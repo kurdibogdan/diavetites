@@ -1,2 +1,2 @@
-# diavetites
-Kiscelli
+# Diavetítés összeállítása
+Az Óbudai Metodista Gyülekezet részére

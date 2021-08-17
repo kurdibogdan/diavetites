@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Énekek kivetítése</title>
+  <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/jszip.min.js"></script>
+  <script type="text/javascript" src="js/pptxgen.min.js"></script>
+  <script type="text/javascript" src="js/dalszovegek.js"></script>
+  <script type="text/javascript" src="js/diasor_cimoldal.js"></script>
+  <script type="text/javascript" src="js/diasor_ifienek.js"></script>
+  <script type="text/javascript" src="js/diasor_igehely.js"></script>
+  <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
+  <style type="text/css">
+  #diasor
+  {
+      border : 1px solid grey;
+  }
+  .dia
+  {
+      display             : inline-block;
+      vertical-align      : top;
+      width               : 100px;
+      height              : 92px;
+      background          : url('kepek/filmkeret.png');  /* 800x737, sarkok: (21, 116); (778, 116); (21, 620) */
+      background-repeat   : no-repeat;
+      background-position : top left;
+      background-size     : contain;
+  }
+  .dia_obj
+  {
+      position    : relative;
+      width       : 95px;
+      height      : 63px;
+      margin-top  : 14.5px;
+      margin-left : 2.5px;
+  }
+  </style>
+ </head>
+ <body>
+
+
+<h1>Kivetítés összeállítása</h1>
+<table>
+ <tr>
+  <td><button onclick="dia_keszitese('musorszunet');">+</button></td>
+  <td>műsorszünet címlap</td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('cimoldal');">+</button></td>
+  <td>
+   <input id="cimoldal_szoveg" type="text" value="ISTENTISZTELET">
+   <input id="cimoldal_datum" type="date">
+  </td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('igehely');">+</button></td>
+  <td><input id="igehely" type="text" placeholder="Zsolt 78:1-4,17-31"> igehely</td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('urvacsora');">+</button></td>
+  <td>úrvacsorai liturgia</td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('ifienek');">+</button></td>
+  <td>
+   <select id="ifienek_valasztasa"></select> ifiénekek
+  </td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('dicseret');">+</button></td>
+  <td><select id="dicseret_valasztasa"></select> dicséretek</td>
+ </tr>
+ <tr>
+  <td><button onclick="dia_keszitese('aldas');">+</button></td>
+  <td><input id="aldas" type="text" value="Áldás"></td>
+ </tr>
+</table>
+
+<div id="diasor"></div>
+
+<script type="text/javascript">
+// PPT generátor: https://products.aspose.app/pdf/hu/conversion/ppt-to-txt
+
+// Vasárnap beállítása alap dátumnak:
+var vasarnap = new Date();
+if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
+document.getElementById('cimoldal_datum').valueAsDate = vasarnap;
+
+// TODO: a dián majd ki kell írni a hónap nevét
+var honapok_nevei = ["január", "február", "március", "április", "május", "június", 
+                     "július", "augusztus", "szeptember", "október", "november", "december"];
+
+var diasor = [];
+
+for(var i = 0, n = dalszovegek.length; i < n; i++)
+{
+    var dal = dalszovegek[i];
+    var div = "";
+    switch (dal.tipus)
+    {
+        case "ifiének":
+            div = "ifienek_valasztasa";
+            break;
+        case "dicséret":
+            div = "dicseret_valasztasa";
+            break;
+        default:
+            console.log("ilyen típusú ének még nem volt: " + dal.tipus);
+            break;
+    }
+    if (div != "")
+    {
+        document.getElementById(div).innerHTML += "<option id='dal_" + i + "'>" + dal.cim + "</option>\n";
+    }
+}
+
+function dia_keszitese(tipus)
+{
+    switch(tipus)
+    {
+        case "musorszunet":
+            diasor = diasor.concat(Diasor_Musorszunet());
+            break;
+        case "cimoldal":
+            diasor = diasor.concat(Diasor_Cimoldal($("#cimoldal_datum").val()));
+            break;
+        case "igehely":
+            diasor = diasor.concat(Diasor_Igehely($("#igehely").val()));
+            break;
+        case "urvacsora": 
+            diasor = diasor.concat(Diasor_Urvacsora());
+            break;
+        case "ifienek":
+            diasor = diasor.concat(Diasor_Ifienek($("#ifienek_valasztasa").val()));
+            break;
+        default:
+            console.log("ilyen típusú dia még nem volt: " + tipus);
+            break;
+    }
+    
+    diasor_megjelenitese();
+}
+
+function diasor_megjelenitese()
+{
+    var t = "";
+    for(var i=0, n=diasor.length; i<n; i++)
+    {
+        t += "<div class='dia'>";
+        
+        var dia = diasor[i];
+        for(var j=0, o=dia.length; j<o; j++)
+        {
+            var obj = dia[j];
+            t += "<div class='dia_obj'>";
+            switch(obj.tipus)
+            {
+                case "kep":
+                    t += "<img src='" + obj.kep + "' "
+                       + "     style='position : absolute;"
+                       + "            top      : " + obj.poz_y     + "%;"
+                       + "            left     : " + obj.poz_x     + "%;"
+                       + "            width    : " + obj.szelesseg + "%;"
+                       + "            height   : " + obj.magassag  + "%;"
+                       + "           '"
+                       + ">"
+                    break;
+                case "szovegdoboz":
+                    t += "<table style='width          : 100%;"
+                       + "              height         : 100%;"
+                       + "              position       : absolute;"
+                       + "              top            : " + obj.poz_y     + "%;"
+                       + "              left           : " + obj.poz_x     + "%;"
+                       + "              width          : " + obj.szelesseg + "%;"
+                       + "              height         : " + obj.magassag  + "%;"
+                       + "           '"
+                       + ">"
+                       + " <tr valign='" + (obj.igazitas_y == "fent" ? "top"
+                                                         :  obj.igazitas_y == "kozepre" ? "middle"
+                                                         :  obj.igazitas_y == "lent" ? "bottom"
+                                                         : "initial")
+                       + "           '"
+                       + "  >"
+                       + "   <td style='text-align: " + (obj.igazitas_x == "balra" ? "left" 
+                                                      :  obj.igazitas_x == "jobbra" ? "right"
+                                                      :  obj.igazitas_x == "kozepre" ? "center"
+                                                      :  "initial")
+                                                      + ";"
+                       + "             '"
+                       + "   >"
+                    for(var k=0, p=obj.szovegek.length; k<p; k++)
+                    {
+                        var sz = obj.szovegek[k];
+                        t += "<div style='font-size   : " + sz.betumeret/10 + "pt;"
+                           + "             font-weight : " + (sz.felkover == true ? "bold"   : "normal") + ";"
+                           + "             font-style  : " + (sz.dolt     == true ? "italic" : "normal") + ";"
+                           + "            '"
+                           + ">"
+                           + sz.szoveg
+                           + "</div>";
+                    }
+                    t += "  </td>"
+                       + " </tr>"
+                       + "</table>";
+                    break;
+                default:
+                    console.log("ilyen típusú objektum még nem volt: " + obj.tipus);
+                    break;
+            }
+            t += "</div>";
+        }
+        t += "</div>";
+    }
+    t += "</table>";
+    $("#diasor").html(t);
+}
+
+
+function ppt_keszitese()
+{
+    // PPTX generátor dokumentációja: https://gitbrent.github.io/PptxGenJS/docs/api-text
+    // PPTX PPT-be konvertálása: https://cloudconvert.com/pptx-to-ppt
+    // beállítások:
+    var szelesseg = 10;         // 25,4 cm = 10 inch
+    var magassag  = 5.625;      // 15,87 cm = 6,2480314960629921259842519685039 inch --> 5,625 inch (16:9)
+
+    let pptx = new PptxGenJS();
+    pptx.defineLayout(
+    {
+        name   : 'szélesvásznú',
+        width  : szelesseg,
+        height : magassag
+    });
+    pptx.layout = 'szélesvásznú';
+
+    // diák hozzáadása:
+    let kezdolap = pptx.addSlide("kezdőlap")
+                       .addImage({path: "kepek/kezdolap.png", x: 0, y: 0, w: '100%', h: '100%'});
+    let cimlap = pptx.addSlide("címlap")
+                     .addText(
+                     [
+                        {text: "ISTENTISZTELET", options: {align:'center', color: "#FFFFFF", fontSize:44, breakLine: true}},
+                        {text: "2021. augusztus 1.", options: {align:'center', color: "#FFFFFF", fontSize:32, breakLine: false}}
+                     ],
+                     {
+                        x: 0, y: 0, w: '100%', h: '100%',
+                        fill: { color: "#008000" }
+                     });
+
+    // prezi mentése
+    pptx.writeFile({fileName: "elso_prezi.pptx"});
+}
+</script>
+
+
+ </body>
+</html>
