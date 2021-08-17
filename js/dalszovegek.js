@@ -46,18 +46,43 @@ var dalszovegek =
         "szoveg" :
         [
             [
-                "496."                         +
-                "Urunk add lelkedet,"          +
-                "Újítsd meg népedet."          +
-                "Lélek gyümölcse,"             +
-                "szívünket töltse"             +
-                "Láttassék bőviben életünkön!" +
-                "Szeretet, békesség,"          +
-                "Szent öröm, jóság,"           +
-                "Türelem, szelídség,"          +
-                "Hűség, józanság"              +
+                "496."                         ,
+                "Urunk add lelkedet,"          ,
+                "Újítsd meg népedet."          ,
+                "Lélek gyümölcse,"             ,
+                "szívünket töltse"             ,
+                "Láttassék bőviben életünkön!" ,
+                "Szeretet, békesség,"          ,
+                "Szent öröm, jóság,"           ,
+                "Türelem, szelídség,"          ,
+                "Hűség, józanság"              ,
                 "Láttassék bőviben életünkön!"
             ]
         ]
     }
 ];
+
+function dallista_betoltese()
+{
+    for(var i = 0, n = dalszovegek.length; i < n; i++)
+    {
+        var dal = dalszovegek[i];
+        var div = "";
+        switch (dal.tipus)
+        {
+            case "ifiének":
+                div = "ifienek_valasztasa";
+                break;
+            case "dicséret":
+                div = "dicseret_valasztasa";
+                break;
+            default:
+                console.log("ilyen típusú ének még nem volt: " + dal.tipus);
+                break;
+        }
+        if (div != "")
+        {
+            document.getElementById(div).innerHTML += "<option value='" + i + "'>" + dal.cim + "</option>\n";
+        }
+    }
+}

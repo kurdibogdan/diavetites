@@ -10,7 +10,7 @@ function Diasor_Igehely(igehely)
                 "szelesseg"  : 100,         // %
                 "magassag"   : 100,         // %
                 "igazitas_x" : "kozepre",
-                "igazizas_y" : "kozepre",
+                "igazitas_y" : "kozepre",
                 "szovegek"   :
                 [
                     {

@@ -8,7 +8,7 @@
   <script type="text/javascript" src="js/pptxgen.min.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
   <script type="text/javascript" src="js/diasor_cimoldal.js"></script>
-  <script type="text/javascript" src="js/diasor_ifienek.js"></script>
+  <script type="text/javascript" src="js/diasor_dalszoveg.js"></script>
   <script type="text/javascript" src="js/diasor_igehely.js"></script>
   <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
@@ -94,26 +94,26 @@ var honapok_nevei = ["január", "február", "március", "április", "május", "j
 
 var diasor = [];
 
-for(var i = 0, n = dalszovegek.length; i < n; i++)
+dallista_betoltese();
+
+function diak_osszefuzese(d1, d2)
 {
-    var dal = dalszovegek[i];
-    var div = "";
-    switch (dal.tipus)
+    var d12 = [];
+    
+    // Ha üres oldallal végződik az egyik, és a másik is üres oldallal kezdődik, akkor csak 1 üres oldalt hagy meg a kettő között:
+    if (d1.length > 0 &&
+        d2.length > 0 &&
+        d1[d1.length-1][0].tipus == "ures" &&
+        d2[0][0].tipus == "ures")
     {
-        case "ifiének":
-            div = "ifienek_valasztasa";
-            break;
-        case "dicséret":
-            div = "dicseret_valasztasa";
-            break;
-        default:
-            console.log("ilyen típusú ének még nem volt: " + dal.tipus);
-            break;
+        d12 = d1.concat(d2.slice(1));
     }
-    if (div != "")
+    else
     {
-        document.getElementById(div).innerHTML += "<option id='dal_" + i + "'>" + dal.cim + "</option>\n";
+        d12 = d1.concat(d2);
     }
+    
+    return(d12);
 }
 
 function dia_keszitese(tipus)
@@ -121,19 +121,22 @@ function dia_keszitese(tipus)
     switch(tipus)
     {
         case "musorszunet":
-            diasor = diasor.concat(Diasor_Musorszunet());
+            diasor = diak_osszefuzese(diasor, Diasor_Musorszunet());
             break;
         case "cimoldal":
-            diasor = diasor.concat(Diasor_Cimoldal($("#cimoldal_datum").val()));
+            diasor = diak_osszefuzese(diasor, Diasor_Cimoldal($("#cimoldal_datum").val()));
             break;
         case "igehely":
-            diasor = diasor.concat(Diasor_Igehely($("#igehely").val()));
+            diasor = diak_osszefuzese(diasor, Diasor_Igehely($("#igehely").val()));
             break;
         case "urvacsora": 
-            diasor = diasor.concat(Diasor_Urvacsora());
+            diasor = diak_osszefuzese(diasor, Diasor_Urvacsora());
+            break;
+        case "dicseret":
+            diasor = diak_osszefuzese(diasor, Diasor_Dalszoveg($("#dicseret_valasztasa").val()));
             break;
         case "ifienek":
-            diasor = diasor.concat(Diasor_Ifienek($("#ifienek_valasztasa").val()));
+            diasor = diak_osszefuzese(diasor, Diasor_Dalszoveg($("#ifienek_valasztasa").val()));
             break;
         default:
             console.log("ilyen típusú dia még nem volt: " + tipus);
@@ -148,12 +151,14 @@ function diasor_megjelenitese()
     var t = "";
     for(var i=0, n=diasor.length; i<n; i++)
     {
-        t += "<div class='dia'>";
-        
         var dia = diasor[i];
+        
+        // Új dia hozzáadása:
+        t += "<div class='dia'>";
         for(var j=0, o=dia.length; j<o; j++)
         {
             var obj = dia[j];
+            
             t += "<div class='dia_obj'>";
             switch(obj.tipus)
             {
@@ -177,33 +182,34 @@ function diasor_megjelenitese()
                        + "              height         : " + obj.magassag  + "%;"
                        + "           '"
                        + ">"
-                       + " <tr valign='" + (obj.igazitas_y == "fent" ? "top"
-                                                         :  obj.igazitas_y == "kozepre" ? "middle"
-                                                         :  obj.igazitas_y == "lent" ? "bottom"
-                                                         : "initial")
-                       + "           '"
-                       + "  >"
+                       + " <tr valign='" + (obj.igazitas_y == "fent" 
+                                         ? "top"
+                                         :  obj.igazitas_y == "kozepre" ? "middle"
+                                         :  obj.igazitas_y == "lent" ? "bottom"
+                                         : "initial")
+                                         + "'>"
                        + "   <td style='text-align: " + (obj.igazitas_x == "balra" ? "left" 
                                                       :  obj.igazitas_x == "jobbra" ? "right"
                                                       :  obj.igazitas_x == "kozepre" ? "center"
                                                       :  "initial")
-                                                      + ";"
-                       + "             '"
-                       + "   >"
+                                                      + ";'>"
                     for(var k=0, p=obj.szovegek.length; k<p; k++)
                     {
                         var sz = obj.szovegek[k];
                         t += "<div style='font-size   : " + sz.betumeret/10 + "pt;"
-                           + "             font-weight : " + (sz.felkover == true ? "bold"   : "normal") + ";"
-                           + "             font-style  : " + (sz.dolt     == true ? "italic" : "normal") + ";"
-                           + "            '"
-                           + ">"
+                           + "            font-weight : " + (sz.felkover  == true ? "bold"       : "normal") + ";"
+                           + "            font-style  : " + (sz.dolt      == true ? "italic"     : "normal") + ";"
+                           + "            font-family : " + (sz.betutipus != null ? sz.betutipus : "Sylfaen") + ";"
+                           + "'>"
                            + sz.szoveg
                            + "</div>";
                     }
                     t += "  </td>"
                        + " </tr>"
                        + "</table>";
+                    break;
+                case "ures":
+                    elozo_ures_dia = true;
                     break;
                 default:
                     console.log("ilyen típusú objektum még nem volt: " + obj.tipus);
@@ -236,8 +242,8 @@ function ppt_keszitese()
     pptx.layout = 'szélesvásznú';
 
     // diák hozzáadása:
-    let kezdolap = pptx.addSlide("kezdőlap")
-                       .addImage({path: "kepek/kezdolap.png", x: 0, y: 0, w: '100%', h: '100%'});
+    // let kezdolap = pptx.addSlide("kezdőlap")     // localhost-on a chrome nem engedi
+    //                    .addImage({path: "kepek/kezdolap.png", x: 0, y: 0, w: '100%', h: '100%'});
     let cimlap = pptx.addSlide("címlap")
                      .addText(
                      [

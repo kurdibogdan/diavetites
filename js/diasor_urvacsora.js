@@ -10,7 +10,7 @@ function Diasor_Urvacsora()
                 "szelesseg"  : 96,          // % (100% - 1 cm)
                 "magassag"   : 87,          // % (100% - 1 cm)
                 "igazitas_x" : "balra",
-                "igazizas_y" : "fent",
+                "igazitas_y" : "fent",
                 "szovegek"   :
                 [
                     {
@@ -36,7 +36,7 @@ function Diasor_Urvacsora()
                 "szelesseg"  : 96,          // % (100% - 1 cm)
                 "magassag"   : 87,          // % (100% - 1 cm)
                 "igazitas_x" : "balra",
-                "igazizas_y" : "fent",
+                "igazitas_y" : "fent",
                 "szovegek"   :
                 [
                     {
