@@ -64,6 +64,9 @@ var dalszovegek =
 
 function dallista_betoltese()
 {
+    var t_ifi   = "";
+    var t_dicsi = "";
+    
     for(var i = 0, n = dalszovegek.length; i < n; i++)
     {
         var dal = dalszovegek[i];
@@ -72,17 +75,18 @@ function dallista_betoltese()
         {
             case "ifiének":
                 div = "ifienek_valasztasa";
+                t_ifi += "<option value='" + i + "'>" + dal.cim + "</option>\n";
                 break;
             case "dicséret":
                 div = "dicseret_valasztasa";
+                t_dicsi += "<option value='" + i + "'>" + dal.cim + "</option>\n";
                 break;
             default:
                 console.log("ilyen típusú ének még nem volt: " + dal.tipus);
                 break;
         }
-        if (div != "")
-        {
-            document.getElementById(div).innerHTML += "<option value='" + i + "'>" + dal.cim + "</option>\n";
-        }
     }
+    
+    $(".ifienek_valasztasa").html(t_ifi);
+    $(".dicseret_valasztasa").html(t_dicsi);
 }

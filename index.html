@@ -3,142 +3,215 @@
  <head>
   <meta charset="utf-8">
   <title>Énekek kivetítése</title>
+  <link rel="stylesheet" href="css/index.css">
   <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
   <script type="text/javascript" src="js/jszip.min.js"></script>
   <script type="text/javascript" src="js/pptxgen.min.js"></script>
-  <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
-  <script type="text/javascript" src="js/diamuveletek.js"></script>
+  <script type="text/javascript" src="js/dia_keszitese.js"></script>
+  <script type="text/javascript" src="js/dia_muveletek.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
-  <script type="text/javascript" src="js/diasor_cimoldal.js"></script>
+  <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
+  <script type="text/javascript" src="js/diasor_focim.js"></script>
   <script type="text/javascript" src="js/diasor_dalszoveg.js"></script>
-  <script type="text/javascript" src="js/diasor_igehely.js"></script>
+  <script type="text/javascript" src="js/diasor_cim.js"></script>
+  <script type="text/javascript" src="js/diasor_igehely_cimmel.js"></script>
   <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
-  <style type="text/css">
-  .noselect
-  {
-      -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none;   /* Safari */
-      -khtml-user-select: none;    /* Konqueror HTML */
-      -moz-user-select: none;      /* Old versions of Firefox */
-      -ms-user-select: none;       /* Internet Explorer/Edge */
-      user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-  }
-  #diasor
-  {
-      border : 1px solid grey;
-  }
-  .dia
-  {
-      display             : inline-block;
-      vertical-align      : top;
-      width               : 100px;
-      height              : 92px;
-      background          : url('kepek/filmkeret.png');
-      background-repeat   : no-repeat;
-      background-position : center center;
-      background-size     : cover;
-  }
-  .dia_obj
-  {
-      position    : relative;
-      width       : 95px;
-      height      : 63px;
-      margin-top  : 14.5px;
-      margin-left : 2.5px;
-  }
-  .dia_kijelolve
-  {
-      background-color : rgb(255,180,150);
-  }
-  .vezerlo_gomb
-  {
-      height        : 40px;
-      min-width     : 30px;
-      border        : 1px outset #ccc;
-      padding       : 5px;
-      line-height   : 40px;
-      text-align    : center;
-      border-radius : 2px;
-  }
-  .vezerlo_gomb img
-  {
-      vertical-align: middle;
-  }
-  .vezerlo_gomb:active
-  {
-      border : 1px inset #ccc;
-      position:relative;
-      top:1px;
-      left:1px;
-  }
-  
-  .kurzorhely_kerete
-  {
-      display  : inline-block;
-      width    : 0px;
-      height   : 0px;
-  }
-  .kurzorhely
-  {
-      position         : relative;
-      top              : -18px;
-      left             : -11px;
-      width            : 20px;
-      height           : 20px;
-      border           : 1px solid black;
-      border-radius    : 20px;
-      background-color : rgb(150,0,180);
-      opacity          : 0.5;
-  }
-  .kurzorhely_aktiv
-  {
-      opacity           : 1;
-      background-color  : red;
-  }
-  .kurzorhely:hover
-  {
-      opacity           : 1;
-  }
-  </style>
  </head>
  <body>
 
 <h1>Kivetítés összeállítása</h1>
 <table>
+ <!-- Műsorszünet -->
  <tr>
-  <td><button onclick="dia_keszitese('musorszunet');">+</button></td>
+  <td><button onclick="dia_keszitese_specialisan('musorszunet');">+</button></td>
   <td>műsorszünet címlap</td>
  </tr>
+ 
+ <!-- Istentisztelet + dátum -->
  <tr>
-  <td><button onclick="dia_keszitese('cimoldal');">+</button></td>
+  <td><button onclick="dia_keszitese_specialisan('focim');">+</button></td>
   <td>
    <input id="cimoldal_szoveg" type="text" value="ISTENTISZTELET">
-   <input id="cimoldal_datum" type="date">
   </td>
  </tr>
  <tr>
-  <td><button onclick="dia_keszitese('igehely');">+</button></td>
+  <td></td>
+  <td>
+   <input id="focim_datum" type="date">
+  </td>
+ </tr>
+ 
+ <!-- Cím: Bemenetel -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('BEMENETEL');">+</button></td>
+  <td>BEMENETEL</td>
+ </tr>
+ 
+ <!-- Cím: Köszöntés-->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('KÖSZÖNTÉS');">+</button></td>
+  <td>KÖSZÖNTÉS</td>
+ </tr>
+ 
+ <!-- Dalszöveg: Ifiének -->
+ <tr>
+  <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_1');">+</button></td>
+  <td>
+   <select id="ifienek_valasztasa_1" class="ifienek_valasztasa"></select> ifiének
+  </td>
+ </tr>
+ 
+ <!-- Dalszöveg: Ifiének -->
+ <tr>
+  <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_2');">+</button></td>
+  <td>
+   <select id="ifienek_valasztasa_2" class="ifienek_valasztasa"></select> ifiének
+  </td>
+ </tr>
+ 
+ <!-- Igevers -->
+ <tr>
+  <td><button onclick="dia_keszitese_sajat_cim('igehely');">+</button></td>
   <td><input id="igehely" type="text" placeholder="Zsolt 78:1-4,17-31"> igehely</td>
  </tr>
+ 
+ <!-- Dalszöveg: Ifiének -->
  <tr>
-  <td><button onclick="dia_keszitese('urvacsora');">+</button></td>
+  <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_3');">+</button></td>
+  <td>
+   <select id="ifienek_valasztasa_3" class="ifienek_valasztasa"></select> ifiének
+  </td>
+ </tr>
+ 
+ <!-- Cím: Pásztori imádság -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('PÁSZTORI IMÁDSÁG');">+</button></td>
+  <td>PÁSZTORI IMÁDSÁG</td>
+ </tr>
+ 
+ <!-- Cím: Igehirdetés és válaszadás -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('IGEHIRDETÉS ÉS VÁLASZASDÁS');">+</button></td>
+  <td>IGEHIRDETÉS ÉS VÁLASZASDÁS</td>
+ </tr>
+ 
+ <!-- Dalszöveg: Ifiének -->
+ <tr>
+  <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_4');">+</button></td>
+  <td>
+   <select id="ifienek_valasztasa_4" class="ifienek_valasztasa"></select> ifiének
+  </td>
+ </tr>
+ 
+ <!-- Cím: Lekció + ige -->
+ <tr>
+  <td><button onclick="dia_keszitese_ige_cimmel('LEKCIÓ', 'lekcio');">+</button></td>
+  <td>LEKCIÓ</td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><input id="lekcio" type="text" placeholder="Ézs 55,1-11"></td>
+ </tr>
+ 
+ <!-- Cím: Evangélium + ige -->
+ <tr>
+  <td><button onclick="dia_keszitese_ige_cimmel('EVANGÉLIUM', 'evangelium');">+</button></td>
+  <td>EVANGÉLIUM</td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><input id="evangelium" type="text" placeholder="Lk 11,5-13"></td>
+ </tr>
+ 
+ <!-- Dalszöveg: Dicséretek -->
+ <tr>
+  <td><button onclick="dia_keszitese_dalszoveg('dicseret_valasztasa_1');">+</button></td>
+  <td><select id="dicseret_valasztasa_1" class="dicseret_valasztasa"></select> dicséret</td>
+ </tr>
+ 
+ <!-- Cím: Textus + ige -->
+ <tr>
+  <td><button onclick="dia_keszitese_ige_cimmel('TEXTUS', 'textus');">+</button></td>
+  <td>TEXTUS</td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><input id="textus" type="text" placeholder="1Pt 5,6-7"></td>
+ </tr>
+ 
+ <!-- Cím: Igehirdetés -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('IGEHIRDETÉS');">+</button></td>
+  <td>IGEHIRDETÉS</td>
+ </tr>
+ 
+ <!-- Dalszöveg: Dicséretek -->
+ <tr>
+  <td><button onclick="dia_keszitese_dalszoveg('dicseret_valasztasa_2');">+</button></td>
+  <td><select id="dicseret_valasztasa_2" class="dicseret_valasztasa"></select> dicséret</td>
+ </tr>
+ 
+
+ <!-- ================================
+              SPECIÁLIS RÉSZEK
+      ================================ -->
+ 
+ <!-- Úrvacsorai liturgia -->
+ <tr>
+  <td><button onclick="dia_keszitese_specialisan('urvacsora');">+</button></td>
   <td>úrvacsorai liturgia</td>
  </tr>
  <tr>
-  <td><button onclick="dia_keszitese('ifienek');">+</button></td>
+  <td></td>
   <td>
-   <select id="ifienek_valasztasa"></select> ifiénekek
+   <select> <!-- TODO: ének kiválasztása -->
+    <option>47. Ó, hála az Úrnak</option>
+   </select> ének 1 versszakkal
   </td>
  </tr>
  <tr>
-  <td><button onclick="dia_keszitese('dicseret');">+</button></td>
-  <td><select id="dicseret_valasztasa"></select> dicséretek</td>
+  <td></td>
+  <td>
+   <select>
+    <option>502. Az Úr szent Bárányára</option>
+   </select> közbülső ének (utolsó előtti versszakig)
+  </td>
+ </tr>
+ 
+ 
+ <!-- ================================ -->
+ 
+ <!-- Cím: Kiküldés -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('KIKÜLDÉS');">+</button></td>
+  <td>KIKÜLDÉS</td>
+ </tr>
+ 
+ <!-- Cím: Hirdetések -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('HIRDETÉSEK');">+</button></td>
+  <td>HIRDETÉSEK</td>
  </tr>
  <tr>
-  <td><button onclick="dia_keszitese('aldas');">+</button></td>
-  <td><input id="aldas" type="text" value="Áldás"></td>
+  <td></td>
+  <td>
+   <textarea></textarea>
+  </td>
  </tr>
+ 
+ <!-- Áldás -->
+ <tr>
+  <td><button onclick="dia_keszitese_cim('ÁLDÁS');">+</button></td>
+  <td>ÁLDÁS</td>
+ </tr>
+ 
+ <!-- Úrvacsorán megkezdett ének utolsó versszaka -->
+ <tr>
+  <td><button onclick="dia_keszitese_specialisan('urvacsora_enek_utolso_versszaka');">+</button></td>
+  <td>megkezdett úrvacsorai ének utolsó versszaka</td>
+ </tr>
+ 
 </table>
 
 <table>
@@ -146,11 +219,11 @@
   <td><img class="vezerlo_gomb" src="kepek/kuka.png" onclick="kijelolt_diak_torlese();"></td>
   <td><img class="vezerlo_gomb" src="kepek/mozgatas_balra.png" onclick="kijelolt_dia_mozgatasa_balra();"></td>
   <td><img class="vezerlo_gomb" src="kepek/mozgatas_jobbra.png" onclick="kijelolt_dia_mozgatasa_jobbra();"></td>
-  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(100);"><img src="kepek/doboz.png" style="height:12px; width:12px;"></div></td>
-  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(150);"><img src="kepek/doboz.png" style="height:18px; width:18px;"></div></td>
-  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(200);"><img src="kepek/doboz.png" style="height:26px; width:26px;"></div></td>
-  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(300);"><img src="kepek/doboz.png" style="height:32px; width:32px;"></div></td>
-  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(500);"><img src="kepek/doboz.png" style="height:40px; width:40px;"></div></td>
+  <td><div id="diameret_100" class="vezerlo_gomb" onclick="diameretek_beallitasa(100);"><img src="kepek/doboz.png" style="height:12px; width:12px;"></div></td>
+  <td><div id="diameret_150" class="vezerlo_gomb" onclick="diameretek_beallitasa(150);"><img src="kepek/doboz.png" style="height:18px; width:18px;"></div></td>
+  <td><div id="diameret_200" class="vezerlo_gomb" onclick="diameretek_beallitasa(200);"><img src="kepek/doboz.png" style="height:26px; width:26px;"></div></td>
+  <td><div id="diameret_300" class="vezerlo_gomb" onclick="diameretek_beallitasa(300);"><img src="kepek/doboz.png" style="height:32px; width:32px;"></div></td>
+  <td><div id="diameret_500" class="vezerlo_gomb" onclick="diameretek_beallitasa(500);"><img src="kepek/doboz.png" style="height:40px; width:40px;"></div></td>
  </tr>
 </table>
 
@@ -162,7 +235,7 @@
 // Vasárnap beállítása alap dátumnak:
 var vasarnap = new Date();
 if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
-document.getElementById('cimoldal_datum').valueAsDate = vasarnap;
+document.getElementById('focim_datum').valueAsDate = vasarnap;
 
 // TODO: a dián majd ki kell írni a hónap nevét
 var honapok_nevei = ["január", "február", "március", "április", "május", "június", 
@@ -171,59 +244,8 @@ var honapok_nevei = ["január", "február", "március", "április", "május", "j
 var diasor = [];
 var kurzor = 0;
 
-diameretek_beallitasa(100);
+diameretek_beallitasa(200);
 dallista_betoltese();
-
-function diak_osszefuzese(d1, d2)
-{
-    var d12 = [];
-    
-    // Ha üres oldallal végződik az egyik, és a másik is üres oldallal kezdődik, 
-    // akkor csak 1 üres oldalt hagy meg a kettő között:
-    if (d1.length > 0 &&
-        d2.length > 0 &&
-        d1[d1.length-1].objektumok.length == 0 &&
-        d2[0].objektumok.length == 0)
-    {
-        d12 = d1.concat(d2.slice(1));
-    }
-    else
-    {
-        d12 = d1.concat(d2);
-    }
-    
-    return(d12);
-}
-
-function dia_keszitese(tipus)
-{
-    switch(tipus)
-    {
-        case "musorszunet":
-            diasor = diak_osszefuzese(diasor, Diasor_Musorszunet());
-            break;
-        case "cimoldal":
-            diasor = diak_osszefuzese(diasor, Diasor_Cimoldal($("#cimoldal_datum").val()));
-            break;
-        case "igehely":
-            diasor = diak_osszefuzese(diasor, Diasor_Igehely($("#igehely").val()));
-            break;
-        case "urvacsora": 
-            diasor = diak_osszefuzese(diasor, Diasor_Urvacsora());
-            break;
-        case "dicseret":
-            diasor = diak_osszefuzese(diasor, Diasor_Dalszoveg($("#dicseret_valasztasa").val()));
-            break;
-        case "ifienek":
-            diasor = diak_osszefuzese(diasor, Diasor_Dalszoveg($("#ifienek_valasztasa").val()));
-            break;
-        default:
-            console.log("ilyen típusú dia még nem volt: " + tipus);
-            break;
-    }
-    
-    diasor_megjelenitese();
-}
 
 
 function ppt_keszitese()

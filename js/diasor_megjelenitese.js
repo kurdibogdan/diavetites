@@ -16,6 +16,9 @@ function diameretek_beallitasa(dia_merete)
     dia_obj_margo_fent  = dia_obj_magassag * 14.5/63;
     dia_obj_margo_balra = dia_obj_szelesseg * 2.5/95;
     dia_skalazasa       = 1000 / dia_szelesseg;
+    
+    $(".diameret_kijelolve").removeClass("diameret_kijelolve");
+    $("#diameret_" + dia_merete).addClass("diameret_kijelolve");
     diasor_megjelenitese();
 }
 
