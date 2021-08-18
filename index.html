@@ -100,11 +100,12 @@ function diak_osszefuzese(d1, d2)
 {
     var d12 = [];
     
-    // Ha üres oldallal végződik az egyik, és a másik is üres oldallal kezdődik, akkor csak 1 üres oldalt hagy meg a kettő között:
+    // Ha üres oldallal végződik az egyik, és a másik is üres oldallal kezdődik, 
+    // akkor csak 1 üres oldalt hagy meg a kettő között:
     if (d1.length > 0 &&
         d2.length > 0 &&
-        d1[d1.length-1][0].tipus == "ures" &&
-        d2[0][0].tipus == "ures")
+        d1[d1.length-1].objektumok.length == 0 &&
+        d2[0].objektumok.length == 0)
     {
         d12 = d1.concat(d2.slice(1));
     }
@@ -153,13 +154,12 @@ function diasor_megjelenitese()
     {
         var dia = diasor[i];
         
-        // Új dia hozzáadása:
         t += "<div class='dia'>";
-        for(var j=0, o=dia.length; j<o; j++)
+        for(var j=0, o=dia.objektumok.length; j<o; j++)
         {
-            var obj = dia[j];
+            var obj = dia.objektumok[j];
             
-            t += "<div class='dia_obj'>";
+            t += "<div class='dia_obj' onclick=\"dia_kijelolese('" + i + "');\">";
             switch(obj.tipus)
             {
                 case "kep":
@@ -209,7 +209,6 @@ function diasor_megjelenitese()
                        + "</table>";
                     break;
                 case "ures":
-                    elozo_ures_dia = true;
                     break;
                 default:
                     console.log("ilyen típusú objektum még nem volt: " + obj.tipus);
@@ -223,6 +222,12 @@ function diasor_megjelenitese()
     $("#diasor").html(t);
 }
 
+
+
+function dia_kijelolese(dia_id)
+{
+    
+}
 
 function ppt_keszitese()
 {

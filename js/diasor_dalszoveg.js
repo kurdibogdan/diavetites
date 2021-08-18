@@ -1,10 +1,15 @@
 function Diasor_Dalszoveg(kivalasztott_enek)
 {
-    console.log(kivalasztott_enek);
-    var dalszoveg    = dalszovegek[kivalasztott_enek].szoveg;
+    var dalszoveg      = dalszovegek[kivalasztott_enek].szoveg;
     var dalszoveg_diai = [];
     
-    dalszoveg_diai.push([{"tipus" : "ures"}]);
+    dalszoveg_diai.push(
+    { 
+        kijelolve  : false,
+        csoport    : "",
+        objektumok : []
+    });
+    
     for(var i=0, n=dalszoveg.length; i<n; i++)
     {
         var szovegdoboz =
@@ -26,10 +31,21 @@ function Diasor_Dalszoveg(kivalasztott_enek)
             ]
         };
         
-        var dia = [szovegdoboz];
+        var dia =
+        {
+            kijelolve  : false,
+            csoport    : "",
+            objektumok : [szovegdoboz]
+        };
         dalszoveg_diai.push(dia);
     }
-    dalszoveg_diai.push([{"tipus" : "ures"}]);
+    
+    dalszoveg_diai.push(
+    { 
+        kijelolve  : false,
+        csoport    : "",
+        objektumok : []
+    });
     
     return(dalszoveg_diai);
 }
