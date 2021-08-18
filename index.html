@@ -36,6 +36,10 @@
       margin-top  : 14.5px;
       margin-left : 2.5px;
   }
+  .dia_kijelolve
+  {
+      background-color : rgb(255,180,150);
+  }
   </style>
  </head>
  <body>
@@ -154,7 +158,7 @@ function diasor_megjelenitese()
     {
         var dia = diasor[i];
         
-        t += "<div class='dia'>";
+        t += "<div class='dia " + (dia.kijelolve == true ? " dia_kijelolve " : "") +  "'>";
         for(var j=0, o=dia.objektumok.length; j<o; j++)
         {
             var obj = dia.objektumok[j];
@@ -226,7 +230,8 @@ function diasor_megjelenitese()
 
 function dia_kijelolese(dia_id)
 {
-    
+    diasor[dia_id].kijelolve ^= 1;  // kijelölés megfordítása
+    diasor_megjelenitese();
 }
 
 function ppt_keszitese()
