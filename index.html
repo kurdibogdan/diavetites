@@ -6,6 +6,8 @@
   <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
   <script type="text/javascript" src="js/jszip.min.js"></script>
   <script type="text/javascript" src="js/pptxgen.min.js"></script>
+  <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
+  <script type="text/javascript" src="js/diamuveletek.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
   <script type="text/javascript" src="js/diasor_cimoldal.js"></script>
   <script type="text/javascript" src="js/diasor_dalszoveg.js"></script>
@@ -13,6 +15,15 @@
   <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
   <style type="text/css">
+  .noselect
+  {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none;   /* Safari */
+      -khtml-user-select: none;    /* Konqueror HTML */
+      -moz-user-select: none;      /* Old versions of Firefox */
+      -ms-user-select: none;       /* Internet Explorer/Edge */
+      user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  }
   #diasor
   {
       border : 1px solid grey;
@@ -23,10 +34,10 @@
       vertical-align      : top;
       width               : 100px;
       height              : 92px;
-      background          : url('kepek/filmkeret.png');  /* 800x737, sarkok: (21, 116); (778, 116); (21, 620) */
+      background          : url('kepek/filmkeret.png');
       background-repeat   : no-repeat;
-      background-position : top left;
-      background-size     : contain;
+      background-position : center center;
+      background-size     : cover;
   }
   .dia_obj
   {
@@ -40,10 +51,58 @@
   {
       background-color : rgb(255,180,150);
   }
+  .vezerlo_gomb
+  {
+      height        : 40px;
+      min-width     : 30px;
+      border        : 1px outset #ccc;
+      padding       : 5px;
+      line-height   : 40px;
+      text-align    : center;
+      border-radius : 2px;
+  }
+  .vezerlo_gomb img
+  {
+      vertical-align: middle;
+  }
+  .vezerlo_gomb:active
+  {
+      border : 1px inset #ccc;
+      position:relative;
+      top:1px;
+      left:1px;
+  }
+  
+  .kurzorhely_kerete
+  {
+      display  : inline-block;
+      width    : 0px;
+      height   : 0px;
+  }
+  .kurzorhely
+  {
+      position         : relative;
+      top              : -18px;
+      left             : -11px;
+      width            : 20px;
+      height           : 20px;
+      border           : 1px solid black;
+      border-radius    : 20px;
+      background-color : rgb(150,0,180);
+      opacity          : 0.5;
+  }
+  .kurzorhely_aktiv
+  {
+      opacity           : 1;
+      background-color  : red;
+  }
+  .kurzorhely:hover
+  {
+      opacity           : 1;
+  }
   </style>
  </head>
  <body>
-
 
 <h1>Kivetítés összeállítása</h1>
 <table>
@@ -82,6 +141,19 @@
  </tr>
 </table>
 
+<table>
+ <tr valign="top">
+  <td><img class="vezerlo_gomb" src="kepek/kuka.png" onclick="kijelolt_diak_torlese();"></td>
+  <td><img class="vezerlo_gomb" src="kepek/mozgatas_balra.png" onclick="kijelolt_dia_mozgatasa_balra();"></td>
+  <td><img class="vezerlo_gomb" src="kepek/mozgatas_jobbra.png" onclick="kijelolt_dia_mozgatasa_jobbra();"></td>
+  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(100);"><img src="kepek/doboz.png" style="height:12px; width:12px;"></div></td>
+  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(150);"><img src="kepek/doboz.png" style="height:18px; width:18px;"></div></td>
+  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(200);"><img src="kepek/doboz.png" style="height:26px; width:26px;"></div></td>
+  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(300);"><img src="kepek/doboz.png" style="height:32px; width:32px;"></div></td>
+  <td><div class="vezerlo_gomb" onclick="diameretek_beallitasa(500);"><img src="kepek/doboz.png" style="height:40px; width:40px;"></div></td>
+ </tr>
+</table>
+
 <div id="diasor"></div>
 
 <script type="text/javascript">
@@ -97,7 +169,9 @@ var honapok_nevei = ["január", "február", "március", "április", "május", "j
                      "július", "augusztus", "szeptember", "október", "november", "december"];
 
 var diasor = [];
+var kurzor = 0;
 
+diameretek_beallitasa(100);
 dallista_betoltese();
 
 function diak_osszefuzese(d1, d2)
@@ -151,88 +225,6 @@ function dia_keszitese(tipus)
     diasor_megjelenitese();
 }
 
-function diasor_megjelenitese()
-{
-    var t = "";
-    for(var i=0, n=diasor.length; i<n; i++)
-    {
-        var dia = diasor[i];
-        
-        t += "<div class='dia " + (dia.kijelolve == true ? " dia_kijelolve " : "") +  "'>";
-        for(var j=0, o=dia.objektumok.length; j<o; j++)
-        {
-            var obj = dia.objektumok[j];
-            
-            t += "<div class='dia_obj' onclick=\"dia_kijelolese('" + i + "');\">";
-            switch(obj.tipus)
-            {
-                case "kep":
-                    t += "<img src='" + obj.kep + "' "
-                       + "     style='position : absolute;"
-                       + "            top      : " + obj.poz_y     + "%;"
-                       + "            left     : " + obj.poz_x     + "%;"
-                       + "            width    : " + obj.szelesseg + "%;"
-                       + "            height   : " + obj.magassag  + "%;"
-                       + "           '"
-                       + ">"
-                    break;
-                case "szovegdoboz":
-                    t += "<table style='width          : 100%;"
-                       + "              height         : 100%;"
-                       + "              position       : absolute;"
-                       + "              top            : " + obj.poz_y     + "%;"
-                       + "              left           : " + obj.poz_x     + "%;"
-                       + "              width          : " + obj.szelesseg + "%;"
-                       + "              height         : " + obj.magassag  + "%;"
-                       + "           '"
-                       + ">"
-                       + " <tr valign='" + (obj.igazitas_y == "fent" 
-                                         ? "top"
-                                         :  obj.igazitas_y == "kozepre" ? "middle"
-                                         :  obj.igazitas_y == "lent" ? "bottom"
-                                         : "initial")
-                                         + "'>"
-                       + "   <td style='text-align: " + (obj.igazitas_x == "balra" ? "left" 
-                                                      :  obj.igazitas_x == "jobbra" ? "right"
-                                                      :  obj.igazitas_x == "kozepre" ? "center"
-                                                      :  "initial")
-                                                      + ";'>"
-                    for(var k=0, p=obj.szovegek.length; k<p; k++)
-                    {
-                        var sz = obj.szovegek[k];
-                        t += "<div style='font-size   : " + sz.betumeret/10 + "pt;"
-                           + "            font-weight : " + (sz.felkover  == true ? "bold"       : "normal") + ";"
-                           + "            font-style  : " + (sz.dolt      == true ? "italic"     : "normal") + ";"
-                           + "            font-family : " + (sz.betutipus != null ? sz.betutipus : "Sylfaen") + ";"
-                           + "'>"
-                           + sz.szoveg
-                           + "</div>";
-                    }
-                    t += "  </td>"
-                       + " </tr>"
-                       + "</table>";
-                    break;
-                case "ures":
-                    break;
-                default:
-                    console.log("ilyen típusú objektum még nem volt: " + obj.tipus);
-                    break;
-            }
-            t += "</div>";
-        }
-        t += "</div>";
-    }
-    t += "</table>";
-    $("#diasor").html(t);
-}
-
-
-
-function dia_kijelolese(dia_id)
-{
-    diasor[dia_id].kijelolve ^= 1;  // kijelölés megfordítása
-    diasor_megjelenitese();
-}
 
 function ppt_keszitese()
 {
