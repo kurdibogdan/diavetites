@@ -1,6 +1,6 @@
-function Diasor_Cimoldal(datum)
+function Diasor_Focim(datum)
 {
-    var cimoldal_diai = 
+    var focim_diai = 
     [   // diak
         {   // 1 dia objektumokkal
             kijelolve  : false,
@@ -31,5 +31,5 @@ function Diasor_Cimoldal(datum)
         }
     ];
     
-    return(cimoldal_diai);
+    return(focim_diai);
 }

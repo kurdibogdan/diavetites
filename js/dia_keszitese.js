@@ -59,6 +59,9 @@ function dia_keszitese_specialisan(tipus)
         case "urvacsora_enek_utolso_versszaka":
             // TODO
             break;
+        case "hirdetesek":
+            diasor = diak_osszefuzese(diasor, Diasor_Hirdetesek($("#hirdetesek").val()));
+            break;
         default:
             console.log("ilyen típusú dia még nem volt: " + tipus);
             break;
