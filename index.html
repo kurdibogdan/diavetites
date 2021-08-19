@@ -23,10 +23,18 @@
  <body>
 
 
+
+<hr>
+
 <table>
  <tr valign="top">
   <td> 
    <h1>Kivetítés összeállítása</h1>
+   
+   <div id="kivetites_osszeallitasa"></div>
+   
+   <hr>
+   
    <table class="diakeszites_tabla">
     <tr>
      <th></th>
@@ -34,135 +42,135 @@
      <th>új slide</th>
     </tr>
    
-    <!-- Műsorszünet -->
+    <!-- Műsorszünet
     <tr>
      <td><label class="switch"><input id="dia_keszitese_musorszunet" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>műsorszünet címlap</td>
      <td><button onclick="dia_keszitese_specialisan('musorszunet');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Istentisztelet + dátum -->
+    <!-- Istentisztelet + dátum
     <tr>
      <td><label class="switch"><input id="dia_keszitese_focim" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td><input id="cimoldal_szoveg" type="text" value="ISTENTISZTELET"><br>
          <input id="focim_datum" type="date"></td>
      <td><button onclick="dia_keszitese_specialisan('focim');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Bemenetel -->
+    <!-- Cím: Bemenetel
     <tr>
      <td><label class="switch"><input id="dia_keszitese_bemenetel" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>BEMENETEL</td>
      <td><button onclick="dia_keszitese_cim('BEMENETEL');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Köszöntés-->
+    <!-- Cím: Köszöntés
     <tr>
      <td><label class="switch"><input id="dia_keszitese_koszontes" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>KÖSZÖNTÉS</td>
      <td><button onclick="dia_keszitese_cim('KÖSZÖNTÉS');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Ifiének -->
+    <!-- Dalszöveg: Ifiének
     <tr>
      <td><label class="switch"><input id="dia_keszitese_ifienek_1" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>ifiének<br><select id="ifienek_valasztasa_1" class="ifienek_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_1');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Ifiének -->
+    <!-- Dalszöveg: Ifiének
     <tr>
      <td><label class="switch"><input id="dia_keszitese_ifienek_2" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>ifiének<br><select id="ifienek_valasztasa_2" class="ifienek_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_2');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Igevers -->
+    <!-- Igehely
     <tr>
      <td><label class="switch"><input id="dia_keszitese_igehely" type="checkbox"><span class="slider round"></span></label></td>
-     <td>igehely<br><input id="igehely" type="text" placeholder="Zsolt 78:1-4,17-31"></td>
+     <td>igehely<br><input id="igehely" type="text" placeholder="Zsolt 78:1-4,17-31" onkeypress="opcio_aktivalasa('dia_keszitese_igehely');"></td>
      <td><button onclick="dia_keszitese_sajat_cim('igehely');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Ifiének -->
+    <!-- Dalszöveg: Ifiének
     <tr>
      <td><label class="switch"><input id="dia_keszitese_ifienek_3" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>ifiének<br><select id="ifienek_valasztasa_3" class="ifienek_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_3');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Pásztori imádság -->
+    <!-- Cím: Pásztori imádság
     <tr>
      <td><label class="switch"><input id="dia_keszitese_pasztori_ima" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>PÁSZTORI IMÁDSÁG</td>
      <td><button onclick="dia_keszitese_cim('PÁSZTORI IMÁDSÁG');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Igehirdetés és válaszadás -->
+    <!-- Cím: Igehirdetés és válaszadás
     <tr>
      <td><label class="switch"><input id="dia_keszitese_igehirdetes_valaszadas" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>IGEHIRDETÉS ÉS VÁLASZASDÁS</td>
      <td><button onclick="dia_keszitese_cim('IGEHIRDETÉS ÉS VÁLASZASDÁS');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Ifiének -->
+    <!-- Dalszöveg: Ifiének
     <tr>
      <td><label class="switch"><input id="dia_keszitese_ifienek_4" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>ifiének<br><select id="ifienek_valasztasa_4" class="ifienek_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('ifienek_valasztasa_4');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Lekció + ige -->
+    <!-- Cím: Lekció + ige
     <tr>
      <td><label class="switch"><input id="dia_keszitese_lekcio" type="checkbox"><span class="slider round"></span></label></td>
      <td>LEKCIÓ<br>
          <input id="lekcio" type="text" placeholder="Ézs 55,1-11"></td>
      <td><button onclick="dia_keszitese_ige_cimmel('LEKCIÓ', 'lekcio');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Evangélium + ige -->
+    <!-- Cím: Evangélium + ige
     <tr>
      <td><label class="switch"><input id="dia_keszitese_evangelium" type="checkbox"><span class="slider round"></span></label></td>
      <td>EVANGÉLIUM<br>
          <input id="evangelium" type="text" placeholder="Lk 11,5-13"></td>
      <td><button onclick="dia_keszitese_ige_cimmel('EVANGÉLIUM', 'evangelium');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Dicséretek -->
+    <!-- Dalszöveg: Dicséretek
     <tr>
      <td><label class="switch"><input id="dia_keszitese_dicseret_1" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>dicséret<br><select id="dicseret_valasztasa_1" class="dicseret_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('dicseret_valasztasa_1');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Textus + ige -->
+    <!-- Cím: Textus + ige
     <tr>
      <td><label class="switch"><input id="dia_keszitese_textus" type="checkbox"><span class="slider round"></span></label></td>
      <td>TEXTUS<br>
          <input id="textus" type="text" placeholder="1Pt 5,6-7"></td>
      <td><button onclick="dia_keszitese_ige_cimmel('TEXTUS', 'textus');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Igehirdetés -->
+    <!-- Cím: Igehirdetés
     <tr>
      <td><label class="switch"><input id="dia_keszitese_igehirdetes" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>IGEHIRDETÉS</td>
      <td><button onclick="dia_keszitese_cim('IGEHIRDETÉS');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Dalszöveg: Dicséretek -->
+    <!-- Dalszöveg: Dicséretek
     <tr>
      <td><label class="switch"><input id="dia_keszitese_dicseret_2" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>dicséret<br><select id="dicseret_valasztasa_2" class="dicseret_valasztasa"></select></td>
      <td><button onclick="dia_keszitese_dalszoveg('dicseret_valasztasa_2');">&rarr;</button></td>
     </tr>
-   </table>
+   </table> -->
 
     <!-- ================================
                  SPECIÁLIS RÉSZEK
          ================================ -->
     
-    <!-- Úrvacsorai liturgia -->
+    <!-- Úrvacsorai liturgia
    <table class="diakeszites_tabla">
     <tr>
      <th><label class="switch"><input id="dia_keszitese_urvacsora" type="checkbox"><span class="slider round"></span></label></th>
@@ -172,7 +180,7 @@
     <tr>
      <td><label class="switch"><input id="dia_keszitese_urvacsora_enek_1" type="checkbox"><span class="slider round"></span></label></td>
      <td>ének 1 versszakkal<br>
-      <select> <!-- TODO: ének kiválasztása -->
+      <select> <!-- TODO: ének kiválasztása -- >
        <option>47. Ó, hála az Úrnak</option>
       </select>
      </td>
@@ -188,7 +196,7 @@
      </td>
      <td></td>
     </tr>
-   </table>
+   </table> -->
     
     <!-- ================================ -->
     
@@ -200,41 +208,41 @@
      <th>új slide</th>
     </tr>
     
-    <!-- Cím: Kiküldés -->
+    <!-- Cím: Kiküldés
     <tr>
      <td><label class="switch"><input id="dia_keszitese_kikuldes" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>KIKÜLDÉS</td>
      <td><button onclick="dia_keszitese_cim('KIKÜLDÉS');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Cím: Hirdetések -->
+    <!-- Cím: Hirdetések
     <tr>
      <td><label class="switch"><input id="dia_keszitese_hirdetesek" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>HIRDETÉSEK<br>
       <textarea id="hirdetesek"></textarea>
      </td>
      <td><button onclick="dia_keszitese_specialisan('hirdetesek');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Áldás -->
+    <!-- Áldás
     <tr>
      <td><label class="switch"><input id="dia_keszitese_aldas" type="checkbox" checked="checked"><span class="slider round"></span></label></td>
      <td>ÁLDÁS</td>
      <td><button onclick="dia_keszitese_cim('ÁLDÁS');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
-    <!-- Úrvacsorán megkezdett ének utolsó versszaka -->
+    <!-- Úrvacsorán megkezdett ének utolsó versszaka
     <tr>
      <td><label class="switch"><input id="dia_keszitese_urvacsora_enek_utolso_versszaka" type="checkbox"><span class="slider round"></span></label></td>
      <td>megkezdett úrvacsorai ének<br>
          utolsó versszaka</td>
      <td><button onclick="dia_keszitese_specialisan('urvacsora_enek_utolso_versszaka');">&rarr;</button></td>
-    </tr>
+    </tr> -->
     
    </table>
    
    <div style="text-align:right; margin:29px;">
-   <button>Kiválasztottak hozzáadása &rarr;</button>
+    <button>Kiválasztottak hozzáadása &rarr;</button>
    </div>
    
   </td>
@@ -262,10 +270,11 @@
 <script type="text/javascript">
 // PPT generátor: https://products.aspose.app/pdf/hu/conversion/ppt-to-txt
 
+
 // Vasárnap beállítása alap dátumnak:
-var vasarnap = new Date();
-if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
-document.getElementById('focim_datum').valueAsDate = vasarnap;
+// var vasarnap = new Date();
+// if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
+// document.getElementById('focim_datum').valueAsDate = vasarnap;
 
 // TODO: a dián majd ki kell írni a hónap nevét
 var honapok_nevei = ["január", "február", "március", "április", "május", "június", 
@@ -277,6 +286,10 @@ var kurzor = 0;
 diameretek_beallitasa(200);
 dallista_betoltese();
 
+function opcio_aktivalasa(checkbox_id)
+{
+    $("#"+checkbox_id).prop("selected", "selected");
+}
 
 function ppt_keszitese()
 {
@@ -315,6 +328,49 @@ function ppt_keszitese()
         fileName: $("#focim_datum").val().replace(/-/g, "") + ".pptx"
     });
 }
+
+
+var t = "<table class='diakeszites_tabla'>\n"
+      + " <tr>\n"
+      + "  <th></th>\n"
+      + "  <th width='230'>általános részek</th>\n"
+      + "  <th>új slide</th>\n"
+      + " </tr>\n"
+      + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
+      + Diasor_Focim.diakeszites_gomb("focim")
+      // + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS")
+      + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "1. ifiének")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
+      + Diasor_Igehely_Cimmel.diakeszites_gomb("igehely", "igehely")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
+      + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG")
+      + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
+      + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
+      + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
+      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
+      + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
+      + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS")
+      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
+      + "</table>\n"
+      + "<table class='diakeszites_tabla'>\n"
+      + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
+      + "</table>"
+      + "<table class='diakeszites_tabla'>\n"
+      + " <tr>\n"
+      + "  <th></th>\n"
+      + "  <th width='230'>befejező részek</th>\n"
+      + "  <th>új slide</th>\n"
+      + " </tr>\n"
+      + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS")
+      + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
+      + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS")
+     // + Diasor_Cim.diakeszites_gomb("urvacsora_vege", "megkezdett úrvacsorai ének utolsó versszaka")  // TODO
+      + "</table>"
+
+$("#kivetites_osszeallitasa").html(t);
+
 </script>
 
 
