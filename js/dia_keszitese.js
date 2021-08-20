@@ -19,53 +19,8 @@ function diak_osszefuzese(d1, d2)
     return(d12);
 }
 
-function dia_keszitese_cim(cim)
+function diasor_bovitese(uj_diasor)
 {
-    diasor = diak_osszefuzese(diasor, Diasor_Cim(cim));
-    diasor_megjelenitese();
-}
-
-function dia_keszitese_sajat_cim(cim_mezo)
-{
-    diasor = diak_osszefuzese(diasor, Diasor_Cim($("#" + cim_mezo).val()));
-    diasor_megjelenitese();
-}
-
-function dia_keszitese_dalszoveg(valaszto_mezo)
-{
-    diasor = diak_osszefuzese(diasor, Diasor_Dalszoveg($("#" + valaszto_mezo).val()));
-    diasor_megjelenitese();
-}
-
-function dia_keszitese_ige_cimmel(cim, ige_mezo)
-{
-    diasor = diak_osszefuzese(diasor, Diasor_Igehely_Cimmel(cim, $("#" + ige_mezo).val()));
-    diasor_megjelenitese();
-}
-
-function dia_keszitese_specialisan(tipus)
-{
-    switch(tipus)
-    {
-        case "musorszunet":
-            diasor = diak_osszefuzese(diasor, Diasor_Musorszunet());
-            break;
-        case "focim":
-            diasor = diak_osszefuzese(diasor, Diasor_Focim($("#focim_datum").val()));
-            break;
-        case "urvacsora": 
-            diasor = diak_osszefuzese(diasor, Diasor_Urvacsora());
-            break;
-        case "urvacsora_enek_utolso_versszaka":
-            // TODO
-            break;
-        case "hirdetesek":
-            diasor = diak_osszefuzese(diasor, Diasor_Hirdetesek($("#hirdetesek").val()));
-            break;
-        default:
-            console.log("ilyen típusú dia még nem volt: " + tipus);
-            break;
-    }
-    
+    diasor = diak_osszefuzese(diasor, uj_diasor);
     diasor_megjelenitese();
 }

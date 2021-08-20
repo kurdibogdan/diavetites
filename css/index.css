@@ -9,6 +9,10 @@ button
     background-color : #04AA6D;
     box-shadow       : 0 0 1px #2196F3;
 }
+button:disabled
+{
+    background-color : #ccc;
+}
 input[type='text'],
 textarea
 {

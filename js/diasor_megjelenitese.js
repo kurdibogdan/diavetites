@@ -1,21 +1,26 @@
 var dia_szelesseg       = 100;  // px
 var dia_magassag        = 92;   // px
-var dia_obj_szelesseg   = 95;   // px
+var dia_obj_szelesseg   = 96;   // px
 var dia_obj_magassag    = 63;   // px
 var dia_obj_margo_fent  = 14.5; // px
 var dia_obj_margo_balra = 2.5;  // px
 var dia_skalazasa       = 10;   // pt/px
 
-
 function diameretek_beallitasa(dia_merete)
 {
-    dia_szelesseg       = dia_merete;
-    dia_magassag        = dia_szelesseg * 92/100;
-    dia_obj_szelesseg   = dia_szelesseg - 8;
+    dia_szelesseg       = dia_merete;                       // 500px
+    dia_magassag        = dia_szelesseg * 0.92;             // 460px
+    dia_obj_szelesseg   = dia_szelesseg * 0.9485            // egyenes illesztése ezekre a pontokra: (0, 0), (100, 96), (500, 474)
     dia_obj_magassag    = dia_obj_szelesseg * 63/95;
     dia_obj_margo_fent  = dia_obj_magassag * 14.5/63;
     dia_obj_margo_balra = dia_obj_szelesseg * 2.5/95;
     dia_skalazasa       = 1000 / dia_szelesseg;
+    
+    // console.log("Dia mérete              = " + dia_merete);
+    // console.log("Dia szélessége          = " + dia_szelesseg);
+    // console.log("Dia magassága           = " + dia_magassag);
+    // console.log("Dia objektum szélessége = " + dia_obj_szelesseg);
+    // console.log("Dia objektum magassága  = " + dia_obj_magassag);
     
     $(".diameret_kijelolve").removeClass("diameret_kijelolve");
     $("#diameret_" + dia_merete).addClass("diameret_kijelolve");

@@ -1,7 +1,9 @@
 var Diasor_Urvacsora =
 {
-    uj_diasor : function()
+    uj_diasor : function(gomb_id)
     {
+        // var enek_1 = "";   // gomb_id alapján a kiválasztott dal
+        // var enek_2 = "";
         var diak = 
         [
             {   // 1 dia objektumokkal
@@ -79,7 +81,7 @@ var Diasor_Urvacsora =
         var t = " <tr>\n"
               + "  <th><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></th>\n"
               + "  <th width='230'>úrvacsorai liturgia</th>\n"
-              + "  <th><button onclick=\"dia_keszitese_specialisan('urvacsora');\">&rarr;</button></th>\n"
+              + "  <th><button onclick=\"diasor_bovitese(Diasor_Urvacsora.uj_diasor('" + gomb_id + "'));\">&rarr;</button></th>\n"
               + " </tr>\n"
               + " <tr>\n"
               + "  <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "_enek_1' type='checkbox'><span class='slider round'></span></label></td>\n"

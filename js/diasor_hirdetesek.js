@@ -1,7 +1,8 @@
 var Diasor_Hirdetesek =
 {
-    uj_diasor : function(szoveg)
+    uj_diasor : function(gomb_id)
     {
+        var szoveg = $("#hirdetesek_" + gomb_id).val();
         var diak = 
         [
             {   // 1 dia objektumokkal
@@ -48,14 +49,26 @@ var Diasor_Hirdetesek =
         return(diak);
     },
     
+    jelolo_valtasa : function(gomb_id)
+    {
+        var jelolo  = $("#dia_keszitese_" + gomb_id);
+        var bovito  = $("#diasor_bovitese_" + gomb_id);
+        var bevitel = $("#hirdetesek_" + gomb_id).val();
+        $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
+        $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));
+    },
+    
     diakeszites_gomb : function(gomb_id)
     {
         var t = "<tr>\n"
-              + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' checked='checked'><span class='slider round'></span></label></td>\n"
+              + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></td>\n"
               + " <td>HIRDETÉSEK<br>\n"
-              + "  <textarea id='hirdetesek_" + gomb_id + "'></textarea>\n"
+              + "  <textarea id='hirdetesek_" + gomb_id + "' "
+              + "             onkeyup=\"Diasor_Hirdetesek.jelolo_valtasa('" + gomb_id + "');\"></textarea>\n"
               + " </td>\n"
-              + " <td><button onclick='dia_keszitese_specialisan('hirdetesek_" + gomb_id + "');'>&rarr;</button></td>\n"
+              + " <td><button id='diasor_bovitese_" + gomb_id + "' "
+              + "             onclick=\"diasor_bovitese(Diasor_Hirdetesek.uj_diasor('" + gomb_id + "'));\" "
+              + "             disabled='disabled'>&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);
     },

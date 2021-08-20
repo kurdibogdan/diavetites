@@ -1,9 +1,10 @@
 var Diasor_Dalszoveg =
 {
-    uj_diasor : function(kivalasztott_enek)
+    uj_diasor : function(gomb_id)
     {
-        var dalszoveg      = dalszovegek[kivalasztott_enek].szoveg;
-        var diak = [];
+        var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).val();
+        var dalszoveg         = dalszovegek[kivalasztott_enek].szoveg;
+        var diak              = [];
         
         diak.push(
         { 
@@ -52,12 +53,28 @@ var Diasor_Dalszoveg =
         return(diak);
     },
     
+    jelolo_valtasa : function(gomb_id)
+    {
+        var jelolo  = $("#dia_keszitese_" + gomb_id);
+        var bovito  = $("#diasor_bovitese_" + gomb_id);
+        var bevitel = $("#enek_valasztasa_" + gomb_id).val();
+        $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
+        $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));
+    },
+    
     diakeszites_gomb : function(gomb_id, tipus, cim) // tipus = "ifienek", "dicseret", cim = "ifiének", "dicséret"
     {
         var t = "<tr>\n"
-              + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' checked='checked'><span class='slider round'></span></label></td>\n"
-              + " <td>" + cim + "<br><select id='enek_valasztasa_" + gomb_id + "' class='" + tipus + "_valasztasa'></select></td>\n"
-              + " <td><button onclick=\"dia_keszitese_dalszoveg('enek_valasztasa_" + gomb_id + "');\">&rarr;</button></td>\n"
+              + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></td>\n"
+              + " <td>" + cim + "<br>\n"
+              + "  <select id='enek_valasztasa_" + gomb_id + "' "
+              + "          class='" + tipus + "_valasztasa' "
+              + "          onchange=\"Diasor_Dalszoveg.jelolo_valtasa('" + gomb_id + "');\">"
+              + "  </select>\n"
+              + " </td>\n"
+              + " <td><button id='diasor_bovitese_" + gomb_id + "' "
+              + "             onclick=\"diasor_bovitese(Diasor_Dalszoveg.uj_diasor('" + gomb_id + "'));\" "
+              + "             disabled='disabled'>&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);
     },

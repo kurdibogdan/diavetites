@@ -1,8 +1,8 @@
-var Diasor_Igehely_Cimmel =
+var Diasor_Sajat_Cim =
 {
-    uj_diasor : function(cim, gomb_id)
+    uj_diasor : function(gomb_id)
     {
-        var igehely = $("#textus_" + gomb_id).val();
+        var cim  = $("#sajat_cim_" + gomb_id).val();
         var diak = 
         [
             {   // 1 dia objektumokkal
@@ -22,15 +22,7 @@ var Diasor_Igehely_Cimmel =
                         [
                             {
                                 "szoveg"    : cim,
-                                "betumeret" : 40,       // pt
-                                "betutipus" : "Gill Sans MT",
-                                "felkover"  : true
-                            },
-                            {
-                                "szoveg"    : igehely,
-                                "betumeret" : 44,
-                                "betutipus" : "Sylfaen",
-                                "felkover"  : true
+                                "betumeret" : 32        // pt
                             }
                         ]
                     }
@@ -45,25 +37,24 @@ var Diasor_Igehely_Cimmel =
     {
         var jelolo  = $("#dia_keszitese_" + gomb_id);
         var bovito  = $("#diasor_bovitese_" + gomb_id);
-        var bevitel = $("#textus_" + gomb_id).val();
+        var bevitel = $("#sajat_cim_" + gomb_id).val();
         $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
         $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));
     },
     
-    diakeszites_gomb : function(gomb_id, cim)    // cim = TEXTUS, ...
+    diakeszites_gomb : function(gomb_id)
     {
         var t = "<tr>\n"
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></td>\n"
-              + " <td>" + cim + "<br>\n"
-              + "     <input id='textus_" + gomb_id + "' "
+              + " <td><input id='sajat_cim_" + gomb_id + "' "
               + "            type='text' "
-              + "            placeholder='1Pt 5,6-7' "
-              + "            onkeyup=\"Diasor_Igehely_Cimmel.jelolo_valtasa('" + gomb_id + "');\">\n"
+              + "            placeholder='(saját cím)' "
+              + "            onkeyup=\"Diasor_Sajat_Cim.jelolo_valtasa('" + gomb_id + "');\">\n"
               + " </td>\n"
               + " <td><button id='diasor_bovitese_" + gomb_id + "' "
-              + "             onclick=\"diasor_bovitese(Diasor_Igehely_Cimmel.uj_diasor('" + cim + "', '" + gomb_id + "'));\" "
+              + "             onclick=\"diasor_bovitese(Diasor_Sajat_Cim.uj_diasor('" + gomb_id + "'));\" "
               + "             disabled='disabled'>&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);
     },
-}
+};

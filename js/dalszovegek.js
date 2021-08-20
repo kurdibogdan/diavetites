@@ -64,8 +64,8 @@ var dalszovegek =
 
 function dallista_betoltese()
 {
-    var t_ifi   = "";
-    var t_dicsi = "";
+    var t_ifi   = "<option value=''>-- ifiének --</option>";
+    var t_dicsi = "<option value=''>-- dicséret --</option>";
     
     for(var i = 0, n = dalszovegek.length; i < n; i++)
     {
