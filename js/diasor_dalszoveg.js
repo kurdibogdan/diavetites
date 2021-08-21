@@ -58,8 +58,11 @@ var Diasor_Dalszoveg =
         var jelolo  = $("#dia_keszitese_" + gomb_id);
         var bovito  = $("#diasor_bovitese_" + gomb_id);
         var bevitel = $("#enek_valasztasa_" + gomb_id).val();
-        $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
-        $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));
+        if (jelolo && bovito && bevitel)
+        {
+            $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
+            $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));
+        }
     },
     
     diakeszites_gomb : function(gomb_id, tipus, cim) // tipus = "ifienek", "dicseret", cim = "ifiének", "dicséret"
