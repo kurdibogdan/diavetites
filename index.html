@@ -8,6 +8,7 @@
   <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
   <script type="text/javascript" src="js/jszip.min.js"></script>
   <script type="text/javascript" src="js/pptxgen.min.js"></script>
+  <script type="text/javascript" src="js/ppt_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_muveletek.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
@@ -74,45 +75,6 @@ function opcio_aktivalasa(checkbox_id)
     $("#"+checkbox_id).prop("selected", "selected");
 }
 
-function ppt_keszitese()
-{
-    // PPTX generátor dokumentációja: https://gitbrent.github.io/PptxGenJS/docs/api-text
-    // PPTX PPT-be konvertálása: https://cloudconvert.com/pptx-to-ppt
-    // beállítások:
-    var szelesseg = 10;         // 25,4 cm = 10 inch
-    var magassag  = 5.625;      // 15,87 cm = 6,2480314960629921259842519685039 inch --> 5,625 inch (16:9)
-
-    let pptx = new PptxGenJS();
-    pptx.defineLayout(
-    {
-        name   : 'szélesvásznú',
-        width  : szelesseg,
-        height : magassag
-    });
-    pptx.layout = 'szélesvásznú';
-
-    // diák hozzáadása:
-    // let kezdolap = pptx.addSlide("kezdőlap")     // localhost-on a chrome nem engedi
-    //                    .addImage({path: "kepek/kezdolap.png", x: 0, y: 0, w: '100%', h: '100%'});
-    let cimlap = pptx.addSlide("címlap")
-                     .addText(
-                     [
-                        {text: "ISTENTISZTELET", options: {align:'center', color: "#FFFFFF", fontSize:44, breakLine: true}},
-                        {text: "2021. augusztus 1.", options: {align:'center', color: "#FFFFFF", fontSize:32, breakLine: false}}
-                     ],
-                     {
-                        x: 0, y: 0, w: '100%', h: '100%',
-                        fill: { color: "#008000" }
-                     });
-
-    // prezi mentése
-    pptx.writeFile(
-    {
-        fileName: $("#focim_datum").val().replace(/-/g, "") + ".pptx"
-    });
-}
-
-
 var t = "<table class='diakeszites_tabla'>\n"
       + " <tr>\n"
       + "  <th></th>\n"
@@ -121,20 +83,20 @@ var t = "<table class='diakeszites_tabla'>\n"
       + " </tr>\n"
       + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
       + Diasor_Focim.diakeszites_gomb("focim")
-      + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL")
-      + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS")
+      + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
+      + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "1. ifiének")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
       + Diasor_Sajat_Cim.diakeszites_gomb("igehely")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
-      + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG")
-      + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS")
+      + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
+      + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
       + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
-      + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS")
+      + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
       + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
       + "</table>\n"
       + "<table class='diakeszites_tabla'>\n"
@@ -146,9 +108,9 @@ var t = "<table class='diakeszites_tabla'>\n"
       + "  <th width='230'>befejező részek</th>\n"
       + "  <th>új slide</th>\n"
       + " </tr>\n"
-      + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS")
+      + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
-      + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS")
+      + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
      // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
       + "</table>";
 

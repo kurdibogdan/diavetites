@@ -103,45 +103,24 @@ var Diasor_Urvacsora =
     
     diakeszites_gomb : function(gomb_id)
     {   
-        var t1 = " <tr>\n"
-               + "  <th><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' onchange=\"Diasor_Urvacsora.jelolo_valtasa('" + gomb_id + "');\"><span class='slider round'></span></label></th>\n"
-               + "  <th width='230'>úrvacsorai liturgia</th>\n"
-               + "  <th><button onclick=\"diasor_bovitese(Diasor_Urvacsora.uj_diasor('" + gomb_id + "'));\">&rarr;</button></th>\n"
-               + " </tr>\n"
-               + " <tr>\n";
-        
-        var t2 =
-               + "  <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "_enek_1' type='checkbox'><span class='slider round'></span></label></td>\n"
-               + "  <td>ének 1 versszakkal<br>\n"
-               + "   <select>\n"     // TODO: ének kiválasztása
-               + "    <option>47. Ó, hála az Úrnak</option>\n"
-               + "   </select>\n"
-               + "  </td>\n"
-               + "  <td></td>\n"
-               + " </tr>\n"
-               + " <tr>\n"
-               + "  <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "_enek_2' type='checkbox'><span class='slider round'></span></label></td>\n"
-               + "  <td>\n"
-               + "   közbülső ének (utolsó előtti versszakig)<br>\n"
-               + "   <select>\n"
-               + "    <option>502. Az Úr szent Bárányára</option>\n"
-               + "   </select>\n"
-               + "  </td>\n"
-               + "  <td></td>\n"
-               + " </tr>\n";
-              
-        var t3 = Diasor_Cim.diakeszites_gomb("urvacsora_bunvallas_cim", "BŰNVALLÁS<br>-<br>FELOLDOZÁS")
-               // + bűnvallás szöveg
-               + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_1", "dicseret_1_vsz", "ének 1 versszakkal")
-               + Diasor_Cim.diakeszites_gomb("urvacsora_urvacsora_cim", "ÚRVACSORA")
-               + Diasor_Cim.diakeszites_gomb("urvacsora_halaado_ima_cim", "NAGY, HÁLAADÓ IMÁDSÁG")
-               // + hálaadás szöveg
-               + Diasor_Cim.diakeszites_gomb("urvacsora_miatyank_cim", "MIATYÁNK")
-               // + Mi Atyánk szöveg
-               + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_2", "dicseret_majdnem_vegig", "közbülső ének (utolsó előtti versszakig)")
-               + Diasor_Cim.diakeszites_gomb("urvacsora_urvacsorai_kozosseg_cim", "ÚRVACSORAI<br>KÖZÖSSÉG")
-               // + úrvacsorai közösség szöveg
-               ;
-        return(t1 + t3);
+        var t = " <tr>\n"
+              + "  <th><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' onchange=\"Diasor_Urvacsora.jelolo_valtasa('" + gomb_id + "');\"><span class='slider round'></span></label></th>\n"
+              + "  <th width='230'>úrvacsorai liturgia</th>\n"
+              + "  <th><button onclick=\"diasor_bovitese(Diasor_Urvacsora.uj_diasor('" + gomb_id + "'));\">&rarr;</button></th>\n"
+              + " </tr>\n"
+              + " <tr>\n"
+              + Diasor_Cim.diakeszites_gomb("urvacsora_bunvallas_cim", "BŰNVALLÁS<br>-<br>FELOLDOZÁS")
+              // + bűnvallás szöveg
+              + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_1", "dicseret_1_vsz", "ének 1 versszakkal")
+              + Diasor_Cim.diakeszites_gomb("urvacsora_urvacsora_cim", "ÚRVACSORA")
+              + Diasor_Cim.diakeszites_gomb("urvacsora_halaado_ima_cim", "NAGY, HÁLAADÓ IMÁDSÁG")
+              // + hálaadás szöveg
+              + Diasor_Cim.diakeszites_gomb("urvacsora_miatyank_cim", "MIATYÁNK")
+              // + Mi Atyánk szöveg
+              + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_2", "dicseret_majdnem_vegig", "közbülső ének (utolsó előtti versszakig)")
+              + Diasor_Cim.diakeszites_gomb("urvacsora_urvacsorai_kozosseg_cim", "ÚRVACSORAI<br>KÖZÖSSÉG")
+              // + úrvacsorai közösség szöveg
+              ;
+        return(t);
     },
 }

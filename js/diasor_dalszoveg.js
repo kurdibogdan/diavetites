@@ -58,7 +58,7 @@ var Diasor_Dalszoveg =
         var jelolo  = $("#dia_keszitese_" + gomb_id);
         var bovito  = $("#diasor_bovitese_" + gomb_id);
         var bevitel = $("#enek_valasztasa_" + gomb_id).val();
-        if (jelolo && bovito && bevitel)
+        if (jelolo && bovito)
         {
             $(jelolo).prop("checked", (bevitel.length > 0 ? "checked" : ""));
             $(bovito).prop("disabled", (bevitel.length > 0 ? "" : "disabled"));

@@ -150,7 +150,7 @@ function dallista_betoltese()
     var t_ifi                 = "<option value=''>-- ifiének --</option>";
     var t_dicsi               = "<option value=''>-- dicséret --</option>";
     var t_dicsi_1_vsz         = "<option value=''>-- dicséret 1 vsz --</option>";
-    var t_dicsi_majdnem_vegig = "<option value=''>-- dicséret utolsó vsz-ig --</option>";
+    var t_dicsi_majdnem_vegig = "<option value=''>-- dicséret utolsó előtti vsz-ig --</option>";
     
     for(var i = 0, n = dalszovegek.length; i < n; i++)
     {
