@@ -11,6 +11,8 @@
   <script type="text/javascript" src="js/ppt_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_muveletek.js"></script>
+  <script type="text/javascript" src="js/dalszovegek_dicseretek.js"></script>
+  <script type="text/javascript" src="js/dalszovegek_ifienekek.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
   <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
   <script type="text/javascript" src="js/diasor_focim.js"></script>
@@ -85,9 +87,11 @@ var t = "<table class='diakeszites_tabla'>\n"
       + Diasor_Focim.diakeszites_gomb("focim")
       + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
       + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
+      + Diasor_Cim.diakeszites_gomb("orgonajatek", "ORGONAJÁTÉK")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "1. ifiének")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
       + Diasor_Sajat_Cim.diakeszites_gomb("igehely")
+      + Diasor_Cim.diakeszites_gomb("ima", "IMÁDSÁG")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
       + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
       + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
@@ -111,6 +115,7 @@ var t = "<table class='diakeszites_tabla'>\n"
       + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
       + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
+      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_3", "dicseret", "3. dicséret")
      // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
       + "</table>";
 
