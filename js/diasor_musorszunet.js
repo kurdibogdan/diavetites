@@ -11,7 +11,7 @@ var Diasor_Musorszunet =
                 [
                     {   // 1 objektum
                         "tipus"     : "kep",
-                        "kep"       : "kepek/kezdolap.png",
+                        "kep"       : "kepek/musorszunet.png",
                         "poz_x"     : 0,            // %
                         "poz_y"     : 0,            // %
                         "szelesseg" : 100,          // %

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/checkbox.css">
   <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
   <script type="text/javascript" src="js/jszip.min.js"></script>
+  <script type="text/javascript" src="js/szovegmeretek_meghatarozasa.js"></script>
   <script type="text/javascript" src="js/pptxgen.min.js"></script>
   <script type="text/javascript" src="js/ppt_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_keszitese.js"></script>
@@ -71,6 +72,11 @@
 // PPT generátor: https://products.aspose.app/pdf/hu/conversion/ppt-to-txt
 var diasor = [];
 var kurzor = 0;
+var STILUS =
+{
+    "betuszin"   : "#ffffff",
+    "hatterszin" : "#008000",
+};
 
 function opcio_aktivalasa(checkbox_id)
 {

@@ -40,11 +40,13 @@ var Diasor_Focim =
                         [
                             {
                                 "szoveg"    : "ISTENTISZTELET",
-                                "betumeret" : 44        // pt
+                                "betumeret" : 44,       // pt
+                                "betutipus" : "Gill Sans MT",
                             },
                             {
                                 "szoveg"    : datum,
-                                "betumeret" : 32        // pt
+                                "betumeret" : 32,       // pt
+                                "betutipus" : "Gill Sans MT",
                             }
                         ]
                     }

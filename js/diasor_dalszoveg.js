@@ -5,6 +5,7 @@ var Diasor_Dalszoveg =
         var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).val();
         var dalszoveg         = dalszovegek[kivalasztott_enek].szoveg;
         var diak              = [];
+        var betumeret         = this.maximumalis_betumeret_meghatarozasa(dalszoveg);
         
         diak.push(
         { 
@@ -28,7 +29,7 @@ var Diasor_Dalszoveg =
                 [
                     {
                         "szoveg"    : dalszoveg[i].join("<br>"),
-                        "betumeret" : 32,   // pt
+                        "betumeret" : betumeret,    // pt
                         "betutipus" : "Sylfaen"
                     },
                 ]
@@ -51,6 +52,50 @@ var Diasor_Dalszoveg =
         });
         
         return(diak);
+    },
+    
+    betumeret_meghatarozasa : function(sorok_szama)
+    {
+        // mért értékek: (9, 30), (8, 34), (7, 39), (6, 44pt)  ==> (-4.7 * sorok_szama + 72)
+        var betumeret = (sorok_szama < 6 
+                         ? 44
+                         : Math.max(1, -4.4 * sorok_szama + 64));  // pt   +72
+        console.log(sorok_szama + " -> " + betumeret);
+        return(betumeret);
+    },
+    
+    maximumalis_betumeret_meghatarozasa : function(dalszoveg)
+    {
+        var maximum_betumeret = 44;
+        
+        for(var i=0, n=dalszoveg.length; i<n; i++)
+        {
+            var versszak = dalszoveg[i];
+            for(var j=0, o=versszak.length; j<o; j++)
+            {
+                var sor = versszak[j];
+                var szelesseg = getTextWidth(sor);
+                var betumeret = Math.max(1, -0.1699 * szelesseg + 84.241);
+                // console.log(szelesseg + " -> " + sor);
+                // Mért értékek:
+                //   192,8515625    53
+                //   178,625        56
+                //   207,484375     47
+                //   314,75         32
+                //   304,1015625    33
+                //   223,6640625    45
+                //   307,46875      32
+                //   242,015625     41
+                max_betumeret = Math.min(betumeret, maximum_betumeret);
+            }
+        }
+        
+        for(var i=0, n=dalszoveg.length; i<n; i++)
+        {
+            var betumeret     = this.betumeret_meghatarozasa(dalszoveg[i].length);
+            maximum_betumeret = Math.min(betumeret, maximum_betumeret);
+        }
+        return(maximum_betumeret);
     },
     
     jelolo_valtasa : function(gomb_id)

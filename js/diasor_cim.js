@@ -21,7 +21,8 @@ var Diasor_Cim =
                         [
                             {
                                 "szoveg"    : cim,
-                                "betumeret" : 32        // pt
+                                "betumeret" : 44,       // pt
+                                "betutipus" : "Gill Sans MT",
                             }
                         ]
                     }

@@ -52,6 +52,9 @@ function ppt_keszitese()
     for(var i = 0, n = diasor.length; i < n; i++)
     {
         var dia = pptx.addSlide();
+        dia.color      = STILUS.betuszin;
+        dia.background = {color: STILUS.hatterszin};
+        
         var objektumok = diasor[i].objektumok;
         for(var j = 0, o = objektumok.length; j < o; j++)
         {
@@ -65,23 +68,36 @@ function ppt_keszitese()
                         var sz = obj.szovegek[k];
                         szovegek.push(
                         {
-                            text      : sz.szoveg,
-                            fontSize  : sz.betumeret,
-                            breakLine : true,
-                            fontFace  : sz.betutipus
+                            text    : sz.szoveg.replace(/<br>/g, "\n"),
+                            options : 
+                            {
+                                fontSize  : sz.betumeret,
+                                fontFace  : sz.betutipus,
+                                breakLine : true,
+                            }
                         });
                     }
                     
-                    dia.addText(szovegek,
+                    dia.addText(szovegek,   // https://gitbrent.github.io/PptxGenJS/docs/api-text
                     {
-                        x: obj.poz_x,
-                        y: obj.poz_y,
-                        w: obj.szelesseg + "%",
-                        h: obj.magassag + "%",
-                        align     : (obj.igazitas_x == "balra" ? "left" 
-                                  :  obj.igazitas_x == "jobbra" ? "right"
-                                  :  obj.igazitas_x == "kozepre" ? "center"
-                                  :  "initial"),        // ezt a szövegnek kellene tudni beállítani: https://gitbrent.github.io/PptxGenJS/docs/api-text
+                        x      : obj.poz_x     + "%",
+                        y      : obj.poz_y     + "%",
+                        w      : obj.szelesseg + "%",
+                        h      : obj.magassag  + "%",
+                        align  : (obj.igazitas_x == "balra"   ? "left" 
+                               :  obj.igazitas_x == "jobbra"  ? "right"
+                               :  obj.igazitas_x == "kozepre" ? "center"
+                               :  "initial"),
+                        valign : (obj.igazitas_y == "fent"    ? "top"
+                               :  obj.igazitas_y == "kozepre" ? "middle"
+                               :  obj.igazitas_y == "lent"    ? "bottom"
+                               :  "initial"),
+                        shadow :
+                        {
+                            'type'    : "outer",
+                            'angle'   : 45,
+                            'blur'    : 1,
+                        },
                     });
                     break;
                 default:
@@ -89,7 +105,6 @@ function ppt_keszitese()
                     break;
             }
         }
-        console.log(dia);
     }
     
     
