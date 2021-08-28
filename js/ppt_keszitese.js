@@ -100,6 +100,32 @@ function ppt_keszitese()
                         },
                     });
                     break;
+                case "kep":
+                    if (location.hostname != "")
+                    {
+                        dia.addImage(
+                        {
+                            path : obj.kep,
+                            x    : obj.poz_x     + "%",
+                            y    : obj.poz_y     + "%",
+                            w    : obj.szelesseg + "%",
+                            h    : obj.magassag  + "%",
+                        });
+                    }
+                    else
+                    {
+                        dia.addText("Itt jelenne meg a '" + obj.kep + "' képfájl, de az oldal nem fér hozzá a gép fájlrendszeréhez. Megoldás: szerverről futtatni (pl. http://mix.metodista.hu)!",
+                        {
+                            x        : obj.poz_x     + "%", 
+                            y        : obj.poz_y     + "%",
+                            w        : obj.szelesseg + "%",
+                            h        : obj.magassag  + "%",
+                            fontFace : "Arial",
+                            fontSize : 24,
+                            color    : "#00CC00",
+                        });
+                    }
+                    break;
                 default:
                     console.log("Ilyen típus még nem volt: " + obj.tipus);
                     break;

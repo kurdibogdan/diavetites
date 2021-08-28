@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
  <head>
   <meta charset="utf-8">
@@ -40,12 +40,12 @@
      <td>megkezdett úrvacsorai ének<br>
          utolsó versszaka</td>
      <td><button onclick="diasor_bovitese(Diasor_Urvacsora.???('urvacsora'));">&rarr;</button></td>
-    </tr> -->
+    </tr>
     
    <div style="text-align:right; margin:29px;">
     <button>Kiválasztottak hozzáadása &rarr;</button>
    </div>
-   
+    -->
   </td>
   <td>
   
@@ -108,21 +108,21 @@ var t = "<table class='diakeszites_tabla'>\n"
       + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
       + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
       + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
-      + "</table>\n"
-      + "<table class='diakeszites_tabla'>\n"
-      + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
-      + "</table>"
-      + "<table class='diakeszites_tabla'>\n"
-      + " <tr>\n"
-      + "  <th></th>\n"
-      + "  <th width='230'>befejező részek</th>\n"
-      + "  <th>új slide</th>\n"
-      + " </tr>\n"
+   // + "</table>\n"
+   // + "<table class='diakeszites_tabla'>\n"
+   // + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
+   // + "</table>"
+   // + "<table class='diakeszites_tabla'>\n"
+   // + " <tr>\n"
+   // + "  <th></th>\n"
+   // + "  <th width='230'>befejezo részek</th>\n"
+   // + "  <th>új slide</th>\n"
+   // + " </tr>\n"
       + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
       + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
       + Diasor_Dalszoveg.diakeszites_gomb("dicseret_3", "dicseret", "3. dicséret")
-     // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
+   // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
       + "</table>";
 
 $("#kivetites_osszeallitasa").html(t);

@@ -22,7 +22,9 @@ var Diasor_Sajat_Cim =
                         [
                             {
                                 "szoveg"    : cim,
-                                "betumeret" : 32        // pt
+                                "betumeret" : 40,       // pt
+                                "betutipus" : "Gill Sans MT",
+                                "felkover"  : true
                             }
                         ]
                     }
