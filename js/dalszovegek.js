@@ -14,20 +14,19 @@ function dallista_betoltese()
         for(var i = 0, n = dalszovegek.length; i < n; i++)
         {
             var dal = dalszovegek[i];
-            var div = "";
             switch (dal.tipus)
             {
                 case "ifiének":
-                    t_ifi += "<option value='" + i + "'>" + dal.cim + "</option>\n";
+                    t_ifi += "<option value='" + dal.id + "'>" + dal.cim + "</option>\n";
                     break;
                 case "dicséret":
-                    t_dicsi += "<option value='" + i + "'>" + dal.sorszam + ". " + dal.cim + "</option>\n";
+                    t_dicsi += "<option value='" + dal.id + "'>" + dal.sorszam + ". " + dal.cim + "</option>\n";
                     break;
                 case "dicseret_1_vsz":
-                    t_dicsi_1_vsz += "<option value='" + i + "'>" + dal.cim + "</option>\n";
+                    t_dicsi_1_vsz += "<option value='" + dal.id + "'>" + dal.cim + "</option>\n";
                     break;
                 case "dicseret_majdnem_vegig":
-                    t_dicsi_majdnem_vegig += "<option value='" + i + "'>" + dal.cim + "</option>\n";
+                    t_dicsi_majdnem_vegig += "<option value='" + dal.id + "'>" + dal.cim + "</option>\n";
                     break;
                 default:
                     console.log("ilyen típusú ének még nem volt: " + dal.tipus);
@@ -42,4 +41,11 @@ function dallista_betoltese()
     });
 }
     
-
+function dalszoveg_betoltese(dalszoveg_id, callback)
+{
+    $.post("php/dalszoveg_betoltese.php", {dalszoveg_id: dalszoveg_id}, function(data)
+    {
+        data = jQuery.parseJSON(data);
+        if (typeof callback == "function") callback(data);
+    });
+}
