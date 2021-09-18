@@ -53,10 +53,12 @@ select
 .dia_obj
 {
     position    : absolute;
+/*
     width       : 95px;
     height      : 63px;
     margin-top  : 14.5px;
     margin-left : 2.5px;
+*/
 }
 .dia_kijelolve,
 .diameret_kijelolve

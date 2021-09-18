@@ -13,7 +13,7 @@ function diameretek_beallitasa(dia_merete)
     dia_obj_szelesseg   = dia_szelesseg * 0.9485            // egyenes illesztése ezekre a pontokra: (0, 0), (100, 96), (500, 474)
     dia_obj_magassag    = dia_obj_szelesseg * 63.2/95;
     dia_obj_margo_fent  = dia_obj_magassag * 14.5/63;
-    dia_obj_margo_balra = dia_obj_szelesseg * 2.6/95;
+    dia_obj_margo_balra = dia_obj_szelesseg * 2.5/95;
     dia_skalazasa       = 1000 / dia_szelesseg;
     
     // console.log("Dia mérete              = " + dia_merete);

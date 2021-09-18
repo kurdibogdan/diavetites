@@ -13,6 +13,7 @@
   <script type="text/javascript" src="js/dia_keszitese.js"></script>
   <script type="text/javascript" src="js/dia_muveletek.js"></script>
   <script type="text/javascript" src="js/dalszovegek.js"></script>
+  <script type="text/javascript" src="js/dal_keresese.js"></script>
   <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
   <script type="text/javascript" src="js/diasor_focim.js"></script>
   <script type="text/javascript" src="js/diasor_dalszoveg.js"></script>
@@ -22,6 +23,30 @@
   <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
   <script type="text/javascript" src="js/diasor_sajat_cim.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
+  <style>
+  .dalszoveg_talalatok
+  {
+     display          : none;
+     border           : 1px solid gray;
+     border-top       : 0;
+     position         : absolute;
+     background-color : #eee;
+     width            : 226px;
+  }
+  .dal_talalat
+  {
+     display          : block;
+     overflow         : hidden;
+     text-overflow    : ellipsis;
+     white-space      : nowrap;
+     padding          : 2px;
+  }
+  .dal_talalat:hover
+  {
+    cursor           : default;
+    background-color : #ccc;
+  }
+  </style>
  </head>
  <body>
 
@@ -89,23 +114,23 @@ var t = "<table class='diakeszites_tabla'>\n"
       + " </tr>\n"
       + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
       + Diasor_Focim.diakeszites_gomb("focim")
-      + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
-      + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
-      + Diasor_Cim.diakeszites_gomb("orgonajatek", "ORGONAJÁTÉK")
-      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "1. ifiének")
-      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
+   // + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
+   // + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
+   // + Diasor_Cim.diakeszites_gomb("orgonajatek", "ORGONAJÁTÉK")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "dalszöveg")
+   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
       + Diasor_Sajat_Cim.diakeszites_gomb("igehely")
-      + Diasor_Cim.diakeszites_gomb("ima", "IMÁDSÁG")
-      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
-      + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
-      + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
-      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
+   // + Diasor_Cim.diakeszites_gomb("ima", "IMÁDSÁG")
+   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
+   // + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
+   // + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
+   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
-      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
+   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
       + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
-      + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
-      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
+   // + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
+   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
    // + "</table>\n"
    // + "<table class='diakeszites_tabla'>\n"
    // + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
@@ -116,10 +141,10 @@ var t = "<table class='diakeszites_tabla'>\n"
    // + "  <th width='230'>befejezo részek</th>\n"
    // + "  <th>új slide</th>\n"
    // + " </tr>\n"
-      + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
+   // + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
-      + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
-      + Diasor_Dalszoveg.diakeszites_gomb("dicseret_3", "dicseret", "3. dicséret")
+   // + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
+   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_3", "dicseret", "3. dicséret")
    // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
       + "</table>";
 

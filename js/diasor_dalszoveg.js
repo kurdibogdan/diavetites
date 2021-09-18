@@ -2,7 +2,7 @@ var Diasor_Dalszoveg =
 {
     uj_diasor : function(gomb_id, callback)
     {
-        var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).val();
+        var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");   // data("dal_id") nem jól működik (második kiválasztásnál nem vált át)
         var that = this;
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
@@ -128,14 +128,23 @@ var Diasor_Dalszoveg =
         var t = "<tr>\n"
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></td>\n"
               + " <td>" + cim + "<br>\n"
-              + "  <select id='enek_valasztasa_" + gomb_id + "' "
-              + "          class='" + tipus + "_valasztasa' "
-              + "          onchange=\"Diasor_Dalszoveg.jelolo_valtasa('" + gomb_id + "');\">"
-              + "  </select>\n"
+              + "  <input id='enek_valasztasa_" + gomb_id + "'"
+              + "         type='text'"
+              + "         value=''"
+              + "         data-dal_id=''"
+              + "         onkeyup=\"dal_keresese(this);\""
+              + "         autocomplete='off'"
+              + "         placeholder='-- dal keresése --'"
+              + "         data-list='dalszoveg_talalatok_" + gomb_id + "'>"
+              + "  <div class='dalszoveg_talalatok' id='dalszoveg_talalatok_" + gomb_id + "'></div>"
+           // + "  <select id='enek_valasztasa_" + gomb_id + "' "
+           // + "          class='" + tipus + "_valasztasa' "
+           // + "          onchange=\"Diasor_Dalszoveg.jelolo_valtasa('" + gomb_id + "');\">"
+           // + "  </select>\n"
               + " </td>\n"
               + " <td><button id='diasor_bovitese_" + gomb_id + "' "
               + "             onclick=\"Diasor_Dalszoveg.uj_diasor('" + gomb_id + "', diasor_bovitese);\" "
-              + "             disabled='disabled'>&rarr;</button></td>\n"
+              + "             >&rarr;</button></td>\n"      // disabled='disabled'
               + "</tr>\n";
         return(t);
     },

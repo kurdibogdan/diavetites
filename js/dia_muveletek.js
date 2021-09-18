@@ -1,10 +1,10 @@
 $(document).mouseup(function(e)
 {
-	var container = $(".dia, .vezerlo_gomb");
-	if (!container.is(e.target) && container.has(e.target).length === 0)
-	{
-		kijelolesek_megszuntetese();
-	}
+	// var container = $(".dia, .vezerlo_gomb");
+	// if (!container.is(e.target) && container.has(e.target).length === 0)
+	// {
+	//     kijelolesek_megszuntetese();
+	// }
 });
 
 function dia_kijelolese(e, dia_id)
