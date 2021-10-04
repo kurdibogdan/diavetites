@@ -2,12 +2,15 @@ var Diasor_Dalszoveg =
 {
     uj_diasor : function(gomb_id, callback)
     {
+        oldal_megjelenitese("diak_rendezese_oldal");
+        
         var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");   // data("dal_id") nem jól működik (második kiválasztásnál nem vált át)
         var that = this;
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
+            data = data.replace(/\r/g, "");
             var dalszoveg = [];
-            var versszakok = data.split("\r\n\r\n");
+            var versszakok = data.split("\n\n");    // data.split("\r\n\r\n");
             for(var i=0, n=versszakok.length; i<n; i++)
             {
                 var versszak = versszakok[i].split("\r\n");
@@ -127,25 +130,77 @@ var Diasor_Dalszoveg =
     {                                                // cim   = "ifiének", "dicséret"
         var t = "<tr>\n"
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox'><span class='slider round'></span></label></td>\n"
-              + " <td>" + cim + "<br>\n"
+              + " <td>" + cim + " <br>"
               + "  <input id='enek_valasztasa_" + gomb_id + "'"
               + "         type='text'"
               + "         value=''"
               + "         data-dal_id=''"
+              + "         data-gomb_id='" + gomb_id + "'"
+              + "         onkeydown=\"dalszoveg_gombok_tiltasa('" + gomb_id + "');\""
               + "         onkeyup=\"dal_keresese(this);\""
               + "         autocomplete='off'"
               + "         placeholder='-- dal keresése --'"
               + "         data-list='dalszoveg_talalatok_" + gomb_id + "'>"
               + "  <div class='dalszoveg_talalatok' id='dalszoveg_talalatok_" + gomb_id + "'></div>"
-           // + "  <select id='enek_valasztasa_" + gomb_id + "' "
-           // + "          class='" + tipus + "_valasztasa' "
-           // + "          onchange=\"Diasor_Dalszoveg.jelolo_valtasa('" + gomb_id + "');\">"
-           // + "  </select>\n"
               + " </td>\n"
-              + " <td><button id='diasor_bovitese_" + gomb_id + "' "
+              + " <td>"
+              + "  <button id='diasor_bovitese_" + gomb_id + "' "
               + "             onclick=\"Diasor_Dalszoveg.uj_diasor('" + gomb_id + "', diasor_bovitese);\" "
-              + "             >&rarr;</button></td>\n"      // disabled='disabled'
+              + "             disabled='disabled'>&rarr;</button>"
+              + "  <br>"
+              +  " <button class='dalszoveg_szerkesztese_gomb' "
+              +  "         onclick=\"dalszoveg_szerkesztese('" + gomb_id + "');\""
+              +  "         disabled='disabled'></button>"
+              + " </td>\n"
               + "</tr>\n";
         return(t);
     },
+}
+
+function dalszoveg_gombok_tiltasa(gomb_id)
+{
+    $("#diasor_bovitese_" + gomb_id).prop("disabled", "disabled");
+    $(".dalszoveg_szerkesztese_gomb").prop("disabled", "disabled");
+}
+
+function dalszoveg_gombok_engedelyezese(gomb_id)
+{
+    $("#diasor_bovitese_" + gomb_id).prop("disabled", "");
+    $(".dalszoveg_szerkesztese_gomb").prop("disabled", "");
+}
+
+function dalszoveg_szerkesztese(gomb_id)
+{
+    var dalszoveg_id = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");
+    dalszoveg_betoltese(dalszoveg_id, function(data)
+    {
+        var t = "<textarea id='dalszoveg_szerkesztese_" + dalszoveg_id + "' autocomplete='off'>"
+              + data
+              + "</textarea>"
+              + "<br>"
+              + "<button class='szurke_gomb' onclick='dalszoveg_szerkesztes_bezarasa();'>Mégse</button>"
+              + "<button class='zold_gomb' onclick=\"dalszoveg_mentese('" + dalszoveg_id + "');\">Mentés</button>";
+        $("#dalszoveg_szerkesztese").html(t);
+        oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
+    });
+}
+
+function dalszoveg_szerkesztes_bezarasa()
+{
+    $("#dalszoveg_szerkesztese").val("");
+    oldal_megjelenitese("diak_rendezese_oldal");
+}
+
+function dalszoveg_mentese(dalszoveg_id)
+{
+    var szoveg = $("#dalszoveg_szerkesztese_" + dalszoveg_id).val();
+    $.post("php/dalszoveg_mentese.php",
+    {
+        dalszoveg_id : dalszoveg_id,
+        szoveg       : szoveg
+    }, function(data)
+    {
+        if (data != "") console.log(data);
+        dalszoveg_szerkesztes_bezarasa();
+    });
 }

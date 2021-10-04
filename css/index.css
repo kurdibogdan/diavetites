@@ -7,7 +7,9 @@ button
     line-height      : 30px;
     color            : white;
     background-color : #04AA6D;
-    box-shadow       : 0 0 1px #2196F3;
+ /* box-shadow       : 0 0 1px #2196F3; */
+    padding          : 5px 10px;
+    margin           : 5px;
 }
 button:disabled
 {

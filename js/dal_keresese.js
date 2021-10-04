@@ -1,3 +1,4 @@
+// diasor_dalszoveg.js kiegészítése
 $(document).mouseup(function(e)
 {
     var container = $(".dalszoveg_talalatok");
@@ -40,8 +41,9 @@ function dalszoveg_keresese(szoveg, callback)
 
 function dal_keresese(beviteli_mezo)
 {
-    var cim   = beviteli_mezo.value.toLowerCase();
-    var lista = document.getElementById(beviteli_mezo.getAttribute("data-list"));
+    var cim     = beviteli_mezo.value.toLowerCase();
+    var lista   = document.getElementById(beviteli_mezo.getAttribute("data-list"));
+    var gomb_id = beviteli_mezo.getAttribute("data-gomb_id");
     $(lista).show();
     
     var MAX_TALALATOK      = 10;
@@ -77,7 +79,7 @@ function dal_keresese(beviteli_mezo)
     {
         t += "<div class='dal_talalat'"
            + "     data-id='" + pontos_talalatok[i].id + "'"
-           + "     onclick=\"dal_kivalasztasa('" + beviteli_mezo.id + "', " + pontos_talalatok[i].id + ", '" + pontos_talalatok[i].cim + "')\""
+           + "     onclick=\"dal_kivalasztasa('" + gomb_id + "', '" + beviteli_mezo.id + "', " + pontos_talalatok[i].id + ", '" + pontos_talalatok[i].cim + "')\""
            + ">" + (pontos_talalatok[i].sorszam ? pontos_talalatok[i].sorszam + ". " : "")
            + pontos_talalatok[i].cim 
            + "</div>";
@@ -109,7 +111,7 @@ function dal_keresese(beviteli_mezo)
                 {
                     t += "<div class='dal_talalat'"
                        + "     data-id='" + szoveg_talalatok[i].id + "'"
-                       + "     onclick=\"dal_kivalasztasa('" + beviteli_mezo.id + "', " + szoveg_talalatok[i].id + ", '" + szoveg_talalatok[i].cim + "')\""
+                       + "     onclick=\"dal_kivalasztasa('" + gomb_id + "', '" + beviteli_mezo.id + "', " + szoveg_talalatok[i].id + ", '" + szoveg_talalatok[i].cim + "')\""
                        + ">" + (szoveg_talalatok[i].sorszam ? szoveg_talalatok[i].sorszam + ". " : "")
                        + szoveg_talalatok[i].cim 
                        + "</div>";
@@ -121,11 +123,12 @@ function dal_keresese(beviteli_mezo)
     }
 }
 
-function dal_kivalasztasa(beviteli_mezo_id, dal_id, dal_cim)
+function dal_kivalasztasa(gomb_id, beviteli_mezo_id, dal_id, dal_cim)
 {
     // console.log(beviteli_mezo_id + " -> " + dal_id + "(" + dal_cim + ")");
     var beviteli_mezo = document.getElementById(beviteli_mezo_id);
     beviteli_mezo.setAttribute("data-dal_id", dal_id);
     beviteli_mezo.value = dal_cim;
     $(".dalszoveg_talalatok").hide();
+    dalszoveg_gombok_engedelyezese(gomb_id);
 }

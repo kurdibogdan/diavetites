@@ -46,6 +46,41 @@
     cursor           : default;
     background-color : #ccc;
   }
+  .dalszoveg_szerkesztese_gomb
+  {
+    background-image    : url('kepek/ikon_beallitasok.png');
+    background-repeat   : no-repeat;
+    background-position : center center;
+    background-size     : contain;
+  }
+  .dalszoveg_szerkesztese_gomb:disabled
+  {
+      /* display:none; */
+  }
+  #dalszoveg_szerkesztese textarea
+  {
+    width            : 500px;
+    height           : 500px;
+  }
+  .oldal
+  {
+    display          : none;
+  }
+  .zold_gomb
+  {
+    background-color : #04AA6D;  /* #04AA6D */
+    color            : white;
+  }
+  .piros_gomb
+  {
+    background-color : rgb(236, 76, 76);
+    color            : white;
+  }
+  .szurke_gomb
+  {
+    background-color : #ccc;
+    color            : black;
+  }
   </style>
  </head>
  <body>
@@ -70,8 +105,7 @@
    </div>
     -->
   </td>
-  <td>
-  
+  <td id="diak_rendezese_oldal" class="oldal">
    <h1>Diák rendezése</h1>
    <table class="diakeszites_tabla">
     <tr valign="top">
@@ -88,6 +122,19 @@
    </table>
    <div id="diasor"></div>
   </td>
+  
+  <td id="dalszoveg_szerkesztese_oldal" class="oldal">
+   <h1>Dalszöveg szerkesztése</h1>
+   <table>
+    <tr>
+     <td>
+      <div id="dalszoveg_szerkesztese"></div>
+     </td>
+     <td id="dalok_listaja"></td>
+    </tr>
+   </table>
+  </td>
+  
  </tr>
 </table>
 
@@ -100,6 +147,15 @@ var STILUS =
     "betuszin"   : "#ffffff",
     "hatterszin" : "#008000",
 };
+
+oldal_megjelenitese("diak_rendezese_oldal");
+// oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
+
+function oldal_megjelenitese(oldal_id)
+{
+    $(".oldal").hide();
+    $("#"+oldal_id).show();
+}
 
 function opcio_aktivalasa(checkbox_id)
 {
