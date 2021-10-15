@@ -149,11 +149,35 @@ var Diasor_Dalszoveg =
               + "             disabled='disabled'>&rarr;</button>"
               + "  <br>"
               +  " <button class='dalszoveg_szerkesztese_gomb' "
-              +  "         onclick=\"dalszoveg_szerkesztese('" + gomb_id + "');\""
+              +  "         onclick=\"Diasor_Dalszoveg.dalszoveg_szerkesztese('" + gomb_id + "');\""
               +  "         disabled='disabled'></button>"
               + " </td>\n"
               + "</tr>\n";
         return(t);
+    },
+    
+    
+    dalszoveg_szerkesztese : function(gomb_id)
+    {
+        if (megjelenitett_oldal == "dalszoveg_szerkesztese_oldal")
+        {
+            dalszoveg_szerkesztes_bezarasa();
+        }
+        else
+        {
+            var dalszoveg_id = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");
+            dalszoveg_betoltese(dalszoveg_id, function(data)
+            {
+                var t = "<textarea id='dalszoveg_szerkesztese_" + dalszoveg_id + "' autocomplete='off'>"
+                      + data
+                      + "</textarea>"
+                      + "<br>"
+                      + "<button class='szurke_gomb' onclick='dalszoveg_szerkesztes_bezarasa();'>Mégse</button>"
+                      + "<button class='zold_gomb' onclick=\"dalszoveg_mentese('" + dalszoveg_id + "');\">Mentés</button>";
+                $("#dalszoveg_szerkesztese").html(t);
+                oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
+            });
+        }
     },
 }
 
@@ -167,22 +191,6 @@ function dalszoveg_gombok_engedelyezese(gomb_id)
 {
     $("#diasor_bovitese_" + gomb_id).prop("disabled", "");
     $(".dalszoveg_szerkesztese_gomb").prop("disabled", "");
-}
-
-function dalszoveg_szerkesztese(gomb_id)
-{
-    var dalszoveg_id = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");
-    dalszoveg_betoltese(dalszoveg_id, function(data)
-    {
-        var t = "<textarea id='dalszoveg_szerkesztese_" + dalszoveg_id + "' autocomplete='off'>"
-              + data
-              + "</textarea>"
-              + "<br>"
-              + "<button class='szurke_gomb' onclick='dalszoveg_szerkesztes_bezarasa();'>Mégse</button>"
-              + "<button class='zold_gomb' onclick=\"dalszoveg_mentese('" + dalszoveg_id + "');\">Mentés</button>";
-        $("#dalszoveg_szerkesztese").html(t);
-        oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
-    });
 }
 
 function dalszoveg_szerkesztes_bezarasa()

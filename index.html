@@ -151,10 +151,13 @@ var STILUS =
 oldal_megjelenitese("diak_rendezese_oldal");
 // oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
 
+var megjelenitett_oldal = "";
+
 function oldal_megjelenitese(oldal_id)
 {
     $(".oldal").hide();
     $("#"+oldal_id).show();
+    megjelenitett_oldal = oldal_id;
 }
 
 function opcio_aktivalasa(checkbox_id)
