@@ -1,0 +1,89 @@
+<input type="date" onchange="liturgikus_szin(this.value);">
+<div id="szin"></div>
+<script type="text/javascript">
+var SZIN_LILA   = [167,  84, 172];
+var SZIN_FEHER  = [255, 255, 255];
+var SZIN_ZOLD   = [ 59, 141,  79];
+var SZIN_PIROS  = [219,  10,   5];
+var SZIN_FEKETE = [  0,   0,   0];
+
+function datum_eve(datum)
+{
+    return(String("0000" + datum.getFullYear()).slice(-4));
+}
+
+function advent(datum)
+{
+    var d = new Date(datum_eve(datum) + "-12-24");
+    d.setDate(d.getDate() - d.getDay() - 3 * 7);
+    return(d);
+}
+
+function advent_van(datum)  // 4 vasárnapon keresztül a karácsony előtti vasárnapig
+{
+    var advent_elso_vasarnapja   = advent(datum);
+    var advent_utolso_vasarnapja = new Date(advent_elso_vasarnapja);
+    advent_utolso_vasarnapja.setDate(advent_utolso_vasarnapja.getDate() + 3*7);
+    return (datum >= advent_elso_vasarnapja && datum <= advent_utolso_vasarnapja);
+}
+
+function karacsonyi_unnepkor_van(datum) // december 25 - január 6
+{
+    var szenteste                     = new Date(datum_eve(datum) + "-12-25");
+    var karacsony_utani_elso_vasarnap = new Date(szenteste);
+        karacsony_utani_elso_vasarnap.setDate(karacsony_utani_elso_vasarnap.getDate() - karacsony_utani_elso_vasarnap.getDay() + 7);
+    var oev_este                      = new Date(datum_eve(datum) + "-12-31");
+    var ujev_elso_napja               = new Date(datum_eve(datum) + "-01-01");
+    var vizkereszt                    = new Date(datum_eve(datum) + "-01-06");
+    return(datum == szenteste
+        || datum == karacsony_utani_elso_vasarnap
+        || datum == oev_este
+        || datum == ujev_elso_napja
+        || datum == vizkereszt);
+}
+
+function vizkereszt_utani_evkozi_idoszak_van(datum) // január 6 utáni első vasárnaptól
+{
+    
+}
+
+function husvet(datum)
+{
+    // húsvét első vasárnapja: március 22 - április 25 között
+    //        a tavaszi nap-éj egyenlőség utáni első holdtöltét követő vasárnap.
+    var Y = datum.getFullYear();
+    var C = Math.floor(Y/100);
+    var N = Y - 19*Math.floor(Y/19);
+    var K = Math.floor((C - 17)/25);
+    var I = C - Math.floor(C/4) - Math.floor((C - K)/3) + 19*N + 15;
+        I = I - 30*Math.floor((I/30));
+        I = I - Math.floor(I/28)*(1 - Math.floor(I/28)*Math.floor(29/(I + 1))*Math.floor((21 - N)/11));
+    var J = Y + Math.floor(Y/4) + I + 2 - C + Math.floor(C/4);
+        J = J - 7*Math.floor(J/7);
+    var L = I - J;
+    var M = 3 + Math.floor((L + 40)/44);
+    var D = L + 28 - 31*Math.floor(M/4);
+
+    return(new Date(Y, M, D));
+}
+
+function husvet_van(datum)
+{
+    var husvet_elso_vasarnapja = husvet(datum);
+}
+
+function liturgikus_szin(datum)
+{
+    datum = new Date(datum);
+    var ev         = datum.getFullYear();
+    var honap      = datum.getMonth() + 1;
+    var nap        = datum.getDate();
+    var het_napja  = datum.getDay();
+    var szin_doboz = document.getElementById("szin");
+    szin_doboz.innerHTML = datum;
+    
+    // karácsony: december 25.
+    // vízkereszt: január 6.
+    
+}
+</script>

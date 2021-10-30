@@ -1,16 +1,26 @@
 <?php
     include("kapcsolat.php");
     
-    $dalszoveg_id = post("dalszoveg_id");
-    if ($dalszoveg_id != "")
+    $id = post("dalszoveg_id");
+    $dalszoveg = array
+    (
+        "id"      => 0,
+        "cim"     => "",
+        "tipus"   => "",
+        "sorszam" => "",
+        "szoveg"  => ""
+    );
+    
+    if ($id != "")
     {
-        $q = $kapcsolat->prepare("SELECT szoveg FROM dalszovegek WHERE id = :dalszoveg_id;");
-        $q->bindValue(":dalszoveg_id", $dalszoveg_id);
+        $q = $kapcsolat->prepare("SELECT * FROM dalszovegek WHERE id = :id;");
+        $q->bindValue(":id", $id);
         $q->execute();
         
-        $sor = $q->fetch(PDO::FETCH_ASSOC);
-        echo json_encode($sor['szoveg']);
+        $dalszoveg = $q->fetch(PDO::FETCH_ASSOC);
     }
+    
+    echo json_encode($dalszoveg);
     
     $kapcsolat = null;
 ?>

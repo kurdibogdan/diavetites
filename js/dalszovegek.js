@@ -1,7 +1,7 @@
 var dalszovegek = [];
 
 function dallista_betoltese()
-{        
+{
     $.post("php/dallista_betoltese.php", function(data)
     {
         dalszovegek = jQuery.parseJSON(data);
@@ -16,10 +16,10 @@ function dallista_betoltese()
             var dal = dalszovegek[i];
             switch (dal.tipus)
             {
-                case "ifiének":
+                case "ifienek":
                     t_ifi += "<option value='" + dal.id + "'>" + dal.cim + "</option>\n";
                     break;
-                case "dicséret":
+                case "dicseret":
                     t_dicsi += "<option value='" + dal.id + "'>" + dal.sorszam + ". " + dal.cim + "</option>\n";
                     break;
                 case "dicseret_1_vsz":

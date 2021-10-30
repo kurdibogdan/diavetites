@@ -69,7 +69,7 @@ function ppt_keszitese()
                         szovegek.push(
                         {
                             text    : sz.szoveg.replace(/<br>/g, "\n"),
-                            options : 
+                            options :
                             {
                                 fontSize  : sz.betumeret,
                                 fontFace  : sz.betutipus,
@@ -80,24 +80,30 @@ function ppt_keszitese()
                     
                     dia.addText(szovegek,   // https://gitbrent.github.io/PptxGenJS/docs/api-text
                     {
-                        x      : obj.poz_x     + "%",
-                        y      : obj.poz_y     + "%",
-                        w      : obj.szelesseg + "%",
-                        h      : obj.magassag  + "%",
-                        align  : (obj.igazitas_x == "balra"   ? "left" 
-                               :  obj.igazitas_x == "jobbra"  ? "right"
-                               :  obj.igazitas_x == "kozepre" ? "center"
-                               :  "initial"),
-                        valign : (obj.igazitas_y == "fent"    ? "top"
-                               :  obj.igazitas_y == "kozepre" ? "middle"
-                               :  obj.igazitas_y == "lent"    ? "bottom"
-                               :  "initial"),
-                        shadow :
+                        x       : obj.poz_x     + "%",
+                        y       : obj.poz_y     + "%",
+                        w       : obj.szelesseg + "%",
+                        h       : obj.magassag  + "%",
+                        align   : (obj.igazitas_x == "balra"   ? "left" 
+                                :  obj.igazitas_x == "jobbra"  ? "right"
+                                :  obj.igazitas_x == "kozepre" ? "center"
+                                :  "initial"),
+                        valign  : (obj.igazitas_y == "fent"    ? "top"
+                                :  obj.igazitas_y == "kozepre" ? "middle"
+                                :  obj.igazitas_y == "lent"    ? "bottom"
+                                :  "initial"),
+                        outline :
                         {
-                            'type'    : "outer",
-                            'angle'   : 45,
-                            'blur'    : 1,
+                            size  : 0.5,
+                            color : "000000"
                         },
+                        glow :
+                        {
+                            size    : 2,
+                            opacity : 0.5,
+                            color   : "000000"
+                        },
+                        lang : "hu-HU",
                     });
                     break;
                 case "kep":

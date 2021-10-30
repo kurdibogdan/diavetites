@@ -130,5 +130,5 @@ function dal_kivalasztasa(gomb_id, beviteli_mezo_id, dal_id, dal_cim)
     beviteli_mezo.setAttribute("data-dal_id", dal_id);
     beviteli_mezo.value = dal_cim;
     $(".dalszoveg_talalatok").hide();
-    dalszoveg_gombok_engedelyezese(gomb_id);
+    dalszoveg_kivalasztasa(gomb_id);    // hmm... ez csak a folytatása ennek a függvénynek, de ugyanaz a funkciója
 }

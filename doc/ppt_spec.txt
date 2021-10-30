@@ -1,0 +1,46 @@
+Sziasztok!
+
+A ppt-vel kapcsolatban egy kis tapasztalati technikai info:
+
+- a háttér az előző időkben mindig a egyházi év adott időszakának megérkező liturgiai szín volt, és ezen általában fehér betűkkel a szöveg, kivéve a fehér időszakot, amikor zöld;
+- korábbi tábori tapasztalat, hogy a fekete (vagy nagyon sötét)  alapon fehér (vagy nagyon világos) betű látszik a legjobban a napsütésben,
+- betűtípusnak a talpatlan (Arial és hasonló) betűk a megfelelők, árnyékolás és kövérítés nélkül, így egy átlátható és letisztult kép keletkezik,
+- figyelni kell, hogy az egész vetítés egyféle betűtípussal készüljön.
+
+Éljenek az új szolgálttevők!
+
+:)))
+
+Üdv
+Zotyó
+
+------------------------------------------------------------------
+Még annyit, hogy szerintem a köztes címek nyugodtan elhagyhatók. Nem kell kiírni, hogy pl. "Lekció" stb.
+Elég az ének szövegeket és az úrvacsora közös részeit kivetíteni, ha valami extra kérése van a lelkésznek, azt úgyis jelzi.
+
+Ildi 
+------------------------------------------------------------------
+
+Sziasztok!
+
+Mint azt páran tudjátok, a MIX-ben én csinálom a kivetítést, már jó pár éve. Bár 1,5 éve már mozgó háttereket használunk külön spec. programmal, azelőtt mi is a sima ppt verzióval dolgoztunk. Akkor kitapasztaltunk pár hasznos dolgot, amit érdemes lehet a gyüliben is alkalmazni. 
+Sok levélváltás ment itt az utóbbi időben a követelményekkel kapcsolatban, úgy gondoltam, hogy írnék egy ilyen "segédletet", hogy mire kell figyelni. A délelőtti Istentiszteletek is feladták a leckét, hiszen az IT 3/4-étől már alig látszik a vetítés.
+
+Mire figyeljetek:
+1. Ne legyen áttűnés, sem semmilyen animáció a diákon, mert az csak lassítja a váltást, és nem az a lényeg, hogy a szöveg beússzon a képbe. Az egészen egyszerű 'cut' effect a legjobb. 
+2. Ne pasztell színű legyen a háttér, és ne is ilyen előre megadott microsoft téma. Nem kell túl bonyolítani ez nem egy fancy prezentáció amit elő kell adni. Jó ha a liturgikus színek a hátterek, viszont abból is a színskála sötétebb verziót válasszátok, hiszen az úgy jobban fog látszani.
+3. Nem kell a Kiscelli monoszkóp a diasor elejére. 
+4. Nem kellenek bele plusz infók, mint hirdetések, zsoltárok leírása stb. Sokkal jobban figyel a gyülekezet, ha a szöveg nincs kivetítve. Az Úrvacsorai részre ez nyilván nem vonatkozik. 
+5. A dalszövegeket Caps lock-al írjuk, jobban látszik, sokkal szebb lesz a dia...Nem kell központozás, nem kell az ismétlődő részeket többször kiírni. 
+6. Nagyon fontos a szöveg tördelése! Ne legyen olyan nagyon sok szöveg egy dián, inkább válasszuk szét őket verszakonként. 
+7. Akkor a legszebb a dia, ha középre van igazítva, mint a szöveg, mint a tájolás. Ehhez az kell, hogy az egész szövegdoboz kitöltse az adott diát. 
+8. Betűtípus: Ez igazából mindegy, de érdemes talpas betűtípust választani, és árnyékolni, hogy jól látsszon.(de kérlek NE comic sans legyen a diákon)
+9. Nem biztos, hogy a fehér betű jól fog látszani hosszú távon, még ki kell kísérletezni, hogy milyen árnyékolással, vagy esetleg fekete betűkkel. 
+
+Egyenlőre azt hiszem ennyi. Ez elöljáróban egy segédlet, de pontosan megbeszéljük majd a dicsi csendesnapon, és meg is mutatom, hogy mit, hogy kell. 
+A most vasárnapi ppt-t megcsinálom én, ezek alapján, hogy legyen egy minta is és ne csak itt mondjam az infókat! 
+
+Köszi, hogy végigolvastátok!
+Szép hetet!
+
+Nóri
