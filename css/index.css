@@ -70,13 +70,13 @@ select
 
 .vezerlo_gomb
 {
-    height        : 40px;
     min-width     : 30px;
-    border        : 1px outset #ccc;
-    padding       : 5px;
+    height        : 40px;
     line-height   : 36px;
-    text-align    : center;
+    border        : 1px outset #ccc;
     border-radius : 2px;
+    padding       : 5px;
+    text-align    : center;
 }
 .vezerlo_gomb img
 {

@@ -8,19 +8,24 @@ var Diasor_Dalszoveg =
         var that = this;
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
-            var szoveg    = data.szoveg.replace(/\r/g, "").toUpperCase();
-            var dalszoveg = [];
-            var versszakok = szoveg.split("\n\n");    // szoveg.split("\r\n\r\n");
+            // Diákra bontás (üres sorok mentén):
+            var szoveg     = data.szoveg.replace(/\r/g, "").toUpperCase();
+            var dalszoveg  = [];
+            var versszakok = szoveg.split("\n\n");
             for(var i=0, n=versszakok.length; i<n; i++)
             {
-                var versszak = versszakok[i].split("\r\n");
+                // Szöveg felosztása sorokra, közben a jelölések (#) feldolgozása:
+                var versszak = versszakok[i]
+                                .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
+                                .replace(/^#.*?$\n/gm, "")      // jelölések törlése
+                                .split("\n");
                 dalszoveg.push(versszak);
-            }
+            } 
             // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
             // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
             
             var diak      = [];
-            var betumeret = that.maximumalis_betumeret_meghatarozasa(dalszoveg);
+            var betumeret = 25; // that.maximumalis_betumeret_meghatarozasa(dalszoveg);
             
             diak.push(
             { 
@@ -34,18 +39,18 @@ var Diasor_Dalszoveg =
                 var szovegdoboz =
                 {
                     "tipus"      : "szovegdoboz",
-                    "poz_x"      : 4,           // % (~ 1 cm)
-                    "poz_y"      : 8,           // % (~ 1 cm)
-                    "szelesseg"  : 92,          // % (100% - 1 cm)
-                    "magassag"   : 84,          // % (100% - 1 cm)
+                    "poz_x"      : 0,           // 4% (~ 1 cm)
+                    "poz_y"      : 0,           // 8% (~ 1 cm)
+                    "szelesseg"  : 100,         // 92% (100% - 1 cm)
+                    "magassag"   : 100,         // 84% (100% - 1 cm)
                     "igazitas_x" : "kozepre",
                     "igazitas_y" : "kozepre",
                     "szovegek"   :
                     [
                         {
                             "szoveg"    : dalszoveg[i].join("<br>"),
-                            "betumeret" : betumeret,    // pt
-                            "betutipus" : "Sylfaen",
+                            "betumeret" : betumeret,        // pt 
+                            "betutipus" : "Arial Black"     // alternatív: 30px "Sylfaen",
                         },
                     ]
                 };

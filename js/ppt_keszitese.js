@@ -61,6 +61,20 @@ function ppt_keszitese()
             var obj = objektumok[j];
             switch(obj.tipus)
             {
+                case "hatterszin":
+                    dia.background = {color: obj.szin};
+                    // dia.addShape(pptx.ShapeType.rect,
+                    // {
+                    //     x    : "0%",
+                    //     y    : "0%",
+                    //     w    : "100%",
+                    //     h    : "100%",
+                    //     fill :
+                    //     {
+                    //         color: obj.szin
+                    //     }
+                    // });
+                    break;
                 case "szovegdoboz":
                     var szovegek = [];
                     for(var k = 0, p = obj.szovegek.length; k < p; k++)
@@ -112,23 +126,39 @@ function ppt_keszitese()
                         dia.addImage(
                         {
                             path : obj.kep,
-                            x    : obj.poz_x     + "%",
-                            y    : obj.poz_y     + "%",
-                            w    : obj.szelesseg + "%",
-                            h    : obj.magassag  + "%",
+                            x    : obj.poz_x,
+                            y    : obj.poz_y,
+                            w    : obj.szelesseg,
+                            h    : obj.magassag,
+                            sizing   :
+                            {
+                                type : 'contain',
+                                x    : 0   + "%",
+                                y    : 0   + "%",
+                                w    : 100 + "%",
+                                h    : 100 + "%",
+                            }
                         });
                     }
                     else
                     {
                         dia.addText("Itt jelenne meg a '" + obj.kep + "' képfájl, de az oldal nem fér hozzá a gép fájlrendszeréhez. Megoldás: szerverről futtatni (pl. http://mix.metodista.hu)!",
                         {
-                            x        : obj.poz_x     + "%", 
-                            y        : obj.poz_y     + "%",
-                            w        : obj.szelesseg + "%",
-                            h        : obj.magassag  + "%",
+                            // x        : obj.poz_x     + "%", 
+                            // y        : obj.poz_y     + "%",
+                            // w        : obj.szelesseg + "%",
+                            // h        : obj.magassag  + "%",
                             fontFace : "Arial",
                             fontSize : 24,
                             color    : "#00CC00",
+                            sizing   :
+                            {
+                                type : 'contain',
+                                x    : obj.poz_x     + "%", 
+                                y    : obj.poz_y     + "%",
+                                w    : obj.szelesseg + "%",
+                                h    : obj.magassag  + "%",
+                            }
                         });
                     }
                     break;

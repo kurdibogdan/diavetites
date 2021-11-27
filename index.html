@@ -21,6 +21,7 @@
   <script type="text/javascript" src="js/diasor_hirdetesek.js"></script>
   <script type="text/javascript" src="js/diasor_igehely_cimmel.js"></script>
   <script type="text/javascript" src="js/diasor_musorszunet.js"></script>
+  <script type="text/javascript" src="js/diasor_kezdokep.js"></script>
   <script type="text/javascript" src="js/diasor_sajat_cim.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
   <style>
@@ -127,6 +128,7 @@
      <td><img class="vezerlo_gomb" src="kepek/powerpoint.png" onclick="ppt_keszitese();"></td>
     </tr>
    </table>
+   <div id="dia_stilusvalasztas"></div>
    <div id="diasor"></div>
   </td>
   
@@ -147,18 +149,12 @@
 
 <script type="text/javascript">
 // PPT generátor: https://products.aspose.app/pdf/hu/conversion/ppt-to-txt
-var diasor = [];
 var kurzor = 0;
-var STILUS =
-{
-    "betuszin"   : "#ffffff",
-    "hatterszin" : "#008000",
-};
-
+var megjelenitett_oldal = "";
 oldal_megjelenitese("diak_rendezese_oldal");
 // oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
+STILUS.gombok_megjelenitese();
 
-var megjelenitett_oldal = "";
 
 function oldal_megjelenitese(oldal_id)
 {
@@ -178,28 +174,29 @@ var t = "<table class='diakeszites_tabla'>\n"
       + "  <th width='230'>általános részek</th>\n"
       + "  <th>új slide</th>\n"
       + " </tr>\n"
-      + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
+   // + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
+      + Diasor_Kezdokep.diakeszites_gomb("kezdokep")
       + Diasor_Focim.diakeszites_gomb("focim")
+      + Diasor_Sajat_Cim.diakeszites_gomb("sajat_cim")
+      + Diasor_Dalszoveg.diakeszites_gomb("ifienek", "ifienek", "dalszöveg")
    // + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
    // + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
    // + Diasor_Cim.diakeszites_gomb("orgonajatek", "ORGONAJÁTÉK")
-      + Diasor_Dalszoveg.diakeszites_gomb("ifienek_1", "ifienek", "dalszöveg")
    // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
-      + Diasor_Sajat_Cim.diakeszites_gomb("igehely")
    // + Diasor_Cim.diakeszites_gomb("ima", "IMÁDSÁG")
    // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
    // + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
    // + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
    // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
-      + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
-      + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
+   // + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
+   // + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
    // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
-      + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
+   // + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
    // + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
    // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
    // + "</table>\n"
    // + "<table class='diakeszites_tabla'>\n"
-   // + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
+    + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
    // + "</table>"
    // + "<table class='diakeszites_tabla'>\n"
    // + " <tr>\n"
@@ -215,9 +212,7 @@ var t = "<table class='diakeszites_tabla'>\n"
       + "</table>";
 
 $("#kivetites_osszeallitasa").html(t);
-
 Diasor_Focim.datum_elokeszitese();
-diameretek_beallitasa(200);
 dallista_betoltese();
 
 </script>
