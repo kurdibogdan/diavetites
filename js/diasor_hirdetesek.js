@@ -46,6 +46,10 @@ var Diasor_Hirdetesek =
             }
         ];
         
+        if ($("#dia_keszitese_" + gomb_id).prop("checked") == false)
+        {
+            diak = [];
+        }
         return(diak);
     },
     

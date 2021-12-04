@@ -4,29 +4,34 @@ var Diasor_Dalszoveg =
     {
         oldal_megjelenitese("diak_rendezese_oldal");
         
+        var tipus             = $("#dia_keszitese_sor_" + gomb_id).attr("data-tipus");        
         var kivalasztott_enek = $("#enek_valasztasa_" + gomb_id).attr("data-dal_id");   // data("dal_id") nem jól működik (második kiválasztásnál nem vált át)
+        
         var that = this;
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
-            // Diákra bontás (üres sorok mentén):
-            var szoveg     = data.szoveg.replace(/\r/g, "").toUpperCase();
+            // Szöveg típusra szabása (csak az első versszak, utolsó versszakig, csak az utolsó versszak, teljes dal):
+            var szoveg = data.szoveg.replace(/\r/g, "").toUpperCase();
+                szoveg = dalszoveg_tipusra_szabasa(szoveg, tipus);
+            
+            // A szöveg felbontása a diák (üres sorok) mentén:
             var dalszoveg  = [];
-            var versszakok = szoveg.split("\n\n");
-            for(var i=0, n=versszakok.length; i<n; i++)
+            var diak = szoveg.split("\n\n");
+            for(var i=0, n=diak.length; i<n; i++)
             {
                 // Szöveg felosztása sorokra, közben a jelölések (#) feldolgozása:
-                var versszak = versszakok[i]
-                                .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
-                                .replace(/^#.*?$\n/gm, "")      // jelölések törlése
-                                .split("\n");
+                var dia = diak[i]
+                          .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
+                          .replace(/^#.*?$\n/gm, "")      // jelölések törlése
+                          .split("\n");
                 dalszoveg.push(versszak);
             } 
             // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
             // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
             
+            // Diák (objektumok) összeállítása:
             var diak      = [];
             var betumeret = 25; // that.maximumalis_betumeret_meghatarozasa(dalszoveg);
-            
             diak.push(
             { 
                 kijelolve  : false,
@@ -70,7 +75,11 @@ var Diasor_Dalszoveg =
                 csoport    : "",
                 objektumok : []
             });
-                       
+            
+            if ($("#dia_keszitese_" + gomb_id).prop("checked") == false)
+            {
+                diak = [];
+            }
             if (typeof callback == "function") callback(diak);
          });
     },
@@ -132,9 +141,11 @@ var Diasor_Dalszoveg =
         }
     },
     
-    diakeszites_gomb : function(gomb_id, tipus, cim) // tipus = "ifienek", "dicseret"
-    {                                                // cim   = "ifiének", "dicséret"
-        var t = "<tr>\n"
+    diakeszites_gomb : function(gomb_id, tipus, cim, rejtett) // tipus = ["teljes", "csak_elso_versszak", "utolso_versszakig", "csak_utolso_versszak"]
+    {
+        var t = "<tr id='dia_keszitese_sor_"+gomb_id+"' "
+              + "     data-tipus='"+tipus+"' "
+              + "     style='display:" + (rejtett ? "none" : "") + ";'>\n"
               + " <td>"
               + "  <label class='switch'>"
               + "   <input id='dia_keszitese_" + gomb_id + "' type='checkbox'>"
@@ -290,4 +301,26 @@ function dalszoveg_torlese(gomb_id)
             dallista_betoltese();
         });
     }
+}
+
+function dalszoveg_tipusra_szabasa(dalszoveg, tipus)
+{
+    var versszakok = dalszoveg.split(/\s*(?=#[0-9])\s*/g);   // megkeresi a #1, #2, stb. jelölést, de nem törli + az üres karaktereket levágja a végéről
+    switch(tipus)
+    {
+        case "teljes":
+            break;
+        case "csak_elso_versszak":
+            dalszoveg = versszakok.slice(0, 1)[0];              // versszakok[0];
+            break;
+        case "utolso_versszakig":
+            dalszoveg = versszakok.slice(0, -1).join("\n\n");   // utolsó versszak levágása
+            break;
+        case "csak_utolso_versszak":
+            dalszoveg = versszakok.slice(-1)[0];                // versszakok[versszakok.length - 1];
+            break;
+        default:
+            break;
+    };
+    return(dalszoveg);
 }

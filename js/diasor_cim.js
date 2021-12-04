@@ -30,6 +30,10 @@ var Diasor_Cim =
             }
         ];
         
+        if ($("#dia_keszitese_" + gomb_id).prop("checked") == false)
+        {
+            diak = [];
+        }
         return(diak);
     },
     

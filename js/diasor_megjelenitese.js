@@ -1,13 +1,21 @@
 var diasor = [];
 var DIA_MERET = new function()
 {
-    this.szelesseg       = 100;  // px
-    this.magassag        = 92;   // px
-    this.obj_szelesseg   = 96;   // px
-    this.obj_magassag    = 63;   // px
-    this.obj_margo_fent  = 14.5; // px
-    this.obj_margo_balra = 2.5;  // px
-    this.skalazas        = 10;   // pt/px
+    this.szelesseg         = 100;  // px
+    this.magassag          = 92;   // px
+    this.obj_szelesseg     = 96;   // px
+    this.obj_magassag      = 63;   // px
+    this.obj_margo_fent    = 14.5; // px
+    this.obj_margo_balra   = 2.5;  // px
+    this.skalazas          = 10;   // pt/px
+    this.beepitett_meretek = 
+    {
+        100 : {kiskep_merete: 12},
+        150 : {kiskep_merete: 18},
+        200 : {kiskep_merete: 26},
+        300 : {kiskep_merete: 32},
+        500 : {kiskep_merete: 40},
+    };
     
     this.diameretek_beallitasa = function(dia_merete)
     {
@@ -28,7 +36,27 @@ var DIA_MERET = new function()
         $(".diameret_kijelolve").removeClass("diameret_kijelolve");
         $("#diameret_" + dia_merete).addClass("diameret_kijelolve");
         diasor_megjelenitese();
-    }
+    };
+    this.gombok_megjelenitese = function()
+    {
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
+        for(var i in Object.keys(this.beepitett_meretek))
+        {
+            var kulcs         = Object.keys(this.beepitett_meretek)[i];
+            var kiskep_merete = this.beepitett_meretek[kulcs].kiskep_merete;
+            t += "<td>"
+               + " <div class='vezerlo_gomb' "
+               + "      onclick=\"DIA_MERET.diameretek_beallitasa('" + kulcs + "');\">"
+               + "  <img src='kepek/doboz.png' style='height:" + kiskep_merete + "px; width:" + kiskep_merete + "px;'>"
+               + " </div>"
+               + "</td>";
+        }
+        t += " </tr>"
+           + "</table>";
+        
+        $("#dia_meretvalasztas").html(t);
+    };
     
     this.diameretek_beallitasa(200);
 };
@@ -74,6 +102,36 @@ var STILUS = new function()
     this.beepitett_stilus_valasztasa("zold");
 };
 
+var DIA_VEZERLES = new function()
+{
+    this.gombok =
+    [
+        {"kiskep" : "kepek/kuka.png",            "parancs" : "kijelolt_diak_torlese()"},
+        {"kiskep" : "kepek/mozgatas_balra.png",  "parancs" : "kijelolt_dia_mozgatasa_balra()"},
+        {"kiskep" : "kepek/mozgatas_jobbra.png", "parancs" : "kijelolt_dia_mozgatasa_jobbra()"},
+        {"kiskep" : "kepek/powerpoint.png",      "parancs" : "ppt_keszitese()"},
+    ];
+    
+    this.gombok_megjelenitese = function()
+    {
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
+        for(var i in this.gombok)
+        {
+            var gomb = this.gombok[i];
+            t += "<td>"
+               + " <div class='vezerlo_gomb' "
+               + "      onclick=\"" + gomb.parancs + ";\">"
+               + "  <img src='" + gomb.kiskep + "'>"
+               + " </div>"
+               + "</td>";
+        }
+        t += " </tr>"
+           + "</table>";
+        
+        $("#dia_vezerles").html(t);
+    };
+};
 
 function diasor_megjelenitese()
 {

@@ -8,7 +8,7 @@ var Diasor_Focim =
         if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
         document.getElementById(this.datum_bevitel).valueAsDate = vasarnap;
     },
-    uj_diasor : function(datum)
+    uj_diasor : function(gomb_id)
     {
         var datum         = $("#" + this.datum_bevitel).val();
         var ev            = parseInt(datum.substr(0, 4));
@@ -54,6 +54,10 @@ var Diasor_Focim =
             }
         ];
         
+        if ($("#dia_keszitese_" + gomb_id).prop("checked") == false)
+        {
+            diak = [];
+        }
         return(diak);
     },
     
@@ -63,7 +67,7 @@ var Diasor_Focim =
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' checked='checked'><span class='slider round'></span></label></td>\n"
               + " <td><input id='cimoldal_szoveg' type='text' value='ISTENTISZTELET'><br>\n"
               + "     <input id='" + this.datum_bevitel + "' type='date'></td>\n"
-              + " <td><button onclick=\"diasor_bovitese(Diasor_Focim.uj_diasor());\">&rarr;</button></td>\n"
+              + " <td><button onclick=\"diasor_bovitese(Diasor_Focim.uj_diasor('" + gomb_id + "'));\">&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);
     },

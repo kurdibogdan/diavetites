@@ -67,7 +67,10 @@ select
 {
     background-color : #04AA6D;  /* rgb(0,180,150); */
 }
-
+.gombsor
+{
+    display: inline-block;
+}
 .vezerlo_gomb
 {
     min-width     : 30px;
@@ -80,7 +83,8 @@ select
 }
 .vezerlo_gomb img
 {
-    vertical-align: middle;
+    vertical-align : middle;
+    max-height     : 40px;
 }
 .vezerlo_gomb:active
 {
@@ -118,13 +122,11 @@ select
     opacity           : 1;
 }
 
-
-
 .diakeszites_tabla
 {
     font-family     : Arial, Helvetica, sans-serif;
     border-collapse : collapse;
-    margin          : 20px;
+    margin          : 10px;
 }
 
 .diakeszites_tabla td, 
