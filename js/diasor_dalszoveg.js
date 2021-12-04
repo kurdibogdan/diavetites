@@ -24,7 +24,7 @@ var Diasor_Dalszoveg =
                           .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
                           .replace(/^#.*?$\n/gm, "")      // jelölések törlése
                           .split("\n");
-                dalszoveg.push(versszak);
+                dalszoveg.push(dia);
             } 
             // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
             // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
