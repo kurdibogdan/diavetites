@@ -1,0 +1,25 @@
+.diakeszites_tabla
+{
+    font-family     : Arial, Helvetica, sans-serif;
+    border-collapse : collapse;
+    margin          : 10px;
+}
+.diakeszites_tabla td, 
+.diakeszites_tabla th
+{
+    border      : 1px solid #ddd;
+    padding     : 8px;
+    line-height : 1.5em;
+}
+
+.diakeszites_tabla tr:nth-child(even){background-color: #f2f2f2;}
+/* .diakeszites_tabla tr:hover{background-color: #ddd;} */
+
+.diakeszites_tabla th
+{
+    padding-top      : 12px;
+    padding-bottom   : 12px;
+    text-align       : left;
+    background-color : #04AA6D;
+    color            : white;
+}

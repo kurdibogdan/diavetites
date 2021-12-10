@@ -5,6 +5,10 @@
   <title>Énekek kivetítése</title>
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/checkbox.css">
+  <link rel="stylesheet" href="css/gomb.css">
+  <link rel="stylesheet" href="css/diasor_keszitese.css">
+  <link rel="stylesheet" href="css/diasor_megjelenitese.css">
+  <link rel="stylesheet" href="css/dalszoveg_szerkesztese.css">
   <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
   <script type="text/javascript" src="js/jszip.min.js"></script>
   <script type="text/javascript" src="js/szovegmeretek_meghatarozasa.js"></script>
@@ -27,72 +31,7 @@
   <script type="text/javascript" src="js/diasor_urvacsora_bunvallas.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_halaadas.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_befejezes.js"></script>
-  <style>
-  .dalszoveg_talalatok
-  {
-     display          : none;
-     border           : 1px solid gray;
-     border-top       : 0;
-     position         : absolute;
-     background-color : #eee;
-     width            : 226px;
-  }
-  .dal_talalat
-  {
-     display          : block;
-     overflow         : hidden;
-     text-overflow    : ellipsis;
-     white-space      : nowrap;
-     padding          : 2px;
-  }
-  .dal_talalat:hover
-  {
-    cursor           : default;
-    background-color : #ccc;
-  }
-  .dalszoveg_szerkesztese_gomb
-  {
-    background-image    : url('kepek/ikon_beallitasok.png');
-    background-repeat   : no-repeat;
-    background-position : center center;
-    background-size     : contain;
-  }
-  .uj_dalszoveg_gomb
-  {
-    background-image    : url('kepek/ikon_uj_dalszoveg.png');
-    background-repeat   : no-repeat;
-    background-position : center center;
-    background-size     : contain;
-  }
-  .dalszoveg_szerkesztese_gomb:disabled
-  {
-      /* display:none; */
-  }
-  #dalszoveg_szerkesztese textarea
-  {
-    width            : 500px;
-    height           : 500px;
-  }
-  .oldal
-  {
-    display          : none;
-  }
-  .zold_gomb
-  {
-    background-color : #04AA6D;  /* #04AA6D */
-    color            : white;
-  }
-  .piros_gomb
-  {
-    background-color : rgb(236, 76, 76);
-    color            : white;
-  }
-  .szurke_gomb
-  {
-    background-color : #ccc;
-    color            : black;
-  }
-  </style>
+  <style></style>
  </head>
  <body>
 
@@ -100,21 +39,7 @@
  <tr valign="top">
   <td> 
    <h1>Kivetítés összeállítása</h1>
-   
    <div id="kivetites_osszeallitasa"></div>
-   
-    <!-- Úrvacsorán megkezdett ének utolsó versszaka
-    <tr>
-     <td><label class="switch"><input id="dia_keszitese_urvacsora_enek_utolso_versszaka" type="checkbox"><span class="slider round"></span></label></td>
-     <td>megkezdett úrvacsorai ének<br>
-         utolsó versszaka</td>
-     <td><button onclick="diasor_bovitese(Diasor_Urvacsora.???('urvacsora'));">&rarr;</button></td>
-    </tr>
-    
-   <div style="text-align:right; margin:29px;">
-    <button>Kiválasztottak hozzáadása &rarr;</button>
-   </div>
-    -->
   </td>
   <td id="diak_rendezese_oldal" class="oldal">
    <h1>Diák rendezése</h1>
@@ -135,12 +60,8 @@
     </tr>
    </table>
   </td>
-  
  </tr>
 </table>
-
-
-
 
 
 <script type="text/javascript">
@@ -149,8 +70,9 @@
 // - tervező nézet, ahol az objektumokat összeállítjuk -> terv mentése / betöltése
 // - ezután legeneráljuk a diasort a tervből -> generált diasor mentése / betöltése / vetítése
 // - PPT legenerálása a diasorból
+// - Úrvacsora: megkezdett úrvacsorai ének utolsó versszakát automatikusan felkínálja
 
-var REJTETT_GOMB = true;
+const REJTETT_GOMB = true;
 var kurzor = 0;
 var megjelenitett_oldal = "";
 oldal_megjelenitese("diak_rendezese_oldal");
@@ -158,7 +80,6 @@ oldal_megjelenitese("diak_rendezese_oldal");
 DIA_VEZERLES.gombok_megjelenitese();
 DIA_MERET.gombok_megjelenitese();
 STILUS.gombok_megjelenitese();
-
 
 function oldal_megjelenitese(oldal_id)
 {
@@ -178,41 +99,11 @@ var t = "<table class='diakeszites_tabla'>\n"
       + "  <th width='230'>általános részek</th>\n"
       + "  <th>új slide</th>\n"
       + " </tr>\n"
-   // + Diasor_Musorszunet.diakeszites_gomb("musorszunet")
       + Diasor_Kezdokep.diakeszites_gomb("kezdokep")
       + Diasor_Focim.diakeszites_gomb("focim")
-      + Diasor_Sajat_Cim.diakeszites_gomb("sajat_cim")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek", "teljes", "dalszöveg")
-   // + Diasor_Cim.diakeszites_gomb("bemenetel", "BEMENETEL", true)
-   // + Diasor_Cim.diakeszites_gomb("koszontes", "KÖSZÖNTÉS", true)
-   // + Diasor_Cim.diakeszites_gomb("orgonajatek", "ORGONAJÁTÉK")
-   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_2", "ifienek", "2. ifiének")
-   // + Diasor_Cim.diakeszites_gomb("ima", "IMÁDSÁG")
-   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_3", "ifienek", "3. ifiének")
-   // + Diasor_Cim.diakeszites_gomb("pasztori_ima", "PÁSZTORI IMÁDSÁG", true)
-   // + Diasor_Cim.diakeszites_gomb("igehirdetes_es_valaszadas", "IGEHIRDETÉS ÉS VÁLASZASDÁS", true)
-   // + Diasor_Dalszoveg.diakeszites_gomb("ifienek_4", "ifienek", "4. ifiének")
-   // + Diasor_Igehely_Cimmel.diakeszites_gomb("lekcio", "LEKCIÓ")
-   // + Diasor_Igehely_Cimmel.diakeszites_gomb("evangelium", "EVANGÉLIUM")
-   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_1", "dicseret", "1. dicséret")
-   // + Diasor_Igehely_Cimmel.diakeszites_gomb("textus", "TEXTUS")
-   // + Diasor_Cim.diakeszites_gomb("igehirdetes", "IGEHIRDETÉS", true)
-   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_2", "dicseret", "2. dicséret")
-   // + "</table>\n"
-   // + "<table class='diakeszites_tabla'>\n"
-    + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
-   // + "</table>"
-   // + "<table class='diakeszites_tabla'>\n"
-   // + " <tr>\n"
-   // + "  <th></th>\n"
-   // + "  <th width='230'>befejezo részek</th>\n"
-   // + "  <th>új slide</th>\n"
-   // + " </tr>\n"
-   // + Diasor_Cim.diakeszites_gomb("kikuldes", "KIKÜLDÉS", true)
+      + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
-   // + Diasor_Cim.diakeszites_gomb("aldas", "ÁLDÁS", true)
-   // + Diasor_Dalszoveg.diakeszites_gomb("dicseret_3", "dicseret", "3. dicséret")
-   // + Diasor_Urvacsora.diakeszites_utolso_vsz_gomb('urvacsora') // TODO: megkezdett úrvacsorai ének utolsó versszaka ("urvacsora_vege"?)
       + "</table>";
 
 $("#kivetites_osszeallitasa").html(t);

@@ -1,0 +1,45 @@
+.dalszoveg_talalatok
+{
+    display          : none;
+    border           : 1px solid gray;
+    border-top       : 0;
+    position         : absolute;
+    background-color : #eee;
+    width            : 226px;
+}
+.dal_talalat
+{
+    display          : block;
+    overflow         : hidden;
+    text-overflow    : ellipsis;
+    white-space      : nowrap;
+    padding          : 2px;
+}
+.dal_talalat:hover
+{
+    cursor           : default;
+    background-color : #ccc;
+}
+#dalszoveg_szerkesztese textarea
+{
+    width            : 500px;
+    height           : 500px;
+}
+.dalszoveg_szerkesztese_gomb
+{
+    background-image    : url('../kepek/ikon_beallitasok.png');
+    background-repeat   : no-repeat;
+    background-position : center center;
+    background-size     : contain;
+}
+.uj_dalszoveg_gomb
+{
+    background-image    : url('../kepek/ikon_uj_dalszoveg.png');
+    background-repeat   : no-repeat;
+    background-position : center center;
+    background-size     : contain;
+}
+.dalszoveg_szerkesztese_gomb:disabled
+{
+    /* display:none; */
+}
