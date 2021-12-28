@@ -67,10 +67,10 @@ var STILUS = new function()
     this.hatterszin;
     this.beepitett_stilusok =
     {
-        "lila"   : {"betuszin": "#ffffff", "hatterszin": "#a754ac"}, // [167,  84, 172];
+        "lila"   : {"betuszin": "#ffffff", "hatterszin": "#640064"}, // [100,   0, 100];    // "#a754ac"}, // [167,  84, 172];
         "feher"  : {"betuszin": "#000000", "hatterszin": "#ffffff"}, // [255, 255, 255];
-        "zold"   : {"betuszin": "#ffffff", "hatterszin": "#3b8d4f"}, // [ 59, 141,  79];
-        "piros"  : {"betuszin": "#ffffff", "hatterszin": "#db0a05"}, // [219,  10,   5];
+        "zold"   : {"betuszin": "#ffffff", "hatterszin": "#004511"}, // [  0,  69,  17];    // "#3b8d4f"}, // [ 59, 141,  79];
+        "piros"  : {"betuszin": "#ffffff", "hatterszin": "#940200"}, // [148,   2,   0];    // "#db0a05"}, // [219,  10,   5];
         "fekete" : {"betuszin": "#ffffff", "hatterszin": "#000000"}, // [  0,   0,   0];
     };
     this.beepitett_stilus_valasztasa = function(beepitett_stilus)
