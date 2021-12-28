@@ -141,10 +141,11 @@ var Diasor_Dalszoveg =
         }
     },
     
-    diakeszites_gomb : function(gomb_id, tipus, cim, rejtett) // tipus = ["teljes", "csak_elso_versszak", "utolso_versszakig", "csak_utolso_versszak"]
-    {
-        var t = "<tr id='dia_keszitese_sor_"+gomb_id+"' "
-              + "     data-tipus='"+tipus+"' "
+    diakeszites_gomb : function(gomb_id, tipus, cim, rejtett)
+    {   
+        // tipus = ["teljes", "csak_elso_versszak", "utolso_versszakig", "csak_utolso_versszak"];
+        var t = "<tr id='dia_keszitese_sor_" + gomb_id + "' "
+              + "     data-tipus='" + tipus + "' "
               + "     style='display:" + (rejtett ? "none" : "") + ";'>\n"
               + " <td>"
               + "  <label class='switch'>"
@@ -241,20 +242,26 @@ var Diasor_Dalszoveg =
 
 function dalszoveg_kivalasztas_torlese(gomb_id)
 {
-    $("#diasor_bovitese_" + gomb_id).prop("disabled", "disabled");          // diasorhoz hozzáadó gomb tiltása
-    $(".dalszoveg_szerkesztese_gomb").prop("disabled", "disabled").hide();  // szerkesztő gomb letiltás (ne is látszódjon)
-    $("#dia_keszitese_" + gomb_id).prop("checked", "");                     // kipipálás törlése
-    $(".uj_dalszoveg_gomb").show();                                         // új dalszöveg hozzáadása gomb megjelenítése
-    dalszoveg_szerkesztes_bezarasa();                                       // szerkesztő bezárása
+    // <button id="dalszoveg_szerkesztese_gomb_urvacsora2_enek_3" 
+    //         class="dalszoveg_szerkesztese_gomb" 
+    
+    // <button id="uj_dalszoveg_gomb_urvacsora2_enek_1" 
+    //         class="uj_dalszoveg_gomb" 
+    
+    $("#diasor_bovitese_" + gomb_id).prop("disabled", "disabled");                      // diasorhoz hozzáadó gomb tiltása
+    $("#dalszoveg_szerkesztese_gomb_" + gomb_id).prop("disabled", "disabled").hide();   // szerkesztő gomb letiltás (ne is látszódjon)
+    $("#dia_keszitese_" + gomb_id).prop("checked", "");                                 // kipipálás törlése
+    $("#uj_dalszoveg_gomb_" + gomb_id).show();                                          // új dalszöveg hozzáadása gomb megjelenítése
+    dalszoveg_szerkesztes_bezarasa();                                                   // szerkesztő bezárása
 }
 
 function dalszoveg_kivalasztasa(gomb_id)
 {
-    $("#diasor_bovitese_" + gomb_id).prop("disabled", "");                  // diasorhoz hozzáadó gomb engedélyezése
-    $(".dalszoveg_szerkesztese_gomb").prop("disabled", "").show();          // szerkesztő gomb engedélyezése (+ megjelenítése)
-    $("#dia_keszitese_" + gomb_id).prop("checked", "checked");              // kipipálás
-    $(".uj_dalszoveg_gomb").hide();                                         // új dalszöveg hozzáadása gomb elrejtése
-    dalszoveg_szerkesztes_bezarasa();                                       // szerkesztő bezárása (már be van zárva amúgy)
+    $("#diasor_bovitese_" + gomb_id).prop("disabled", "");                              // diasorhoz hozzáadó gomb engedélyezése
+    $("#dalszoveg_szerkesztese_gomb_" + gomb_id).prop("disabled", "").show();           // szerkesztő gomb engedélyezése (+ megjelenítése)
+    $("#dia_keszitese_" + gomb_id).prop("checked", "checked");                          // kipipálás
+    $("#uj_dalszoveg_gomb_" + gomb_id).hide();                                          // új dalszöveg hozzáadása gomb elrejtése
+    dalszoveg_szerkesztes_bezarasa();                                                   // szerkesztő bezárása (már be van zárva amúgy)
 }
 
 function dalszoveg_szerkesztes_bezarasa()

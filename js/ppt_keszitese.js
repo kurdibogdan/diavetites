@@ -106,17 +106,17 @@ function ppt_keszitese()
                                 :  obj.igazitas_y == "kozepre" ? "middle"
                                 :  obj.igazitas_y == "lent"    ? "bottom"
                                 :  "initial"),
-                        outline :
-                        {
-                            size  : 0.5,
-                            color : "000000"
-                        },
-                        glow :
-                        {
-                            size    : 2,
-                            opacity : 0.5,
-                            color   : "000000"
-                        },
+                        // outline :
+                        // {
+                        //     size  : 0.5,
+                        //     color : "000000"
+                        // },
+                        // glow :
+                        // {
+                        //     size    : 2,
+                        //     opacity : 0.5,
+                        //     color   : "000000"
+                        // },
                         lang : "hu-HU",
                     });
                     break;

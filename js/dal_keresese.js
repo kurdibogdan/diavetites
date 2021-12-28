@@ -14,6 +14,24 @@ var KERESESEK_KOZTI_IDO     = 1000;     // ms
 var kereses_folyamatban     = false;
 var kereses_callback        = null;
 
+function dal_keresese_cim_szerint(cim)
+{
+    var talalat_id;
+    for(var i=0, n=dalszovegek.length; i<n; i++)
+    {
+        var dal_id  = dalszovegek[i].id;
+        var dal_cim = dalszovegek[i].cim;
+        var sorszam = dalszovegek[i].sorszam;
+        
+        if (dal_cim == cim)
+        {
+            talalat_id = dal_id;
+            break;
+        }
+    }
+    return(talalat_id);
+}
+
 function dalszoveg_keresese(szoveg, callback)
 {
     if (szoveg != null) legutobbi_keresendo = szoveg;
@@ -131,4 +149,10 @@ function dal_kivalasztasa(gomb_id, beviteli_mezo_id, dal_id, dal_cim)
     beviteli_mezo.value = dal_cim;
     $(".dalszoveg_talalatok").hide();
     dalszoveg_kivalasztasa(gomb_id);    // hmm... ez csak a folytatása ennek a függvénynek, de ugyanaz a funkciója
+}
+
+function dal_kivalasztasa_cim_szerint(gomb_id, dal_cim)
+{
+    var dal_id = dal_keresese_cim_szerint(dal_cim) || "";
+    dal_kivalasztasa(gomb_id, "enek_valasztasa_" + gomb_id, dal_id, dal_cim);
 }

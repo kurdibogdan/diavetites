@@ -31,6 +31,10 @@
   <script type="text/javascript" src="js/diasor_urvacsora_bunvallas.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_halaadas.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_befejezes.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora2.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_bunvallas2.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_parbeszed.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_titok.js"></script>
   <style></style>
  </head>
  <body>
@@ -72,7 +76,7 @@
 // - PPT legenerálása a diasorból
 // - Úrvacsora: megkezdett úrvacsorai ének utolsó versszakát automatikusan felkínálja
 
-const REJTETT_GOMB = true;
+const REJTETT_GOMB = 1;
 var kurzor = 0;
 var megjelenitett_oldal = "";
 oldal_megjelenitese("diak_rendezese_oldal");
@@ -93,6 +97,7 @@ function opcio_aktivalasa(checkbox_id)
     $("#"+checkbox_id).prop("selected", "selected");
 }
 
+// Táblázat elkészítése az elemekhez:
 var t = "<table class='diakeszites_tabla'>\n"
       + " <tr>\n"
       + "  <th></th>\n"
@@ -103,12 +108,24 @@ var t = "<table class='diakeszites_tabla'>\n"
       + Diasor_Focim.diakeszites_gomb("focim")
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek", "teljes", "dalszöveg")
       + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
+      + Diasor_Urvacsora2.diakeszites_gomb("urvacsora2")
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
       + "</table>";
-
 $("#kivetites_osszeallitasa").html(t);
 Diasor_Focim.datum_elokeszitese();
-dallista_betoltese();
+
+// Alapértelmezett dalok kiválasztása:
+dallista_betoltese(function()
+{    
+    dal_kivalasztasa_cim_szerint("urvacsora_enek_1", "Ó, hála az Úrnak");
+    dal_kivalasztasa_cim_szerint("urvacsora_enek_2", "Az Úr szent Bárányára");
+    dal_kivalasztasa_cim_szerint("urvacsora_enek_3", "Az Úr szent Bárányára");
+    
+    dal_kivalasztasa_cim_szerint("urvacsora2_enek_1", "Örvendj, világ, az Úr lejött");
+    dal_kivalasztasa_cim_szerint("urvacsora2_enek_2", "Szent, szent, szent a Seregek Ura Istene");
+    dal_kivalasztasa_cim_szerint("urvacsora2_enek_3", "Az Úr szent Bárányára");
+});
+
 </script>
 
 
