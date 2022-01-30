@@ -1,42 +1,3 @@
-
-function z___ppt_keszitese()
-{
-    // PPTX generátor dokumentációja: https://gitbrent.github.io/PptxGenJS/docs/api-text
-    // PPTX PPT-be konvertálása: https://cloudconvert.com/pptx-to-ppt
-    // beállítások:
-    var szelesseg = 10;         // 25,4 cm = 10 inch
-    var magassag  = 5.625;      // 15,87 cm = 6,2480314960629921259842519685039 inch --> 5,625 inch (16:9)
-
-    let pptx = new PptxGenJS();
-    pptx.defineLayout(
-    {
-        name   : 'szélesvásznú',
-        width  : szelesseg,
-        height : magassag
-    });
-    pptx.layout = 'szélesvásznú';
-
-    // diák hozzáadása:
-    // let kezdolap = pptx.addSlide("kezdőlap")     // localhost-on a chrome nem engedi
-    //                    .addImage({path: "kepek/kezdolap.png", x: 0, y: 0, w: '100%', h: '100%'});
-    let cimlap = pptx.addSlide("címlap")
-                     .addText(
-                     [
-                        {text: "ISTENTISZTELET", options: {align:'center', color: "#FFFFFF", fontSize:44, breakLine: true}},
-                        {text: "2021. augusztus 1.", options: {align:'center', color: "#FFFFFF", fontSize:32, breakLine: false}}
-                     ],
-                     {
-                        x: 0, y: 0, w: '100%', h: '100%',
-                        fill: { color: "#008000" }
-                     });
-
-    // prezi mentése
-    pptx.writeFile(
-    {
-        fileName: $("#focim_datum").val().replace(/-/g, "") + ".pptx"
-    });
-}
-
 function ppt_keszitese()
 {
     // beállítások:
@@ -63,17 +24,6 @@ function ppt_keszitese()
             {
                 case "hatterszin":
                     dia.background = {color: obj.szin};
-                    // dia.addShape(pptx.ShapeType.rect,
-                    // {
-                    //     x    : "0%",
-                    //     y    : "0%",
-                    //     w    : "100%",
-                    //     h    : "100%",
-                    //     fill :
-                    //     {
-                    //         color: obj.szin
-                    //     }
-                    // });
                     break;
                 case "szovegdoboz":
                     var szovegek = [];
@@ -106,17 +56,6 @@ function ppt_keszitese()
                                 :  obj.igazitas_y == "kozepre" ? "middle"
                                 :  obj.igazitas_y == "lent"    ? "bottom"
                                 :  "initial"),
-                        // outline :
-                        // {
-                        //     size  : 0.5,
-                        //     color : "000000"
-                        // },
-                        // glow :
-                        // {
-                        //     size    : 2,
-                        //     opacity : 0.5,
-                        //     color   : "000000"
-                        // },
                         lang : "hu-HU",
                     });
                     break;
@@ -144,7 +83,7 @@ function ppt_keszitese()
                     {
                         dia.addText("Itt jelenne meg a '" + obj.kep + "' képfájl, de az oldal nem fér hozzá a gép fájlrendszeréhez. Megoldás: szerverről futtatni (pl. http://mix.metodista.hu)!",
                         {
-                            // x        : obj.poz_x     + "%", 
+                            // x        : obj.poz_x     + "%",
                             // y        : obj.poz_y     + "%",
                             // w        : obj.szelesseg + "%",
                             // h        : obj.magassag  + "%",
