@@ -6,7 +6,7 @@
     {
         $q = $kapcsolat->prepare("SELECT id, cim, sorszam
                                   FROM   dalszovegek
-                                  WHERE  szoveg LIKE :keres
+                                  WHERE  LOWER(szoveg) LIKE LOWER(:keres)
                                   LIMIT 10;");
         $q->bindValue(':keres', "%$keres%", PDO::PARAM_STR);
         $q->execute();

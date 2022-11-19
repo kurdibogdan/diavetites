@@ -57,7 +57,7 @@ function dalszoveg_keresese(szoveg, callback)
     }
 }
 
-function dal_keresese(beviteli_mezo)
+function dal_keresese(beviteli_mezo, callback_neve)
 {
     var cim     = beviteli_mezo.value.toLowerCase();
     var lista   = document.getElementById(beviteli_mezo.getAttribute("data-list"));
@@ -97,7 +97,11 @@ function dal_keresese(beviteli_mezo)
     {
         t += "<div class='dal_talalat'"
            + "     data-id='" + pontos_talalatok[i].id + "'"
-           + "     onclick=\"dal_kivalasztasa('" + gomb_id + "', '" + beviteli_mezo.id + "', " + pontos_talalatok[i].id + ", '" + pontos_talalatok[i].cim + "')\""
+           + "     onclick=\"dal_kivalasztasa('" + gomb_id + "',"
+           + "                                '" + beviteli_mezo.id + "', " 
+           +                                  pontos_talalatok[i].id + ", "
+           + "                                '" + pontos_talalatok[i].cim + "', "
+           + "                                '" + callback_neve + "');\""
            + ">" + (pontos_talalatok[i].sorszam ? pontos_talalatok[i].sorszam + ". " : "")
            + pontos_talalatok[i].cim 
            + "</div>";
@@ -115,21 +119,15 @@ function dal_keresese(beviteli_mezo)
                 i < n && talalatok_szama < MAX_TALALATOK;
                 i++)
             {
-                var mar_volt = false;
-                for(var j=0, o=pontos_talalatok.length; j<o; j++)
-                {
-                    if (pontos_talalatok[j].id == szoveg_talalatok[i].id)
-                    {
-                        mar_volt = true;
-                        break;
-                    }
-                }
-                
+                var mar_volt = (pontos_talalatok.filter(obj=>obj.id == szoveg_talalatok[i].id).length > 0 ? true : false);
                 if (mar_volt == false)
                 {
                     t += "<div class='dal_talalat'"
                        + "     data-id='" + szoveg_talalatok[i].id + "'"
-                       + "     onclick=\"dal_kivalasztasa('" + gomb_id + "', '" + beviteli_mezo.id + "', " + szoveg_talalatok[i].id + ", '" + szoveg_talalatok[i].cim + "')\""
+                       + "     onclick=\"dal_kivalasztasa('" + gomb_id + "', "
+                       + "                                '" + beviteli_mezo.id + "', "
+                       + "                                 " + szoveg_talalatok[i].id + ", "
+                       + "                                '" + szoveg_talalatok[i].cim + "')\""
                        + ">" + (szoveg_talalatok[i].sorszam ? szoveg_talalatok[i].sorszam + ". " : "")
                        + szoveg_talalatok[i].cim 
                        + "</div>";
@@ -141,14 +139,22 @@ function dal_keresese(beviteli_mezo)
     }
 }
 
-function dal_kivalasztasa(gomb_id, beviteli_mezo_id, dal_id, dal_cim)
+function dal_kivalasztasa(gomb_id, beviteli_mezo_id, dal_id, dal_cim, callback_neve)
 {
     // console.log(beviteli_mezo_id + " -> " + dal_id + "(" + dal_cim + ")");
     var beviteli_mezo = document.getElementById(beviteli_mezo_id);
     beviteli_mezo.setAttribute("data-dal_id", dal_id);
     beviteli_mezo.value = dal_cim;
     $(".dalszoveg_talalatok").hide();
-    dalszoveg_kivalasztasa(gomb_id);    // hmm... ez csak a folytatása ennek a függvénynek, de ugyanaz a funkciója
+    
+    // gombok beállítása:
+    $("#diasor_bovitese_" + gomb_id).prop("disabled", "");                              // diasorhoz hozzáadó gomb engedélyezése
+    $("#dalszoveg_szerkesztese_gomb_" + gomb_id).prop("disabled", "").show();           // szerkesztő gomb engedélyezése (+ megjelenítése)
+    $("#dia_keszitese_" + gomb_id).prop("checked", "checked");                          // kipipálás
+    $("#uj_dalszoveg_gomb_" + gomb_id).hide();                                          // új dalszöveg hozzáadása gomb elrejtése
+    
+    var callback = eval(callback_neve);
+    if (typeof callback == "function") callback(dal_id);
 }
 
 function dal_kivalasztasa_cim_szerint(gomb_id, dal_cim)

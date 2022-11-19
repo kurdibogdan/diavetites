@@ -132,6 +132,68 @@ var DIA_VEZERLES = new function()
         $("#dia_vezerles").html(t);
     };
 };
+ 
+var BETUBEALLITASOK = new function()
+{   
+    this.gombok = 
+    [
+        {"kiskep": "kepek/nagybetus.png", "parancs": ""},
+        {"kiskep": "kepek/betutipus.png", "parancs": ""},   // legördülő lista: Arial Black 25pt, Calibri 44pt
+        {"kiskep": "kepek/korvonal.png", "parancs": ""},    // 2pt széles, szín kiválasztható (háttérhez igazodik)
+        {"kiskep": "kepek/betuszin.png", "parancs": ""},    // fehér, fekete
+    ];
+    
+    this.igazitasok =
+    {
+        "x": ["balra", "kozepre", "jobbra"],
+        "y": ["fent", "kozepre", "lent"],
+        "kivalasztva" : {"x": "kozepre", "y": "kozepre"}
+    };
+    
+    this.gombok_megjelenitese = function()
+    {
+        var t = "<table>";
+        for(var y_index in this.igazitasok.y)
+        {
+            t += "<tr>";
+            for(var x_index in this.igazitasok.x)
+            {
+                var x = this.igazitasok.x[x_index];
+                var y = this.igazitasok.y[y_index];
+                var kivalasztva = (x == this.igazitasok.kivalasztva.x && 
+                                   y == this.igazitasok.kivalasztva.y);
+                var kep = "kepek/igazitas_" + x + "_" + y + ".png";
+                t += "<td>"
+                   + " <div class='kis_vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
+                   + "      onclick=\"BETUBEALLITASOK.igazitas_kivalasztasa('" + x + "', '" + y + "');\">"
+                   + "  <img src='" + kep + "'>"
+                   + "</td>";
+            }
+            t += "</tr>";
+        }
+        t += "</table>";
+        $("#dia_betubeallitasok").html(t);
+    };
+    
+    this.igazitas_kivalasztasa = function(x, y)
+    {
+        // gomb kiválasztása:
+        this.igazitasok.kivalasztva.x = x;
+        this.igazitasok.kivalasztva.y = y;
+        this.gombok_megjelenitese();
+        
+        // kiválasztott diákra alkalmazás:
+        for(var i = 0; i < diasor.length; i++)
+        {
+            if (diasor[i].kijelolve == true)
+            {
+                diaobjektumok_igazitasa(i, x, y);
+            }
+        }
+        
+        diasor_megjelenitese();
+    };
+};
 
 function diasor_megjelenitese()
 {

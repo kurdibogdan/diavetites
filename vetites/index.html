@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Diavetítés</title>
+  <script type="text/javascript" src="../js/jquery.1.12.4.min.js"></script>
+  <style type="text/css">
+  #dia
+  {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  #navigalo_gombok
+  {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: none;
+  }
+  .navigalo_gomb
+  {
+     padding: 10px 30px;
+     border-radius: 5px;
+     font-size: 50px;
+     font-size: 4vw;
+     margin: 5px 20px;
+     height: 400px;
+     width: 200px;
+     width: 20vw;
+     height: calc(90vh - 50px);
+     background-color: rgba(150,150,150,0.5);
+  }
+  </style>
+ </head>
+<body>
+
+<div id="dia"></div>
+<table id="navigalo_gombok" width="100%" height="100%">
+ <tr height="100%" valign="middle">
+  <td width="1">
+   <button class="navigalo_gomb" onclick="Diasor.elozo_dia_megjelenitese();">Vissza</button>
+  </td>
+  <td width="100%"></td>
+  <td width="1">
+   <button class="navigalo_gomb" onclick="Diasor.kovetkezo_dia_megjelenitese();">Elõre</button>
+  </td>
+ </tr>
+</table>
+
+<script type="text/javascript">
+var Diasor =
+{
+    aktualis_dia: 0,
+    diak: [],
+    
+    kepek_betoltese: function(callback)
+    {
+        var that = this;
+        $.get("dia_fajlok.php", function(data)
+        {
+            data = jQuery.parseJSON(data);
+            that.diak = [];
+            
+            data.kepek.sort(function(x, y)
+            {
+                var szam_x = x.match(/\d+/)[0];
+                var szam_y = y.match(/\d+/)[0];
+                return(szam_x - szam_y);
+            });
+            
+            for(var i in data.kepek)
+            {
+                var kep = data.kepek[i];
+                var dia =
+                {
+                    "kep": data.mappa + "/" + kep,
+                    "hatterszin": (i == 0 ? "white" : "rgb(0,69,17)")
+                }
+                dia.img = new Image();   // cache
+                dia.img.src = dia.kep;
+                that.diak.push(dia);
+            }
+            if (typeof callback == "function") callback();
+        });
+    },
+    
+    aktualis_dia_megjelenitese: function()
+    {
+        if ((this.aktualis_dia || this.aktualis_dia == 0) &&
+            this.aktualis_dia != NaN &&
+            this.aktualis_dia < this.diak.length &&
+            this.aktualis_dia >= 0)
+        {
+            var dia = document.getElementById("dia");
+            dia.style.backgroundImage = "url('" + this.diak[this.aktualis_dia].kep + "')";
+            dia.style.backgroundColor = this.diak[this.aktualis_dia].hatterszin;            
+        }
+        else
+        {
+            console.log("Nincs ilyen dia: " + this.aktualis_dia);
+        }
+        
+        dia_folyamatos_frissitese();
+    },
+    
+    dia_megjelenitese: function(dia_sorszam)
+    {
+        Diasor.aktualis_dia = dia_sorszam;
+        Diasor.aktualis_dia_megjelenitese();
+    },
+    
+    kovetkezo_dia_megjelenitese: function()
+    {
+        var uj_dia = (Diasor.aktualis_dia < Diasor.diak.length - 1 ? Diasor.aktualis_dia + 1 : 0);
+        Diasor.aktualis_dia = uj_dia;
+        Diasor.aktualis_dia_megjelenitese();
+    },
+    
+    elozo_dia_megjelenitese: function()
+    {
+        var uj_dia = (Diasor.aktualis_dia > 0 ? Diasor.aktualis_dia - 1 : Diasor.diak.length - 1);
+        Diasor.aktualis_dia = uj_dia;
+        Diasor.aktualis_dia_megjelenitese();
+    },
+    
+    gombnyomas_kezelese: function(e)
+    {
+        if (e.keyCode == 32 || e.keyCode == 39 || e.keyCode == 40)  // space, jobbra, le
+        {
+            e.preventDefault();
+            this.kovetkezo_dia_megjelenitese();
+        }
+        else if (e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 38)  // backspace, balra, fel
+        {
+            e.preventDefault();
+            this.elozo_dia_megjelenitese();
+        }
+    },
+};
+
+// ------------------------------- //
+
+function url_dekololas(url)
+{
+    url = (url || "");
+    return(decodeURIComponent(url.replace(/\+/g,  " ")));
+}
+
+function getUrlVars()
+{
+	var vars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value){vars[key] = url_dekololas(value);});
+	return vars;
+}
+
+function frissites()
+{
+    // console.log("frissítés");
+    if (getUrlVars()["iranyito"] == 1)
+    {
+        $.get("aktualis_dia.php?aktualis_dia=" + Diasor.aktualis_dia, function(data)
+        {
+        });
+    }
+    else
+    {
+        $.get("aktualis_dia.php", function(data)
+        {
+            Diasor.dia_megjelenitese(parseInt(data));
+        });
+    }
+}
+
+var frissites_folyamatban = false;
+var varakozas_folyamatban = false;
+var frissites_timeout;
+var varakozas_timeout;
+var FRISSITES_IDEJE = 500;
+
+function dia_folyamatos_frissitese()
+{
+    if (frissites_folyamatban == false)
+    {
+        frissites_folyamatban = true;
+        frissites();
+        frissites_timeout = setTimeout(function()
+        {
+            // console.log("lejárt a frissítés timeout");
+            frissites_folyamatban = false;
+        }, FRISSITES_IDEJE);
+    }
+    else
+    {
+        if (varakozas_folyamatban == false)
+        {
+            varakozas_folyamatban = true;
+            clearTimeout(frissites_timeout);
+            varakozas_timeout = setTimeout(function()
+            {
+                frissites_folyamatban = false;
+                varakozas_folyamatban = false;
+                dia_folyamatos_frissitese();
+            }, FRISSITES_IDEJE);
+        }
+    }
+}
+
+// ------------------------------- //
+
+Diasor.kepek_betoltese(function()
+{
+    if (getUrlVars()["iranyito"] == 1)
+    {
+        console.log("szerver");
+        document.getElementById("navigalo_gombok").style.display = "block";
+        Diasor.dia_megjelenitese(0);
+        document.addEventListener("keydown", function(e){Diasor.gombnyomas_kezelese(e);});
+    }
+    else
+    {
+        console.log("kliens");
+    }
+
+    dia_folyamatos_frissitese();
+});
+
+</script>
+
+</body>
+</html>

@@ -1,3 +1,15 @@
+// Függőségek:
+// - jQuery
+// Dalszöveg kereséséhez:
+// - dalszoveg_szerkesztese.css
+// - dalszovegek.js
+//   -> dalszovegek[] tömb kell neki
+//   -> dallista_betoltese() gyorsítja
+// - oldal_megjelenitese()
+// Diakészítéshez:
+// - gomb.css
+// - checkbox.css
+
 var Diasor_Dalszoveg =
 {
     uj_diasor : function(gomb_id, callback)
@@ -48,8 +60,8 @@ var Diasor_Dalszoveg =
                     "poz_y"      : 0,           // 8% (~ 1 cm)
                     "szelesseg"  : 100,         // 92% (100% - 1 cm)
                     "magassag"   : 100,         // 84% (100% - 1 cm)
-                    "igazitas_x" : "kozepre",
-                    "igazitas_y" : "kozepre",
+                    "igazitas_x" : BETUBEALLITASOK.igazitasok.kivalasztva.x,
+                    "igazitas_y" : BETUBEALLITASOK.igazitasok.kivalasztva.y,
                     "szovegek"   :
                     [
                         {
@@ -141,6 +153,22 @@ var Diasor_Dalszoveg =
         }
     },
     
+    dalszoveg_kereses_gomb : function(gomb_id, callback_neve)
+    {
+        var t = "  <input id='enek_valasztasa_" + gomb_id + "'"
+              + "         type='text'"
+              + "         value=''"
+              + "         data-dal_id=''"
+              + "         data-gomb_id='" + gomb_id + "'"
+              + "         onkeydown=\"dalszoveg_kivalasztas_torlese('" + gomb_id + "');\""
+              + "         onkeyup=\"dal_keresese(this, '" + callback_neve + "');\""
+              + "         autocomplete='off'"
+              + "         placeholder='-- dal keresése --'"
+              + "         data-list='dalszoveg_talalatok_" + gomb_id + "'>"
+              + "  <div class='dalszoveg_talalatok' id='dalszoveg_talalatok_" + gomb_id + "'></div>";
+        return(t);
+    },
+    
     diakeszites_gomb : function(gomb_id, tipus, cim, rejtett)
     {   
         // tipus = ["teljes", "csak_elso_versszak", "utolso_versszakig", "csak_utolso_versszak"];
@@ -154,17 +182,7 @@ var Diasor_Dalszoveg =
               + "  </label>"
               + " </td>\n"
               + " <td>" + cim + " <br>"
-              + "  <input id='enek_valasztasa_" + gomb_id + "'"
-              + "         type='text'"
-              + "         value=''"
-              + "         data-dal_id=''"
-              + "         data-gomb_id='" + gomb_id + "'"
-              + "         onkeydown=\"dalszoveg_kivalasztas_torlese('" + gomb_id + "');\""
-              + "         onkeyup=\"dal_keresese(this);\""
-              + "         autocomplete='off'"
-              + "         placeholder='-- dal keresése --'"
-              + "         data-list='dalszoveg_talalatok_" + gomb_id + "'>"
-              + "  <div class='dalszoveg_talalatok' id='dalszoveg_talalatok_" + gomb_id + "'></div>"
+              + this.dalszoveg_kereses_gomb(gomb_id, "dalszoveg_szerkesztes_bezarasa")
               + " </td>\n"
               + " <td>"
               + "  <button id='diasor_bovitese_" + gomb_id + "' "
@@ -255,14 +273,6 @@ function dalszoveg_kivalasztas_torlese(gomb_id)
     dalszoveg_szerkesztes_bezarasa();                                                   // szerkesztő bezárása
 }
 
-function dalszoveg_kivalasztasa(gomb_id)
-{
-    $("#diasor_bovitese_" + gomb_id).prop("disabled", "");                              // diasorhoz hozzáadó gomb engedélyezése
-    $("#dalszoveg_szerkesztese_gomb_" + gomb_id).prop("disabled", "").show();           // szerkesztő gomb engedélyezése (+ megjelenítése)
-    $("#dia_keszitese_" + gomb_id).prop("checked", "checked");                          // kipipálás
-    $("#uj_dalszoveg_gomb_" + gomb_id).hide();                                          // új dalszöveg hozzáadása gomb elrejtése
-    dalszoveg_szerkesztes_bezarasa();                                                   // szerkesztő bezárása (már be van zárva amúgy)
-}
 
 function dalszoveg_szerkesztes_bezarasa()
 {

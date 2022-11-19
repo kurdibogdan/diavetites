@@ -135,3 +135,18 @@ function kijelolesek_megszuntetese()
     kurzor = 0;
     diasor_megjelenitese();
 }
+
+function diaobjektumok_igazitasa(dia_id, x, y)
+{
+    var dia = diasor[dia_id];
+    for(var objektum_id in dia.objektumok)
+    {
+        var objektum = dia.objektumok[objektum_id];
+        if (objektum.tipus == "szovegdoboz")
+        {
+            objektum.igazitas_x = x;
+            objektum.igazitas_y = y;
+        }
+    }
+}
+        

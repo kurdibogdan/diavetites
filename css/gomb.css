@@ -34,22 +34,42 @@ button:disabled
 {
     display: inline-block;
 }
-.vezerlo_gomb
+.vezerlo_gomb,
+.kis_vezerlo_gomb
 {
-    min-width     : 30px;
-    height        : 40px;
-    line-height   : 36px;
     border        : 1px outset #ccc;
     border-radius : 2px;
     padding       : 5px;
     text-align    : center;
 }
-.vezerlo_gomb img
+.vezerlo_gomb
+{
+    min-width     : 30px;
+    height        : 40px;
+    line-height   : 36px;
+}
+.kis_vezerlo_gomb
+{
+    min-width     : 15px;
+    height        : 20px;
+    line-height   : 18px;
+}
+.vezerlo_gomb img,
+.kis_vezerlo_gomb img
 {
     vertical-align : middle;
+}
+.vezerlo_gomb img
+{
     max-height     : 40px;
 }
-.vezerlo_gomb:active
+.kis_vezerlo_gomb img
+{
+    max-height     : 20px;
+}
+.vezerlo_gomb:active,
+.kis_vezerlo_gomb:active,
+.vezerlo_gomb_kivalasztva
 {
     border   : 1px inset #ccc;
     position : relative;
