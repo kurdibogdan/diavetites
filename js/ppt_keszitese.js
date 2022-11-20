@@ -30,9 +30,11 @@ function ppt_keszitese()
                     for(var k = 0, p = obj.szovegek.length; k < p; k++)
                     {
                         var sz = obj.szovegek[k];
+                        var szoveg = sz.szoveg.replace(/<br>/g, "\n");
+                            szoveg = (sz.nagybetus == true ? szoveg.toUpperCase() : szoveg);
                         szovegek.push(
                         {
-                            text    : sz.szoveg.replace(/<br>/g, "\n"),
+                            text    : szoveg,
                             options :
                             {
                                 fontSize  : sz.betumeret,

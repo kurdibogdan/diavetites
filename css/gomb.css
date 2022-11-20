@@ -71,6 +71,7 @@ button:disabled
 .kis_vezerlo_gomb:active,
 .vezerlo_gomb_kivalasztva
 {
+    background-color: rgb(4, 170, 109);
     border   : 1px inset #ccc;
     position : relative;
     top      : 1px;

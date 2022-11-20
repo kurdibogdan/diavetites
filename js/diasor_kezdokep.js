@@ -36,7 +36,7 @@ var Diasor_Kezdokep =
     {
         var t = "<tr>\n"
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' checked='checked'><span class='slider round'></span></label></td>\n"
-              + " <td>Kezdőkép (amit Julcsi rajzolt)</td>\n"
+              + " <td>Kezdőkép (Julcsi rajza)</td>\n"
               + " <td><button onclick=\"diasor_bovitese(Diasor_Kezdokep.uj_diasor('" + gomb_id + "'));\">&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);

@@ -136,17 +136,45 @@ function kijelolesek_megszuntetese()
     diasor_megjelenitese();
 }
 
-function diaobjektumok_igazitasa(dia_id, x, y)
+function diaobjektumok_vizszintes_igazitasa(dia_id, x)
 {
     var dia = diasor[dia_id];
     for(var objektum_id in dia.objektumok)
     {
-        var objektum = dia.objektumok[objektum_id];
-        if (objektum.tipus == "szovegdoboz")
+        var obj = dia.objektumok[objektum_id];
+        if (obj.tipus == "szovegdoboz")
         {
-            objektum.igazitas_x = x;
-            objektum.igazitas_y = y;
+            obj.igazitas_x = x;
         }
     }
 }
-        
+
+function diaobjektumok_fuggoleges_igazitasa(dia_id, y)
+{
+    var dia = diasor[dia_id];
+    for(var objektum_id in dia.objektumok)
+    {
+        var obj = dia.objektumok[objektum_id];
+        if (obj.tipus == "szovegdoboz")
+        {
+            obj.igazitas_y = y;
+        }
+    }
+}
+
+function diaszovegek_kis_nagybetus_valtasa(dia_id, nagybetus)
+{
+    var dia = diasor[dia_id];
+    for(var objektum_id in dia.objektumok)
+    {
+        var obj = dia.objektumok[objektum_id];
+        if (obj.tipus == "szovegdoboz")
+        {
+            for(var k=0, p=obj.szovegek.length; k<p; k++)
+            {
+                var sz = obj.szovegek[k];
+                sz.nagybetus = nagybetus;
+            }
+        }
+    }
+}

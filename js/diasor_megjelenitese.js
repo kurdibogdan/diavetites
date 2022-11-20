@@ -137,11 +137,13 @@ var BETUBEALLITASOK = new function()
 {   
     this.gombok = 
     [
-        {"kiskep": "kepek/nagybetus.png", "parancs": ""},
-        {"kiskep": "kepek/betutipus.png", "parancs": ""},   // legördülő lista: Arial Black 25pt, Calibri 44pt
-        {"kiskep": "kepek/korvonal.png", "parancs": ""},    // 2pt széles, szín kiválasztható (háttérhez igazodik)
-        {"kiskep": "kepek/betuszin.png", "parancs": ""},    // fehér, fekete
+        "nagybetus",
+        "betutipus",   // legördülő lista: Arial Black 25pt, Calibri 44pt
+        "korvonal",    // 2pt széles, szín kiválasztható (háttérhez igazodik)
+        "betuszin",    // fehér, fekete
     ];
+    
+    this.nagybetus_beallitasa = true;
     
     this.igazitasok =
     {
@@ -152,33 +154,83 @@ var BETUBEALLITASOK = new function()
     
     this.gombok_megjelenitese = function()
     {
-        var t = "<table>";
+        // Kisbetűs, nagybetűs váltás:
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>"
+              + "  <td>"
+              + "   <div class='vezerlo_gomb " + (this.nagybetus_beallitasa ? "" : "vezerlo_gomb_kivalasztva") + "' "
+              + "        onclick=\"BETUBEALLITASOK.nagybetusse_alakitas(false);\">"
+              + "    <img id='kis_nagybetus_beallitas' src='kepek/kisbetus.png'>"
+              + "   </div>"
+              + "  </td>"
+              + "  <td>"
+              + "   <div class='vezerlo_gomb " + (this.nagybetus_beallitasa ? "vezerlo_gomb_kivalasztva" : "") + "' "
+              + "        onclick=\"BETUBEALLITASOK.nagybetusse_alakitas(true);\">"
+              + "    <img id='kis_nagybetus_beallitas' src='kepek/nagybetus.png'>"
+              + "   </div>"
+              + "  </td>"
+              + " </tr>"
+              + "</table>";
+        $("#dia_kis_nagybetu_valtas").html(t);
+        
+        // Vízszintes igazítás:
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
+        for(var x_index in this.igazitasok.x)
+        {
+            var x = this.igazitasok.x[x_index];
+            var kivalasztva = (x == this.igazitasok.kivalasztva.x);
+            t += "<td>"
+               + " <div class='vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
+               + "      onclick=\"BETUBEALLITASOK.vizszintes_igazitas_kivalasztasa('" + x + "');\">"
+               + "  <img src='kepek/vizszintes_igazitas_" + x + ".png'>"
+               + " </div>"
+               + "</td>";
+        }
+        t += " </tr>"
+           + "</table>";
+        $("#dia_vizszintes_igazitas").html(t);
+        
+        // Függőleges igazítás:
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
         for(var y_index in this.igazitasok.y)
         {
-            t += "<tr>";
-            for(var x_index in this.igazitasok.x)
-            {
-                var x = this.igazitasok.x[x_index];
-                var y = this.igazitasok.y[y_index];
-                var kivalasztva = (x == this.igazitasok.kivalasztva.x && 
-                                   y == this.igazitasok.kivalasztva.y);
-                var kep = "kepek/igazitas_" + x + "_" + y + ".png";
-                t += "<td>"
-                   + " <div class='kis_vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
-                   + "      onclick=\"BETUBEALLITASOK.igazitas_kivalasztasa('" + x + "', '" + y + "');\">"
-                   + "  <img src='" + kep + "'>"
-                   + "</td>";
-            }
-            t += "</tr>";
+            var y = this.igazitasok.y[y_index];
+            var kivalasztva = (y == this.igazitasok.kivalasztva.y);
+            t += "<td>"
+               + " <div class='vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
+               + "      onclick=\"BETUBEALLITASOK.fuggoleges_igazitas_kivalasztasa('" + y + "');\">"
+               + "  <img src='kepek/fuggoleges_igazitas_" + y + ".png'>"
+               + " </div>"
+               + "</td>";
         }
-        t += "</table>";
-        $("#dia_betubeallitasok").html(t);
+        t += " </tr>"
+           + "</table>";
+        $("#dia_fuggoleges_igazitas").html(t);
     };
     
-    this.igazitas_kivalasztasa = function(x, y)
+    this.vizszintes_igazitas_kivalasztasa = function(x)
     {
         // gomb kiválasztása:
         this.igazitasok.kivalasztva.x = x;
+        this.gombok_megjelenitese();
+        
+        // kiválasztott diákra alkalmazás:
+        for(var i = 0; i < diasor.length; i++)
+        {
+            if (diasor[i].kijelolve == true)
+            {
+                diaobjektumok_vizszintes_igazitasa(i, x);
+            }
+        }
+        
+        diasor_megjelenitese();
+    };
+    
+    this.fuggoleges_igazitas_kivalasztasa = function(y)
+    {
+        // gomb kiválasztása:
         this.igazitasok.kivalasztva.y = y;
         this.gombok_megjelenitese();
         
@@ -187,7 +239,25 @@ var BETUBEALLITASOK = new function()
         {
             if (diasor[i].kijelolve == true)
             {
-                diaobjektumok_igazitasa(i, x, y);
+                diaobjektumok_fuggoleges_igazitasa(i, y);
+            }
+        }
+        
+        diasor_megjelenitese();
+    };
+    
+    this.nagybetusse_alakitas = function(nagybetus)
+    {
+        // gomb kiválasztása:
+        this.nagybetus_beallitasa = nagybetus;
+        this.gombok_megjelenitese();
+        
+        // kiválasztott diákra alkalmazás:
+        for(var i = 0; i < diasor.length; i++)
+        {
+            if (diasor[i].kijelolve == true)
+            {
+                diaszovegek_kis_nagybetus_valtasa(i, nagybetus);
             }
         }
         
@@ -284,10 +354,11 @@ function diasor_megjelenitese()
                     for(var k=0, p=obj.szovegek.length; k<p; k++)
                     {
                         var sz = obj.szovegek[k];
-                        t += "<div style='font-size   : " + sz.betumeret/DIA_MERET.skalazas + "pt;"
-                           + "            font-weight : " + (sz.felkover  == true ? "bold"       : "normal") + ";"
-                           + "            font-style  : " + (sz.dolt      == true ? "italic"     : "normal") + ";"
-                           + "            font-family : " + (sz.betutipus != null ? sz.betutipus : "Sylfaen") + ";"
+                        t += "<div style='font-size      : " + sz.betumeret/DIA_MERET.skalazas + "pt;"
+                           + "            font-weight    : " + (sz.felkover  == true ? "bold"       : "normal")  + ";"
+                           + "            font-style     : " + (sz.dolt      == true ? "italic"     : "normal")  + ";"
+                           + "            font-family    : " + (sz.betutipus != null ? sz.betutipus : "Sylfaen") + ";"
+                           + "            text-transform : " + (sz.nagybetus == true ? "uppercase"  : "none")    + ";"
                            + "           '>"
                            + sz.szoveg
                            + "</div>";

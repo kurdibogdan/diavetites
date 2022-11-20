@@ -23,7 +23,7 @@ var Diasor_Dalszoveg =
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
             // Szöveg típusra szabása (csak az első versszak, utolsó versszakig, csak az utolsó versszak, teljes dal):
-            var szoveg = data.szoveg.replace(/\r/g, "").toUpperCase();
+            var szoveg = data.szoveg.replace(/\r/g, "");
                 szoveg = dalszoveg_tipusra_szabasa(szoveg, tipus);
             
             // A szöveg felbontása a diák (üres sorok) mentén:
@@ -67,7 +67,8 @@ var Diasor_Dalszoveg =
                         {
                             "szoveg"    : dalszoveg[i].join("<br>"),
                             "betumeret" : betumeret,        // pt 
-                            "betutipus" : "Arial Black"     // alternatív: 30px "Sylfaen",
+                            "betutipus" : "Arial Black",    // alternatív: 30px "Sylfaen",
+                            "nagybetus" : BETUBEALLITASOK.nagybetus_beallitasa
                         },
                     ]
                 };
