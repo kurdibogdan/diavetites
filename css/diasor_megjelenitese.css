@@ -7,28 +7,28 @@
     -ms-user-select: none;       /* Internet Explorer/Edge */
     user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
-.dia
+.dia_keret_fuggoleges
 {
-    display             : inline-block;
-    vertical-align      : top;
-    width               : 100px;
-    height              : 92px;
-    background          : url('../kepek/filmkeret_atlatszo2.png');
-    background-repeat   : no-repeat;
-    background-position : center center;
-    background-size     : cover;
+    height: 0px;
+    padding: 0px 5px;
+    color: white;
+    background-color: black;
+    border-image: url('../kepek/filmkeret_korbe.png') 116 round;
+    border-top: 30px solid transparent;
 }
-.dia_obj
+.dia_keret_vizszintes
 {
-    position    : absolute;
-/*
-    width       : 95px;
-    height      : 63px;
-    margin-top  : 14.5px;
-    margin-left : 2.5px;
-*/
+    padding: 0px 5px;
+    background-color: black;
 }
-.dia_kijelolve,
+.dia_kijelolve .dia_keret_fuggoleges
+{
+    border-image-source: url("../kepek/filmkeret_korbe_kijelolve.png");
+}
+.dia_kijelolve .dia_keret_vizszintes
+{
+    background-color: rgb(4, 170, 109);
+}
 .diameret_kijelolve
 {
     background-color : #04AA6D;  /* rgb(0,180,150); */

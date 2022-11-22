@@ -4,11 +4,16 @@ function ppt_keszitese()
     let pptx = new PptxGenJS();
     pptx.defineLayout(
     {
-        name   : 'szélesvásznú',
+        name   : "szélesvásznú",
         width  : 10,
         height : 5.625
+    },
+    {
+        name   : "normál_vászon",
+        width  : 10,
+        height : 7.5
     });
-    pptx.layout = 'szélesvásznú';
+    pptx.layout = "szélesvásznú";
     
     for(var i = 0, n = diasor.length; i < n; i++)
     {

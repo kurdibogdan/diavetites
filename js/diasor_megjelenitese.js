@@ -3,8 +3,8 @@ var DIA_MERET = new function()
 {
     this.szelesseg         = 100;  // px
     this.magassag          = 92;   // px
-    this.obj_szelesseg     = 96;   // px
-    this.obj_magassag      = 63;   // px
+    this.obj_szelesseg     = 96;   // px            // TODO: elavult, törölni!
+    this.obj_magassag      = 63;   // px            // TODO: Elavult, törölni!
     this.obj_margo_fent    = 14.5; // px
     this.obj_margo_balra   = 2.5;  // px
     this.skalazas          = 10;   // pt/px
@@ -16,11 +16,22 @@ var DIA_MERET = new function()
         300 : {kiskep_merete: 32},
         500 : {kiskep_merete: 40},
     };
-    
+
+// Kiscelli:
+// 10 x 5,625 (16:9 = 1.7777)
+// - 1366x768 (1,778645833333333)
+// - 1360x768 (1,770833333333333)
+// ------------------------------
+// Felsőerdősor:
+// 25,4 x 19,05 (4:3 = 1,3333)
+// 10 x 7,5
+// - 1024x768 (1,3333)
+// - 800x600 (1,3333)
+
     this.diameretek_beallitasa = function(dia_merete)
     {
-        this.szelesseg       = dia_merete;                    // 500px
-        this.magassag        = this.szelesseg * 0.92;          // 460px
+        this.szelesseg       = dia_merete;
+        this.magassag        = this.szelesseg * 9/13;
         this.obj_szelesseg   = this.szelesseg * 0.9485         // egyenes illesztése ezekre a pontokra: (0, 0), (100, 96), (500, 474)
         this.obj_magassag    = this.obj_szelesseg * 63.2/95;
         this.obj_margo_fent  = this.obj_magassag * 14.5/63;
@@ -271,34 +282,33 @@ function diasor_megjelenitese()
     
     // t += "<div class='kurzorhely_kerete'><div class='kurzorhely'></div></div>";
     
+    
     for(var i=0, n=diasor.length; i<n; i++)
     {
         var dia = diasor[i];
         
-        t += "<div class='dia noselect " + (dia.kijelolve == true ? " dia_kijelolve " : "") +  "' "
-           + "     onclick=\"dia_kijelolese(event, '" + i + "');\" "
-           + "     style='width  : " + DIA_MERET.szelesseg + "px;"
-           + "            height : " + DIA_MERET.magassag  + "px;"
-           + "            color  : " + STILUS.betuszin + ";"
-           + "           '>";
+        t += "<table class='noselect " + (dia.kijelolve == true ? " dia_kijelolve " : "") + "' "
+           + "       style='display: inline-block;'"
+           + "       cellpadding='0' cellspacing='0'"
+           + "       onclick=\"dia_kijelolese(event, '" + i + "');\">"
+           + " <tr><td class='dia_keret_fuggoleges'></td></tr>"
+           + " <tr>"
+           + "  <td class='dia_keret_vizszintes'>"
+           + "   <div style='position: relative; "
+           + "               width: " + DIA_MERET.szelesseg + "px; "
+           + "               height: " + DIA_MERET.magassag + "px; "
+           + "               color: " + STILUS.betuszin + "; "
+           + "               background-color:" + STILUS.hatterszin + ";'>";
+       
         
-        // Háttérszín:
-        t += "<div class='dia_obj'"
-           + "     style='width            : " + DIA_MERET.obj_szelesseg + "px;"
-           + "            height           : " + DIA_MERET.obj_magassag  + "px;"
-           + "            margin-top       : " + DIA_MERET.obj_margo_fent  + "px;"
-           + "            margin-left      : " + DIA_MERET.obj_margo_balra  + "px;"
-           + "            background-color : " + STILUS.hatterszin + ";'></div>";
-        
+        // Dia objektumai:
         for(var j=0, o=dia.objektumok.length; j<o; j++)
         {
             var obj = dia.objektumok[j];
             
             t += "<div class='dia_obj'"
-               + "     style='width            : " + DIA_MERET.obj_szelesseg + "px;"
-               + "            height           : " + DIA_MERET.obj_magassag  + "px;"
-               + "            margin-top       : " + DIA_MERET.obj_margo_fent  + "px;"
-               + "            margin-left      : " + DIA_MERET.obj_margo_balra  + "px;"
+               + "     style='width  : " + DIA_MERET.szelesseg + "px;"
+               + "            height : " + DIA_MERET.magassag  + "px;"
                + "           '>";
             switch(obj.tipus)
             {
@@ -306,8 +316,8 @@ function diasor_megjelenitese()
                     t += "<div style='width:100%; height:100%; background-color:" + obj.szin + ";'></div>";
                     break;
                 case "kep":
-                    var szazalekos_szelesseg = obj.szelesseg / DIA_MERET.obj_szelesseg;
-                    var szazalekos_magassag  = obj.magassag / DIA_MERET.obj_magassag;
+                    var szazalekos_szelesseg = obj.szelesseg / DIA_MERET.szelesseg;
+                    var szazalekos_magassag  = obj.magassag / DIA_MERET.magassag;
                     if (szazalekos_magassag > szazalekos_szelesseg)
                     {
                         szazalekos_szelesseg = szazalekos_szelesseg / szazalekos_magassag * 100;
@@ -375,7 +385,13 @@ function diasor_megjelenitese()
             }
             t += "</div>";
         }
-        t += "</div>";
+
+        t += "   </div>"
+           + "  </td>"
+           + " </tr>"
+           + " <tr><td class='dia_keret_fuggoleges'></td></tr>"
+           + "</table>";
+        
         // t += "<div class='kurzorhely_kerete'><div class='kurzorhely'></div></div>";
     }
     t += "</table>";
