@@ -2,18 +2,16 @@ function ppt_keszitese()
 {
     // beállítások:
     let pptx = new PptxGenJS();
+    
+    // képarányok definiálása:
+    var kulcs = DIA_MERET.keparany;
     pptx.defineLayout(
     {
-        name   : "szélesvásznú",
-        width  : 10,
-        height : 5.625
-    },
-    {
-        name   : "normál_vászon",
-        width  : 10,
-        height : 7.5
+        "name"   : kulcs,
+        "width"  : 10,
+        "height" : (10 / DIA_MERET.beepitett_keparanyok[kulcs].ertek)
     });
-    pptx.layout = "szélesvásznú";
+    pptx.layout = kulcs;
     
     for(var i = 0, n = diasor.length; i < n; i++)
     {

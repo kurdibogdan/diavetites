@@ -1,14 +1,24 @@
 var diasor = [];
 var DIA_MERET = new function()
 {
-    this.szelesseg         = 100;  // px
-    this.magassag          = 92;   // px
-    this.obj_szelesseg     = 96;   // px            // TODO: elavult, törölni!
-    this.obj_magassag      = 63;   // px            // TODO: Elavult, törölni!
-    this.obj_margo_fent    = 14.5; // px
-    this.obj_margo_balra   = 2.5;  // px
-    this.skalazas          = 10;   // pt/px
-    this.beepitett_meretek = 
+    this.beepitett_keparanyok =
+    {
+        "szelesvaszon":
+        {
+            "teljes_nev" : "Széles vászon (16:9)",
+            "rovid_nev"  : "16:9",
+            "kep"        : "keparany_16_9.png",
+            "ertek"      : 16/9
+        },
+        "normalvaszon":
+        {
+            "teljes_nev" : "Normál vászon (4:3)",
+            "rovid_nev"  : "4:3",
+            "kep"        : "keparany_4_3.png",
+            "ertek"      : 4/3
+        },
+    };
+    this.beepitett_meretek =
     {
         100 : {kiskep_merete: 12},
         150 : {kiskep_merete: 18},
@@ -16,6 +26,12 @@ var DIA_MERET = new function()
         300 : {kiskep_merete: 32},
         500 : {kiskep_merete: 40},
     };
+    
+    this.keparany  = "szelesvaszon";
+    this.szelesseg = 100;  // px
+    this.magassag  = this.szelesseg / this.beepitett_keparanyok[this.keparany].ertek;   // px
+    
+    this.skalazas  = 10;   // pt/px
 
 // Kiscelli:
 // 10 x 5,625 (16:9 = 1.7777)
@@ -30,43 +46,57 @@ var DIA_MERET = new function()
 
     this.diameretek_beallitasa = function(dia_merete)
     {
-        this.szelesseg       = dia_merete;
-        this.magassag        = this.szelesseg * 9/13;
-        this.obj_szelesseg   = this.szelesseg * 0.9485         // egyenes illesztése ezekre a pontokra: (0, 0), (100, 96), (500, 474)
-        this.obj_magassag    = this.obj_szelesseg * 63.2/95;
-        this.obj_margo_fent  = this.obj_magassag * 14.5/63;
-        this.obj_margo_balra = this.obj_szelesseg * 2.5/95;
-        this.skalazas        = 1000 / this.szelesseg;
-        
-        // console.log("Dia mérete              = " + this.merete);
-        // console.log("Dia szélessége          = " + this.szelesseg);
-        // console.log("Dia magassága           = " + this.magassag);
-        // console.log("Dia objektum szélessége = " + this.obj_szelesseg);
-        // console.log("Dia objektum magassága  = " + this.obj_magassag);
-        
-        $(".diameret_kijelolve").removeClass("diameret_kijelolve");
-        $("#diameret_" + dia_merete).addClass("diameret_kijelolve");
+        this.szelesseg = dia_merete;
+        this.magassag  = this.szelesseg / this.beepitett_keparanyok[this.keparany].ertek;
+        this.skalazas  = 1000 / this.szelesseg;
+        this.gombok_megjelenitese();
         diasor_megjelenitese();
     };
+    
+    this.keparany_beallitasa = function(keparany)
+    {
+        this.keparany = keparany;
+        this.diameretek_beallitasa(this.szelesseg);
+    };
+    
     this.gombok_megjelenitese = function()
     {
+        // dia mérete megjelenítésben:
         var t = "<table class='diakeszites_tabla'>"
               + " <tr>";
         for(var i in Object.keys(this.beepitett_meretek))
         {
-            var kulcs         = Object.keys(this.beepitett_meretek)[i];
-            var kiskep_merete = this.beepitett_meretek[kulcs].kiskep_merete;
-            t += "<td>"
+            var kulcs = Object.keys(this.beepitett_meretek)[i];
+            var obj = this.beepitett_meretek[kulcs];
+            t += "<td class='" + (this.szelesseg == kulcs ? "vezerlo_gomb_kivalasztva" : "") + "'>"
                + " <div class='vezerlo_gomb' "
                + "      onclick=\"DIA_MERET.diameretek_beallitasa('" + kulcs + "');\">"
-               + "  <img src='kepek/doboz.png' style='height:" + kiskep_merete + "px; width:" + kiskep_merete + "px;'>"
+               + "  <img src='kepek/doboz.png' style='height:" + obj.kiskep_merete + "px; width:" + obj.kiskep_merete + "px;'>"
+               + " </div>"
+               + "</td>";
+        }
+        t += " </tr>"
+           + "</table>";
+        $("#dia_meretvalasztas").html(t);
+        
+        // képarány (generálandó PPT-re is hatással van):
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
+        for(var i in Object.keys(this.beepitett_keparanyok))
+        {
+            var kulcs = Object.keys(this.beepitett_keparanyok)[i];
+            var obj = this.beepitett_keparanyok[kulcs];
+            t += "<td class='" + (this.keparany == kulcs ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+               + " <div class='vezerlo_gomb' "
+               + "      onclick=\"DIA_MERET.keparany_beallitasa('" + kulcs + "');\">"
+               + "  <img src='kepek/" + obj.kep + "'>"
                + " </div>"
                + "</td>";
         }
         t += " </tr>"
            + "</table>";
         
-        $("#dia_meretvalasztas").html(t);
+        $("#dia_keparanyvalasztas").html(t);
     };
     
     this.diameretek_beallitasa(200);
@@ -84,10 +114,14 @@ var STILUS = new function()
         "piros"  : {"betuszin": "#ffffff", "hatterszin": "#940200"}, // [148,   2,   0];    // "#db0a05"}, // [219,  10,   5];
         "fekete" : {"betuszin": "#ffffff", "hatterszin": "#000000"}, // [  0,   0,   0];
     };
+    this.kivalasztott_stilus = "zold";
+    
     this.beepitett_stilus_valasztasa = function(beepitett_stilus)
     {
-        this.betuszin   = this.beepitett_stilusok[beepitett_stilus].betuszin;
+        this.kivalasztott_stilus = beepitett_stilus;
+        this.betuszin = this.beepitett_stilusok[beepitett_stilus].betuszin;
         this.hatterszin = this.beepitett_stilusok[beepitett_stilus].hatterszin;
+        this.gombok_megjelenitese();
         diasor_megjelenitese();
     };
     this.gombok_megjelenitese = function()
@@ -97,7 +131,7 @@ var STILUS = new function()
         for(var i in Object.keys(this.beepitett_stilusok))
         {
             var kulcs = Object.keys(this.beepitett_stilusok)[i];
-            t += "<td>"
+            t += "<td class='" + (kulcs == this.kivalasztott_stilus ? "vezerlo_gomb_kivalasztva" : "") + "'>"
                + " <div class='vezerlo_gomb' "
                + "      onclick=\"STILUS.beepitett_stilus_valasztasa('" + kulcs + "');\""
                + "      style='background-color:" + this.beepitett_stilusok[kulcs].hatterszin + ";'>"
@@ -168,14 +202,14 @@ var BETUBEALLITASOK = new function()
         // Kisbetűs, nagybetűs váltás:
         var t = "<table class='diakeszites_tabla'>"
               + " <tr>"
-              + "  <td>"
-              + "   <div class='vezerlo_gomb " + (this.nagybetus_beallitasa ? "" : "vezerlo_gomb_kivalasztva") + "' "
+              + "  <td class='" + (this.nagybetus_beallitasa ? "" : "vezerlo_gomb_kivalasztva") + "'>"
+              + "   <div class='vezerlo_gomb' "
               + "        onclick=\"BETUBEALLITASOK.nagybetusse_alakitas(false);\">"
               + "    <img id='kis_nagybetus_beallitas' src='kepek/kisbetus.png'>"
               + "   </div>"
               + "  </td>"
-              + "  <td>"
-              + "   <div class='vezerlo_gomb " + (this.nagybetus_beallitasa ? "vezerlo_gomb_kivalasztva" : "") + "' "
+              + "  <td class='" + (this.nagybetus_beallitasa ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+              + "   <div class='vezerlo_gomb' "
               + "        onclick=\"BETUBEALLITASOK.nagybetusse_alakitas(true);\">"
               + "    <img id='kis_nagybetus_beallitas' src='kepek/nagybetus.png'>"
               + "   </div>"
@@ -191,8 +225,8 @@ var BETUBEALLITASOK = new function()
         {
             var x = this.igazitasok.x[x_index];
             var kivalasztva = (x == this.igazitasok.kivalasztva.x);
-            t += "<td>"
-               + " <div class='vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
+            t += "<td class='" + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+               + " <div class='vezerlo_gomb' "
                + "      onclick=\"BETUBEALLITASOK.vizszintes_igazitas_kivalasztasa('" + x + "');\">"
                + "  <img src='kepek/vizszintes_igazitas_" + x + ".png'>"
                + " </div>"
@@ -209,8 +243,8 @@ var BETUBEALLITASOK = new function()
         {
             var y = this.igazitasok.y[y_index];
             var kivalasztva = (y == this.igazitasok.kivalasztva.y);
-            t += "<td>"
-               + " <div class='vezerlo_gomb " + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "' "
+            t += "<td class='" + (kivalasztva ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+               + " <div class='vezerlo_gomb' "
                + "      onclick=\"BETUBEALLITASOK.fuggoleges_igazitas_kivalasztasa('" + y + "');\">"
                + "  <img src='kepek/fuggoleges_igazitas_" + y + ".png'>"
                + " </div>"

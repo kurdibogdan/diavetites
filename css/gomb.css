@@ -37,10 +37,11 @@ button:disabled
 .vezerlo_gomb,
 .kis_vezerlo_gomb
 {
-    border        : 1px outset #ccc;
-    border-radius : 2px;
-    padding       : 5px;
-    text-align    : center;
+    background-color : white;
+    border           : 1px outset #ccc;
+    border-radius    : 2px;
+    padding          : 5px;
+    text-align       : center;
 }
 .vezerlo_gomb
 {
@@ -71,9 +72,14 @@ button:disabled
 .kis_vezerlo_gomb:active,
 .vezerlo_gomb_kivalasztva
 {
-    background-color: rgb(4, 170, 109);
+    /* background-color: rgb(4, 170, 109); */
     border   : 1px inset #ccc;
     position : relative;
     top      : 1px;
     left     : 1px;
+}
+
+.vezerlo_gomb_kivalasztva
+{
+    background-color : #04AA6D;  /* rgb(0,180,150); */
 }
