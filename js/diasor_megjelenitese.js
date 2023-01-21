@@ -408,11 +408,13 @@ var BETUBEALLITASOK = new function()
     {
         this.kivalasztott_betutipus = betutipus;
         var betutipus = this.betutipusok[this.kivalasztott_betutipus];
+        
+        osszes_dia_kijelolese();
         this.nagybetusse_alakitas(betutipus.nagybetus);
         this.vizszintes_igazitas_kivalasztasa(betutipus.igazitas_x);
         this.fuggoleges_igazitas_kivalasztasa(betutipus.igazitas_y);
         DIA_MERET.keparany_beallitasa(betutipus.keparany);
-        diasor_megjelenitese();
+        diak_kijelolesenek_megszuntetese();
     };
 };
 

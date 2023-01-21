@@ -7,11 +7,32 @@ $(document).mouseup(function(e)
 	// }
 });
 
+function osszes_dia_kijelolesenek_beallitasa(kijelolve)
+{
+    for (var i=0, n=diasor.length; i<n; i++)
+    {
+        diasor[i].kijelolve = kijelolve;
+    }
+    diasor_megjelenitese();
+}
+
+function osszes_dia_kijelolese()
+{
+    var kijelolve = true;
+    osszes_dia_kijelolesenek_beallitasa(kijelolve);
+}
+
+function diak_kijelolesenek_megszuntetese()
+{
+    var kijelolve = false;
+    osszes_dia_kijelolesenek_beallitasa(kijelolve);
+}
+
 function dia_kijelolese(e, dia_id)
 {
     if (e.shiftKey == true)
     {
-        for(i=0, n=diasor.length; i<n; i++)
+        for(var i=0, n=diasor.length; i<n; i++)
         {
             if (diasor[kurzor].kijelolve == true)   // kijelölések összekötése
             {
