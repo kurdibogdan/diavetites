@@ -34,8 +34,13 @@ button:disabled
 {
     display: inline-block;
 }
+.rejtett_gombok
+{
+    display: none;
+}
 .vezerlo_gomb,
-.kis_vezerlo_gomb
+.kis_vezerlo_gomb,
+.listavalaszto
 {
     background-color : white;
     border           : 1px outset #ccc;
@@ -54,6 +59,10 @@ button:disabled
     min-width     : 15px;
     height        : 20px;
     line-height   : 18px;
+}
+.listavalaszto
+{
+    height: 52.4px;
 }
 .vezerlo_gomb img,
 .kis_vezerlo_gomb img

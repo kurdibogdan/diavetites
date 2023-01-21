@@ -1,0 +1,55 @@
+﻿Felsőerdősor:
+    Kedves Bogdán!
+    Ha van kedved bíbelődni vele, mellékelek egy diát.
+    - Ha meg tudod oldani, kezdődjön üres diával, ahova beszúrható bármilyen nyitóképkép, ha lementettük.
+    - A betűméret beállításokat is bemásoltam a diákba.
+    - Balra zárt a szöveg (dicséreteknél jól jön), ami a bal felső sarokból indul és általában 44-es. A 44-es már jól látható nagyság a Calibrinél.
+    - A betűk körvonala most csak a zöld háttér miatt zöld, de szerintem nem kell körvonal, ezt utólag állítani a legjobb az adott háttérhez (az egyházi év nagy részében egyébként zöld :-) ).
+    - Ha valami módosítási javaslatod, de a kisbetűs marad, nyugodtan tedd bele. 
+    Köszönöm. Laci
+--------------
+Pécsi gyülekezet:
+    - Egyedi háttér minden dalnak.
+    - Balra igazítás, néha középre - nem egységes.
+    - Betűknek körvonala van.
+--------------
+Kegyelem gyülekezet:
+    - minden diának egyedi háttér a témához igazítva
+    - a szövegdoboznak fehér háttere van, középre igazítva, kb. 70% szélesség, 30% magasság
+    - dobozon belül a szöveg balra igazított, talán Times New Roman stílus (kisbetűs)
+    - versszak száma bekezdésként:
+    1. Ez az első versszak első sora,
+        és itt folytatódik a második,
+        az ének sorszáma fent jobbra,
+        fehér háttere van annak is.
+--------------
+Felsőerdősor:
+    - 1. dia üres (nyitókép)
+    + balrazárt szöveg, bal felső sarokból indul
+    + kisbetűs
+    - betű:             Calibri félkövér 44pt árnyékolt
+    - szöveg kitöltése: fehér (egyszínű, nem átlátszó)
+    - körvonal:         folytonos vonal 2pt,
+                        0% áttetszőség,
+                        vonalvég: lapos,
+                        vonalillesztés: kerek
+                        háttérhez igazodó körvonal
+    - dicséreteknél sorszám
+    (
+      Egyéb:
+      - Úrvacsorai liturgiában a 47-esben hiányzik a refrén.
+      - Sorszámos keresésnél ne szövegként értelmezze a számot.
+      - Hirdetéseknél copy-paste sortörések javítása.
+    )
+----------------
+képarányok:
+   Kiscelli:
+   10 x 5,625 (16:9 = 1.7777)
+   - 1366x768 (1,778645833333333)
+   - 1360x768 (1,770833333333333)
+   ------------------------------
+   Felsőerdősor:
+   25,4 x 19,05 (4:3 = 1,3333)
+   10 x 7,5
+   - 1024x768 (1,3333)
+   - 800x600 (1,3333)

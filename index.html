@@ -49,11 +49,15 @@
    <h1>Diák rendezése</h1>
    <div id="dia_vezerles" class="gombsor"></div>
    <div id="dia_meretvalasztas" class="gombsor"></div>
-   <div id="dia_keparanyvalasztas" class="gombsor"></div>
    <div id="dia_stilusvalasztas" class="gombsor"></div>
-   <div id="dia_kis_nagybetu_valtas" class="gombsor"></div>
-   <div id="dia_vizszintes_igazitas" class="gombsor"></div>
-   <div id="dia_fuggoleges_igazitas" class="gombsor"></div>
+   <div id="dia_betutipus" class="gombsor"></div>
+   
+   <div id="rejtett_gombok_megjelenitese" class="gombsor"></div>
+   <div id="dia_keparanyvalasztas" class="gombsor rejtett_gombok"></div>
+   <div id="dia_kis_nagybetu_valtas" class="gombsor rejtett_gombok"></div>
+   <div id="dia_vizszintes_igazitas" class="gombsor rejtett_gombok"></div>
+   <div id="dia_fuggoleges_igazitas" class="gombsor rejtett_gombok"></div>
+    
    <div id="diasor"></div>
   </td>
   
@@ -83,6 +87,7 @@ var kurzor = 0;
 var megjelenitett_oldal = "";
 oldal_megjelenitese("diak_rendezese_oldal");
 // oldal_megjelenitese("dalszoveg_szerkesztese_oldal");
+REJTETT_GOMBOK.gombok_megjelenitese();
 DIA_VEZERLES.gombok_megjelenitese();
 DIA_MERET.gombok_megjelenitese();
 STILUS.gombok_megjelenitese();

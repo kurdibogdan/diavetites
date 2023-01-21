@@ -1,4 +1,36 @@
 var diasor = [];
+
+var REJTETT_GOMBOK = new function()
+{
+    var megjelenitve = false;
+    this.valtas = function()
+    {
+        if (megjelenitve == true)
+        {
+            $(".rejtett_gombok").hide();
+            megjelenitve = false;
+        }
+        else
+        {
+            $(".rejtett_gombok").css("display", "inline-block");
+            megjelenitve = true;
+        }
+    }
+    this.gombok_megjelenitese = function()
+    {
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>"
+              + "  <td>"
+              + "   <div class='vezerlo_gomb' onclick='REJTETT_GOMBOK.valtas();'>"
+              + "    <img src='kepek/rejtett_gombok.png'>"
+              + "   </div>"
+              + "  </td>"
+              + " </tr>"
+              + "</table>";
+        $("#rejtett_gombok_megjelenitese").html(t);
+    };
+};
+
 var DIA_MERET = new function()
 {
     this.beepitett_keparanyok =
@@ -30,19 +62,7 @@ var DIA_MERET = new function()
     this.keparany  = "szelesvaszon";
     this.szelesseg = 100;  // px
     this.magassag  = this.szelesseg / this.beepitett_keparanyok[this.keparany].ertek;   // px
-    
     this.skalazas  = 10;   // pt/px
-
-// Kiscelli:
-// 10 x 5,625 (16:9 = 1.7777)
-// - 1366x768 (1,778645833333333)
-// - 1360x768 (1,770833333333333)
-// ------------------------------
-// Felsőerdősor:
-// 25,4 x 19,05 (4:3 = 1,3333)
-// 10 x 7,5
-// - 1024x768 (1,3333)
-// - 800x600 (1,3333)
 
     this.diameretek_beallitasa = function(dia_merete)
     {
@@ -115,6 +135,32 @@ var STILUS = new function()
         "fekete" : {"betuszin": "#ffffff", "hatterszin": "#000000"}, // [  0,   0,   0];
     };
     this.kivalasztott_stilus = "zold";
+    this.naptar =
+    [
+        {"nap": new Date("2023-01-01"), "stilus": "feher" },  // karácsonyi ünnepkör
+        {"nap": new Date("2023-01-15"), "stilus": "zold"  },  // vízkereszt utáni időszak
+        {"nap": new Date("2023-03-05"), "stilus": "lila"  },  // böjt
+        {"nap": new Date("2023-04-07"), "stilus": "fekete"},  // nagypéntek
+        {"nap": new Date("2023-04-09"), "stilus": "feher" },  // húsvét
+        {"nap": new Date("2023-05-28"), "stilus": "piros" },  // pünkösd
+        {"nap": new Date("2023-06-04"), "stilus": "zold"  },  // pünkösd utáni időszak
+        {"nap": new Date("2023-11-26"), "stilus": "lila"  },  // advent
+        {"nap": new Date("2023-12-24"), "stilus": "feher" },  // karácsonyi ünnepkör
+    ];
+    
+    this.stilus_valasztasa_naptar_szerint = function(datum)
+    {
+        var datum = new Date(datum);
+        var stilus = "zold";
+        for(var nap of this.naptar)
+        {
+            if (datum > nap.nap)
+            {
+                stilus = nap.stilus;
+            }
+        }
+        this.beepitett_stilus_valasztasa(stilus);
+    };
     
     this.beepitett_stilus_valasztasa = function(beepitett_stilus)
     {
@@ -197,6 +243,35 @@ var BETUBEALLITASOK = new function()
         "kivalasztva" : {"x": "kozepre", "y": "kozepre"}
     };
     
+    this.betutipusok =
+    {
+        "kiscelli":
+        {
+            "cim"        : "Kiscelli (Arial Black 25pt, nagybetűs, középre igazított, 13:9 szélesvászon)",
+            "betutipus"  : "Arial Black",
+            "betumeret"  : 25, // pt
+            "arnyekolt"  : false,
+            "korvonal"   : false,
+            "nagybetus"  : true,
+            "igazitas_x" : "kozepre",
+            "igazitas_y" : "kozepre",
+            "keparany"   : "szelesvaszon",
+        },
+        "felsoerdosor": // TODO: árnyékolt, körvonalas
+        {
+            "cim"        : "Felsőerdősor (Calibri 44pt, kisbetűs, balrazárt, fent, 4:3 normál vászon)",
+            "betutipus"  : "Calibri",
+            "betumeret"  : 44, // pt  // TODO: generált PPT-ben is legyen
+            "arnyekolt"  : true,      // TODO: alkalmazni
+            "korvonal"   : true,      // TODO: alkalmazni
+            "nagybetus"  : false,
+            "igazitas_x" : "balra",
+            "igazitas_y" : "fent",
+            "keparany"   : "normalvaszon",
+        }
+    };
+    this.kivalasztott_betutipus = "kiscelli";
+    
     this.gombok_megjelenitese = function()
     {
         // Kisbetűs, nagybetűs váltás:
@@ -253,6 +328,26 @@ var BETUBEALLITASOK = new function()
         t += " </tr>"
            + "</table>";
         $("#dia_fuggoleges_igazitas").html(t);
+        
+        // Betűtípus:
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>"
+              + "  <td>"
+              + "    <select class='listavalaszto' "
+              + "            onchange=\"BETUBEALLITASOK.betutipus_kivalasztasa(this.value);\">";
+        for(var kulcs in this.betutipusok)
+        {
+            t += "<option value='" + kulcs + "' "
+              +   (kulcs == this.kivalasztott_betutipus ? "selected='selected'" : "")
+              + ">"
+              + this.betutipusok[kulcs].cim
+              + "</option>";
+        }
+        t += "   </select>"
+           + "  </td>"
+           + " </tr>"
+           + "</table>";
+        $("#dia_betutipus").html(t);
     };
     
     this.vizszintes_igazitas_kivalasztasa = function(x)
@@ -308,14 +403,23 @@ var BETUBEALLITASOK = new function()
         
         diasor_megjelenitese();
     };
+    
+    this.betutipus_kivalasztasa = function(betutipus)
+    {
+        this.kivalasztott_betutipus = betutipus;
+        var betutipus = this.betutipusok[this.kivalasztott_betutipus];
+        this.nagybetusse_alakitas(betutipus.nagybetus);
+        this.vizszintes_igazitas_kivalasztasa(betutipus.igazitas_x);
+        this.fuggoleges_igazitas_kivalasztasa(betutipus.igazitas_y);
+        DIA_MERET.keparany_beallitasa(betutipus.keparany);
+        diasor_megjelenitese();
+    };
 };
 
 function diasor_megjelenitese()
 {
     var t = "";
-    
     // t += "<div class='kurzorhely_kerete'><div class='kurzorhely'></div></div>";
-    
     
     for(var i=0, n=diasor.length; i<n; i++)
     {
@@ -333,7 +437,6 @@ function diasor_megjelenitese()
            + "               height: " + DIA_MERET.magassag + "px; "
            + "               color: " + STILUS.betuszin + "; "
            + "               background-color:" + STILUS.hatterszin + ";'>";
-       
         
         // Dia objektumai:
         for(var j=0, o=dia.objektumok.length; j<o; j++)

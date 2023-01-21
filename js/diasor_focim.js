@@ -7,6 +7,10 @@ var Diasor_Focim =
         var vasarnap = new Date();
         if (vasarnap.getDay() > 0) vasarnap.setDate(vasarnap.getDate() - vasarnap.getDay() + 7);
         document.getElementById(this.datum_bevitel).valueAsDate = vasarnap;
+        
+        // Dátumhoz tartozó stílus kiválasztása:
+        var vasarnap_string = document.getElementById(this.datum_bevitel).value;
+        STILUS.stilus_valasztasa_naptar_szerint(vasarnap_string);
     },
     uj_diasor : function(gomb_id)
     {
@@ -66,7 +70,7 @@ var Diasor_Focim =
         var t = "<tr>\n"
               + " <td><label class='switch'><input id='dia_keszitese_" + gomb_id + "' type='checkbox' checked='checked'><span class='slider round'></span></label></td>\n"
               + " <td><input id='cimoldal_szoveg' type='text' value='ISTENTISZTELET'><br>\n"
-              + "     <input id='" + this.datum_bevitel + "' type='date'></td>\n"
+              + "     <input id='" + this.datum_bevitel + "' onchange=\"STILUS.stilus_valasztasa_naptar_szerint(this.value);\" type='date'></td>\n"
               + " <td><button onclick=\"diasor_bovitese(Diasor_Focim.uj_diasor('" + gomb_id + "'));\">&rarr;</button></td>\n"
               + "</tr>\n";
         return(t);

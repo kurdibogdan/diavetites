@@ -66,8 +66,8 @@ var Diasor_Dalszoveg =
                     [
                         {
                             "szoveg"    : dalszoveg[i].join("<br>"),
-                            "betumeret" : betumeret,        // pt 
-                            "betutipus" : "Arial Black",    // alternatív: 30px "Sylfaen",
+                            "betumeret" : BETUBEALLITASOK.betutipusok[BETUBEALLITASOK.kivalasztott_betutipus].betumeret,    // 25pt 
+                            "betutipus" : BETUBEALLITASOK.betutipusok[BETUBEALLITASOK.kivalasztott_betutipus].betutipus,    // Arial Black; alternatív: 30px "Sylfaen",
                             "nagybetus" : BETUBEALLITASOK.nagybetus_beallitasa
                         },
                     ]
