@@ -50,6 +50,7 @@
    <div id="dia_vezerles" class="gombsor"></div>
    <div id="dia_meretvalasztas" class="gombsor"></div>
    <div id="dia_stilusvalasztas" class="gombsor"></div>
+   <div id="dia_hattervalasztas" class="gombsor"></div>
    <div id="dia_betutipus" class="gombsor"></div>
    
    <div id="rejtett_gombok_megjelenitese" class="gombsor"></div>
@@ -81,6 +82,8 @@
 // Ötletek:
 // - tervező nézet, ahol az objektumokat összeállítjuk -> terv mentése / betöltése
 // - ezután legeneráljuk a diasort a tervből -> generált diasor mentése / betöltése / vetítése
+// Hibák:
+// - Előredefiniált stílus választásánál a betűméretet és betűkészletet nem állítja át a meglévő diákon.
 
 const REJTETT_GOMB = 1;
 var kurzor = 0;

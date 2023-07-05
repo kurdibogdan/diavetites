@@ -113,7 +113,8 @@ var Diasor =
             console.log("Nincs ilyen dia: " + this.aktualis_dia);
         }
         
-        dia_folyamatos_frissitese();
+        hashtag_dia_beallitasa(this.aktualis_dia);
+        //dia_folyamatos_frissitese();
     },
     
     dia_megjelenitese: function(dia_sorszam)
@@ -166,13 +167,32 @@ function getUrlVars()
 	return vars;
 }
 
-function frissites()
+function hashtag_dia_kiolvasasa()
+{
+    var m = window.location.hash.match(/#dia=(.*?)$/);
+    var dia = parseInt(m != null ? m[1] : 0);
+	return(dia);
+}
+
+function hashtag_dia_beallitasa(dia)
+{
+    window.location.hash = "#dia=" + parseInt(dia);
+}
+
+function en_iranyitok()
+{
+    return((getUrlVars()["iranyito"] &&
+            getUrlVars()["iranyito"][0] == 1));
+}
+
+function frissites(callback)
 {
     // console.log("frissítés");
-    if (getUrlVars()["iranyito"] == 1)
+    if (en_iranyitok())
     {
         $.get("aktualis_dia.php?aktualis_dia=" + Diasor.aktualis_dia, function(data)
         {
+            if (typeof callback == "function") callback();
         });
     }
     else
@@ -180,6 +200,7 @@ function frissites()
         $.get("aktualis_dia.php", function(data)
         {
             Diasor.dia_megjelenitese(parseInt(data));
+            if (typeof callback == "function") callback();
         });
     }
 }
@@ -192,41 +213,50 @@ var FRISSITES_IDEJE = 500;
 
 function dia_folyamatos_frissitese()
 {
-    if (frissites_folyamatban == false)
+    frissites(function()
     {
-        frissites_folyamatban = true;
-        frissites();
-        frissites_timeout = setTimeout(function()
-        {
-            // console.log("lejárt a frissítés timeout");
-            frissites_folyamatban = false;
-        }, FRISSITES_IDEJE);
-    }
-    else
-    {
-        if (varakozas_folyamatban == false)
-        {
-            varakozas_folyamatban = true;
-            clearTimeout(frissites_timeout);
-            varakozas_timeout = setTimeout(function()
-            {
-                frissites_folyamatban = false;
-                varakozas_folyamatban = false;
-                dia_folyamatos_frissitese();
-            }, FRISSITES_IDEJE);
-        }
-    }
+        setTimeout(dia_folyamatos_frissitese, FRISSITES_IDEJE);
+    });
 }
+
+// function dia_folyamatos_frissitese()
+// {
+//     if (frissites_folyamatban == false)
+//     {
+//         frissites_folyamatban = true;
+//         frissites();
+//         frissites_timeout = setTimeout(function()
+//         {
+//             // console.log("lejárt a frissítés timeout");
+//             frissites_folyamatban = false;
+//         }, FRISSITES_IDEJE);
+//     }
+//     else
+//     {
+//         if (varakozas_folyamatban == false)
+//         {
+//             varakozas_folyamatban = true;
+//             clearTimeout(frissites_timeout);
+//             varakozas_timeout = setTimeout(function()
+//             {
+//                 frissites_folyamatban = false;
+//                 varakozas_folyamatban = false;
+//                 dia_folyamatos_frissitese();
+//             }, FRISSITES_IDEJE);
+//         }
+//     }
+// }
 
 // ------------------------------- //
 
 Diasor.kepek_betoltese(function()
 {
-    if (getUrlVars()["iranyito"] == 1)
+    if (en_iranyitok())
     {
         console.log("szerver");
+        var dia = hashtag_dia_kiolvasasa();
         document.getElementById("navigalo_gombok").style.display = "block";
-        Diasor.dia_megjelenitese(0);
+        Diasor.dia_megjelenitese(dia);
         document.addEventListener("keydown", function(e){Diasor.gombnyomas_kezelese(e);});
     }
     else

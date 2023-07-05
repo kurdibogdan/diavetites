@@ -193,6 +193,124 @@ var STILUS = new function()
     this.beepitett_stilus_valasztasa("zold");
 };
 
+var HATTER = new function()
+{
+    this.kivalasztott_hatterkep = "semmi";
+    this.meglevo_hatterkepek_megjelenitese = function(callback)
+    {
+        $.post("php/meglevo_hatterkepek.php", function(data)
+        {
+            const kepek = jQuery.parseJSON(data);
+            var t = "<table class='diakeszites_tabla'>"
+                  + " <tr>"
+                  + "  <td id='kiskep_keret_semmi' class='kiskep_keret " + (HATTER.kivalasztott_hatterkep == "semmi" ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+                  + "   <div class='vezerlo_gomb' onclick=\"HATTER.hatter_kivalasztasa('semmi');\"></div>"
+                  + "  </td>";
+            for(var i = 0; i < kepek.length; i++)
+            {
+                var kep = kepek[i];
+                t += "<td id='kiskep_keret_" + kep + "' class='kiskep_keret " + (kep == HATTER.kivalasztott_hatterkep ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+                   + " <div class='vezerlo_gomb_hatterrel'>"
+                   + "  <div id='kiskep_" + kep + "' class='kiskep' "
+                   + "       style='background-image: url(kepek/hatter/kiskep/" + kep + ");'"
+                   + "       onclick=\"HATTER.hatter_kivalasztasa('" + kep + "');\""
+                   + "       tabindex='" + i + "'"
+                   + "       onkeydown=\"HATTER.hatterkep_torlese(event, '" + kep + "');\">"
+                   + "  </div>"
+                   + " </div>"
+                   + "</td>";
+            }
+            t += "  <td>"
+               + "   <label for='hatter_feltoltese'>"
+               + "    <div class='vezerlo_gomb'>"
+               + "     <img src='kepek/hatter_feltoltese.png'>"
+               + "    </div>"
+               + "   </label>"
+               + "   <input id='hatter_feltoltese' "
+               + "          type='file' "
+               + "          accept='image/png, image/jpeg' "
+            // + "          multiple "
+               + "          style='display:none;' "
+               + "          onchange='HATTER.uj_hatter_feltoltese(event);'>"
+               + "  </td>"
+               + " </tr>"
+               + "</table>";
+           
+            $("#dia_hattervalasztas").html(t);
+            if (typeof callback == "function") callback();
+        });
+    };
+    
+    this.hatter_kivalasztasa = function(kep)
+    {
+        this.kivalasztott_hatterkep = kep;
+        $(".kiskep_keret.vezerlo_gomb_kivalasztva").removeClass("vezerlo_gomb_kivalasztva");
+        $(document.getElementById("kiskep_keret_" + kep)).addClass("vezerlo_gomb_kivalasztva");
+        diasor_megjelenitese();
+    };
+    
+    this.hatterkep_torlese = function(e, kep)
+    {
+        if (e.keyCode == 46)
+        {
+            e.preventDefault();
+            $.post("php/hatterkep_torlese.php", {kep: kep}, function()
+            {
+                HATTER.meglevo_hatterkepek_megjelenitese();
+            });
+        }
+    };
+    
+    this.uj_hatter_feltoltese = function(e)
+    {
+        var fd = new FormData();
+        var hatterkep = e.target.files[0];
+        fd.append("hatterkep", hatterkep);
+        $.ajax(
+        {
+            url: "php/hatterkep_feltoltese.php",
+            type: "post",
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response)
+            {
+                if (response != 0)
+                {
+                    HATTER.meglevo_hatterkepek_megjelenitese();
+                }
+                else
+                {
+                    alert("Nem sikerült feltölteni a fájlt.");
+                }
+            },
+        });
+    };
+    
+    this.gombok_megjelenitese = function()
+    {
+        var t = "<table class='diakeszites_tabla'>"
+              + " <tr>";
+        // for(var i in Object.keys(this.beepitett_stilusok))
+        // {
+        //     var kulcs = Object.keys(this.beepitett_stilusok)[i];
+        //     t += "<td class='" + (kulcs == this.kivalasztott_stilus ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+        //        + " <div class='vezerlo_gomb' "
+        //        + "      onclick=\"STILUS.beepitett_stilus_valasztasa('" + kulcs + "');\""
+        //        + "      style='background-color:" + this.beepitett_stilusok[kulcs].hatterszin + ";'>"
+        //        + " </div>"
+        //        + "</td>";
+        // }
+        t += " </tr>"
+           + "</table>";
+        
+        // $("#dia_hattervalasztas").html(t);
+    };
+    
+    this.gombok_megjelenitese();
+    this.meglevo_hatterkepek_megjelenitese();
+};
+
 var DIA_VEZERLES = new function()
 {
     this.gombok =
@@ -434,11 +552,17 @@ function diasor_megjelenitese()
            + " <tr><td class='dia_keret_fuggoleges'></td></tr>"
            + " <tr>"
            + "  <td class='dia_keret_vizszintes'>"
-           + "   <div style='position: relative; "
+           + "   <div style=\"position: relative; "
            + "               width: " + DIA_MERET.szelesseg + "px; "
            + "               height: " + DIA_MERET.magassag + "px; "
            + "               color: " + STILUS.betuszin + "; "
-           + "               background-color:" + STILUS.hatterszin + ";'>";
+           + "               background-color:" + STILUS.hatterszin + ";"
+           +                 (HATTER.kivalasztott_hatterkep != "semmi"
+                          ? ("background-image: url('kepek/hatter/" + HATTER.kivalasztott_hatterkep + "');"
+                          + "background-position: center center;"
+                          + "background-size: cover;")
+                          : "")
+           + "\">";
         
         // Dia objektumai:
         for(var j=0, o=dia.objektumok.length; j<o; j++)

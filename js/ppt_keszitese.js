@@ -16,8 +16,23 @@ function ppt_keszitese()
     for(var i = 0, n = diasor.length; i < n; i++)
     {
         var dia = pptx.addSlide();
-        dia.color      = STILUS.betuszin;
-        dia.background = {color: STILUS.hatterszin};
+        dia.color = STILUS.betuszin;
+        
+        if (HATTER.kivalasztott_hatterkep != "semmi")
+        {
+            dia.background = {path: "kepek/hatter/" + HATTER.kivalasztott_hatterkep};
+            // dia.addImage(
+            // {
+            //     path: "kepek/hatter/" + HATTER.kivalasztott_hatterkep,
+            //     x: 0,
+            //     y: 0,
+            //     sizing: {type: "contain"},
+            // });
+        }
+        else
+        {
+            dia.background = {color: STILUS.hatterszin};
+        }
         
         var objektumok = diasor[i].objektumok;
         for(var j = 0, o = objektumok.length; j < o; j++)

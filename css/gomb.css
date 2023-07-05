@@ -39,6 +39,7 @@ button:disabled
     display: none;
 }
 .vezerlo_gomb,
+.vezerlo_gomb_hatterrel,
 .kis_vezerlo_gomb,
 .listavalaszto
 {
@@ -47,6 +48,11 @@ button:disabled
     border-radius    : 2px;
     padding          : 5px;
     text-align       : center;
+}
+.vezerlo_gomb_hatterrel
+{
+     padding : 0px;
+     border  : 0px;
 }
 .vezerlo_gomb
 {
@@ -65,19 +71,31 @@ button:disabled
     height: 52.4px;
 }
 .vezerlo_gomb img,
+.vezerlo_gomb_hatterrel .kiskep,
 .kis_vezerlo_gomb img
 {
     vertical-align : middle;
 }
 .vezerlo_gomb img
 {
-    max-height     : 40px;
+    max-height : 40px;
+}
+.vezerlo_gomb_hatterrel .kiskep
+{
+    width               : 40px;
+    height              : 50px;
+    background-position : center center;
+    background-size     : cover;
+    background-repeat   : no-repeat;
+    border              : 1px outset #ccc;
+    border-radius       : 2px;
 }
 .kis_vezerlo_gomb img
 {
     max-height     : 20px;
 }
 .vezerlo_gomb:active,
+.vezerlo_gomb_hatterrel .kiskep:active,
 .kis_vezerlo_gomb:active,
 .vezerlo_gomb_kivalasztva
 {
