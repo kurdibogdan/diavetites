@@ -1,21 +1,14 @@
 <?php
-    function legnagyobb_sorszam()
+    function uj_sorszam()
     {
-        $bazis = "..";
-        $utvonal = "kepek/hatter/";
-        $kepek = glob($bazis."/".$utvonal."*.*");
-        $legnagyobb_sorszam = 0;
-        for ($i=0; $i<sizeof($kepek); $i++)
-        {
-            $sorszam = (int)(pathinfo($kepek[$i], PATHINFO_FILENAME));
-            if ($sorszam > $legnagyobb_sorszam) $legnagyobb_sorszam = $sorszam;
-        }
-        return($legnagyobb_sorszam);
-    }
-    
-    function kovetkezo_sorszam()    // kitalálja a következő fájlnevet
-    {
-        return(legnagyobb_sorszam()+1);
+        include("kapcsolat.php");
+        $kapcsolat->beginTransaction();
+        $kapcsolat->query("UPDATE kepek SET max_id = (max_id + 1) WHERE 1;");
+        $q = $kapcsolat->query("SELECT max_id FROM kepek WHERE 1;");
+        $r = $q->fetch(PDO::FETCH_ASSOC);
+        $kapcsolat->commit();
+        $kapcsolat = null;
+        return($r['max_id']);
     }
     
     function sorszambol_fajlnev($sorszam)
@@ -26,13 +19,10 @@
         return($sorszam);
     }
     
-    function legnagyobb_sorszamu_fajlnev()
+    function uj_sorszamu_fajlnev()
     {
-        return(sorszambol_fajlnev(legnagyobb_sorszam()));
-    }
-    
-    function kovetkezo_sorszamu_fajlnev()
-    {        
-        return(sorszambol_fajlnev(kovetkezo_sorszam()));
+        $sorszam = uj_sorszam();
+        $fajlnev = sorszambol_fajlnev($sorszam);
+        return($fajlnev);
     }
 ?>

@@ -368,24 +368,30 @@ var BETUBEALLITASOK = new function()
             "cim"        : "Kiscelli (Arial Black 25pt, nagybetűs, középre igazított, 13:9 szélesvászon)",
             "betutipus"  : "Arial Black",
             "betumeret"  : 25, // pt
+            "felkover"   : false,
             "arnyekolt"  : false,
             "korvonal"   : false,
             "nagybetus"  : true,
             "igazitas_x" : "kozepre",
             "igazitas_y" : "kozepre",
-            "keparany"   : "szelesvaszon",
+            "margo_x"    : 0,
+            "margo_y"    : 0,
+            "keparany"   : "szelesvaszon"
         },
         "felsoerdosor": // TODO: árnyékolt, körvonalas
         {
             "cim"        : "Felsőerdősor (Calibri 44pt, kisbetűs, balrazárt, fent, 4:3 normál vászon)",
             "betutipus"  : "Calibri",
             "betumeret"  : 44, // pt  // TODO: generált PPT-ben is legyen
+            "felkover"   : true,
             "arnyekolt"  : true,      // TODO: alkalmazni
             "korvonal"   : true,      // TODO: alkalmazni
             "nagybetus"  : false,
             "igazitas_x" : "balra",
             "igazitas_y" : "fent",
-            "keparany"   : "normalvaszon",
+            "margo_x"    : 3,
+            "margo_y"    : 3,
+            "keparany"   : "normalvaszon"
         }
     };
     this.kivalasztott_betutipus = "kiscelli";

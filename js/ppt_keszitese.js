@@ -13,6 +13,8 @@ function ppt_keszitese()
     });
     pptx.layout = kulcs;
     
+    var betutipus = BETUBEALLITASOK.betutipusok[BETUBEALLITASOK.kivalasztott_betutipus];
+    
     for(var i = 0, n = diasor.length; i < n; i++)
     {
         var dia = pptx.addSlide();
@@ -20,19 +22,20 @@ function ppt_keszitese()
         
         if (HATTER.kivalasztott_hatterkep != "semmi")
         {
-            dia.background = {path: "kepek/hatter/" + HATTER.kivalasztott_hatterkep};
-            // dia.addImage(
-            // {
-            //     path: "kepek/hatter/" + HATTER.kivalasztott_hatterkep,
-            //     x: 0,
-            //     y: 0,
-            //     sizing: {type: "contain"},
-            // });
+            dia.background =
+            {
+                path: "php/kep_letoltese_keparannyal.php?fajl=" 
+                      + HATTER.kivalasztott_hatterkep
+                      + "&keparany="
+                      + DIA_MERET.beepitett_keparanyok[kulcs].ertek
+            };
         }
         else
         {
             dia.background = {color: STILUS.hatterszin};
         }
+        
+        
         
         var objektumok = diasor[i].objektumok;
         for(var j = 0, o = objektumok.length; j < o; j++)
@@ -64,10 +67,10 @@ function ppt_keszitese()
                     
                     dia.addText(szovegek,   // https://gitbrent.github.io/PptxGenJS/docs/api-text
                     {
-                        x       : obj.poz_x     + "%",
-                        y       : obj.poz_y     + "%",
-                        w       : obj.szelesseg + "%",
-                        h       : obj.magassag  + "%",
+                        x       : (betutipus.margo_x + obj.poz_x) + "%",
+                        y       : (betutipus.margo_y + obj.poz_y) + "%",
+                        w       : (obj.szelesseg - betutipus.margo_x * 2) + "%",
+                        h       : (obj.magassag - betutipus.margo_y * 2) + "%",
                         align   : (obj.igazitas_x == "balra"   ? "left" 
                                 :  obj.igazitas_x == "jobbra"  ? "right"
                                 :  obj.igazitas_x == "kozepre" ? "center"
@@ -75,7 +78,10 @@ function ppt_keszitese()
                         valign  : (obj.igazitas_y == "fent"    ? "top"
                                 :  obj.igazitas_y == "kozepre" ? "middle"
                                 :  obj.igazitas_y == "lent"    ? "bottom"
-                                :  "initial"),
+                                :  "initial"),        
+                        bold    : betutipus.felkover,
+                        outline : (betutipus.korvonal ? { size: 2, color: "000000"} : null),
+                        shadow  : (betutipus.arnyekolt ? { type: "outer", color: "444444", blur: 4, offset: 3, angle: 45 } : null),
                         lang : "hu-HU",
                     });
                     break;
