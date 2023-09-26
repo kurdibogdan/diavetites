@@ -23,23 +23,8 @@ var Diasor_Dalszoveg =
         dalszoveg_betoltese(kivalasztott_enek, function(data)
         {
             // Szöveg típusra szabása (csak az első versszak, utolsó versszakig, csak az utolsó versszak, teljes dal):
-            var szoveg = data.szoveg.replace(/\r/g, "");
-                szoveg = dalszoveg_tipusra_szabasa(szoveg, tipus);
-            
-            // A szöveg felbontása a diák (üres sorok) mentén:
-            var dalszoveg  = [];
-            var diak = szoveg.split("\n\n");
-            for(var i=0, n=diak.length; i<n; i++)
-            {
-                // Szöveg felosztása sorokra, közben a jelölések (#) feldolgozása:
-                var dia = diak[i]
-                          .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
-                          .replace(/^#.*?$\n/gm, "")      // jelölések törlése
-                          .split("\n");
-                dalszoveg.push(dia);
-            } 
-            // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
-            // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
+            var szoveg = dalszoveg_tipusra_szabasa(data.szoveg, tipus);
+            var dalszoveg = that.szoveg_elofeldolgozasa(szoveg);
             
             // Diák (objektumok) összeállítása:
             var diak      = [];
@@ -95,6 +80,27 @@ var Diasor_Dalszoveg =
             }
             if (typeof callback == "function") callback(diak);
          });
+    },
+    
+    szoveg_elofeldolgozasa : function(szoveg)
+    {
+        // A szöveg felbontása a diák (üres sorok) mentén:
+        var dalszoveg = [];
+        var diak = szoveg.replace(/\r/g, "").split("\n\n");
+        
+        for(var i=0, n=diak.length; i<n; i++)
+        {
+            // Szöveg felosztása sorokra, közben a jelölések (#) feldolgozása:
+            var dia = diak[i]
+                      .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
+                      .replace(/^#.*?$\n/gm, "")      // jelölések törlése
+                      .split("\n");
+            dalszoveg.push(dia);
+        }
+        // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
+        // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
+        
+        return(dalszoveg);
     },
     
     betumeret_meghatarozasa : function(sorok_szama)
@@ -182,6 +188,33 @@ var Diasor_Dalszoveg =
               + "   <span class='slider round'></span>"
               + "  </label>"
               + " </td>\n"
+              + " <td>" + cim + " <br>"
+              + this.dalszoveg_kereses_gomb(gomb_id, "dalszoveg_szerkesztes_bezarasa")
+              + " </td>\n"
+              + " <td>"
+              + "  <button id='diasor_bovitese_" + gomb_id + "' "
+              + "             onclick=\"Diasor_Dalszoveg.uj_diasor('" + gomb_id + "', diasor_bovitese);\" "
+              + "             disabled='disabled'>&rarr;</button>"
+              + "  <br>"
+              + "  <button id='dalszoveg_szerkesztese_gomb_" + gomb_id + "' "
+              + "          class='dalszoveg_szerkesztese_gomb' "
+              + "          onclick=\"Diasor_Dalszoveg.dalszoveg_szerkesztese('" + gomb_id + "');\" "
+              + "          disabled='disabled'"
+              + "          style='display:none;'></button>"
+              + "  <button id='uj_dalszoveg_gomb_" + gomb_id + "' "
+              + "          class='uj_dalszoveg_gomb' "
+              + "          onclick=\"Diasor_Dalszoveg.uj_dalszoveg_irasa('" + gomb_id + "');\"></button>"
+              + " </td>\n"
+              + "</tr>\n";
+        return(t);
+    },
+    
+    mobil_diakeszites_gomb : function(gomb_id, tipus, cim, rejtett)
+    {   
+        // tipus = ["teljes", "csak_elso_versszak", "utolso_versszakig", "csak_utolso_versszak"];
+        var t = "<tr id='dia_keszitese_sor_" + gomb_id + "' "
+              + "     data-tipus='" + tipus + "' "
+              + "     style='display:" + (rejtett ? "none" : "") + ";'>\n"
               + " <td>" + cim + " <br>"
               + this.dalszoveg_kereses_gomb(gomb_id, "dalszoveg_szerkesztes_bezarasa")
               + " </td>\n"

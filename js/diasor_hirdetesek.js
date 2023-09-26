@@ -76,4 +76,18 @@ var Diasor_Hirdetesek =
               + "</tr>\n";
         return(t);
     },
+    
+    mobil_diakeszites_gomb : function(gomb_id)
+    {
+        var t = "<tr>\n"
+              + " <td>HIRDETÉSEK<br>\n"
+              + "  <textarea id='hirdetesek_" + gomb_id + "' "
+              + "             onkeyup=\"Diasor_Hirdetesek.jelolo_valtasa('" + gomb_id + "');\"></textarea>\n"
+              + " </td>\n"
+              + " <td><button id='diasor_bovitese_" + gomb_id + "' "
+              + "             onclick=\"diasor_bovitese(Diasor_Hirdetesek.uj_diasor('" + gomb_id + "'));\" "
+              + "             disabled='disabled'>&rarr;</button></td>\n"
+              + "</tr>\n";
+        return(t);
+    },
 }

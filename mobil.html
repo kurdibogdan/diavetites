@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Énekek kivetítése</title>
+  <link rel="stylesheet" href="css/gomb.css">
+  <link rel="stylesheet" href="css/mobil.css">
+  <link rel="stylesheet" href="css/diasor_keszitese.css">
+  <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/diasor_megjelenitese.js"></script>
+  <script type="text/javascript" src="js/mobil_fajl.js"></script>
+  <script type="text/javascript" src="js/mobil_stilus.js"></script>
+  <script type="text/javascript" src="js/mobil_hatter.js"></script>
+  <script type="text/javascript" src="js/dalszovegek.js"></script>
+  <script type="text/javascript" src="js/diasor_kezdokep.js"></script>
+  <script type="text/javascript" src="js/diasor_focim.js"></script>
+  <script type="text/javascript" src="js/diasor_dalszoveg.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_bunvallas.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_halaadas.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_befejezes.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora2.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_bunvallas2.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_parbeszed.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_titok.js"></script>
+  <script type="text/javascript" src="js/diasor_hirdetesek.js"></script>
+  <style type="text/css">
+  </style>
+ </head>
+<body>
+
+<div id="keret">
+ <div id="fejlec"></div>
+ 
+ <!-- Fájl -->
+ <div id="menu_fajl" class="menu">
+  <table>
+   <tr>
+    <table>
+     <tr>
+      <td>
+       <div id="uj_fajl_gomb" class="vezerlo_gomb" onclick="Fajl.uj_fajl();">
+        <img src="kepek/uj_fajl.png">
+       </div>
+      </td>
+      <td>
+       <div id="fajl_megnyitas_gomb" class="vezerlo_gomb" onclick="Fajl.kivalasztott_megnyitasa();">
+        <img src="kepek/fajl_megnyitas.png">
+       </div>
+      </td>
+      <td>
+       <div id="fajl_mentes_gomb" class="vezerlo_gomb" onclick="Fajl.mentes();">
+        <img src="kepek/fajl_mentes.png">
+       </div>
+      </td>
+      <td>
+       <div id="fajl_torles_gomb" class="vezerlo_gomb" onclick="Fajl.kivalaszott_torlese();">
+        <img src="kepek/kuka.png">
+       </div>
+      </td>
+      <td>
+       <div id="fajl_letoltes_gomb" class="vezerlo_gomb" onclick="Fajl.kivalaszott_letoltese();">
+        <img src="kepek/powerpoint.png">
+       </div>
+      </td>
+     </tr>
+    </table>
+   </tr>
+   <tr>
+    <td>
+     <input id="fajlnev"
+            type="text"
+            placeholder="Fájlnév"
+            onkeyup="Fajl.ikonallapotok_frissitese(this.value);"
+            autocomplete="off"
+            list="mentett_fajlok">
+     <br>
+     <datalist id="mentett_fajlok"></datalist>
+     <div id="fajllista"></div>
+    </td>
+   </tr>
+  </table>
+ </div>
+ 
+ <!-- Stílus -->
+ <div id="menu_stilus" class="menu">
+  <div class="gorgethetetlen">
+   <h2>Példa</h2>
+   <div id="stilus_pelda_keret">
+    <div id="stilus_pelda">
+     Ó, hála az Úrnak, zengjünk neki hát,<br>
+     Mert úgy szeretett,<br>
+     hogy od'adta Fiát!<br>
+     A kínra, halálra küldötte el Őt.<br>
+     Megnyitni a mennyet a bűnös előtt!
+    </div>
+   </div>
+  </div>
+  <h2>Elmentett stílus betöltése:</h2>
+  <div id="eloredefinialt_stilusok_valasztasa" class="stilusvalaszto"></div>
+  <h2>Képarány:</h2>
+  <div id="keparany_valasztasa" class="stilusvalaszto"></div>
+  <h2>Margó:</h2>
+  <div id="margo_valasztasa" class="stilusvalaszto"></div>
+  <h2>Szöveg igazítása:</h2>
+  <div id="szovegigazitas_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűtípus:</h2>
+  <div id="betutipus_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűméret:</h2>
+  <div id="betumeret_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűvastagság:</h2>
+  <div id="betuvastagsag_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűkárnyékolás:</h2>
+  <div id="betuarnyekolas_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűkörvonal:</h2>
+  <div id="betukorvonal_valasztasa" class="stilusvalaszto"></div>
+  <h2>Kisbetű/nagybetű:</h2>
+  <div id="betu_kis_nagy_valasztasa" class="stilusvalaszto"></div>
+ </div>
+ 
+ <div id="menu_hatter" class="menu">
+  <h2>Betű színe:</h2>
+  <div id="betuszin_valasztasa" class="stilusvalaszto"></div>
+  <h2>Háttér színe:</h2> <!-- háttérképre rákeverni? -->
+  <div id="hatterszin_valasztasa" class="stilusvalaszto"></div>
+  <h2>Háttérkép:</h2>
+  <div id="hatterkep_valasztasa" class="stilusvalaszto"></div>
+ </div>
+ 
+ <!-- Diasor elemei -->
+ <div id="menu_elemek" class="menu">
+  <h2>Diavetítés összeállítása:</h2>
+  <div id="kivetites_osszeallitasa"></div>
+  <div id="kivetites_osszeallitas_elonezet"></div>
+ </div>
+ 
+ <!-- Diavetítés -->
+ <div id="menu_vetites" class="menu"></div>
+</div>
+
+<script type="text/javascript">
+var Menu =
+{
+    kivalasztott: null,
+    menuk:
+    [
+        {id: "fajl",     cim: "Fájl"},
+        {id: "stilus",   cim: "Stílus"},
+        {id: "hatter",   cim: "Háttér"},
+        {id: "elemek",   cim: "Elemek"},
+        {id: "vetites",  cim: "Vetítés"},
+    ],
+    menuvalaszto_gombok_megjelenitese : function()
+    {
+        var t = "";
+        for(var menu of this.menuk)
+        {
+            t += "<button "
+               + " id='menuvalaszto_" + menu.id + "' "
+               + " class='menuvalaszto' "
+               + (menu == this.kivalasztott ? " data-kivalasztva='true' " : "")
+               + " onclick=\"Menu.menu_kivalasztasa('" + menu.id + "');\" "
+               + ">"
+               + menu.cim
+               + "</button>";
+        }
+        $("#fejlec").html(t);
+    },
+    menu_kivalasztasa: function(menu_id)
+    {
+        this.kivalasztott = menu_id;
+        $(".menu").hide();
+        $("#menu_" + menu_id).show();
+        $(".menuvalaszto").removeClass("kivalasztott");
+        $("#menuvalaszto_" + menu_id).addClass("kivalasztott");
+    },
+};
+
+
+var Elemek =
+{
+    kivetites_osszeallitasa: function()
+    {
+        var t = "<table class='diakeszites_tabla'>\n"
+              + " <tr>\n"
+              + "  <th width='230'>általános részek</th>\n"
+              + "  <th>új slide</th>\n"
+              + " </tr>\n"
+              + Diasor_Kezdokep.mobil_diakeszites_gomb("kezdokep")
+              + Diasor_Focim.mobil_diakeszites_gomb("focim")
+              + Diasor_Dalszoveg.mobil_diakeszites_gomb("ifienek", "teljes", "dalszöveg")
+              + Diasor_Urvacsora.mobil_diakeszites_gomb("urvacsora")
+           // + Diasor_Urvacsora2.mobil_diakeszites_gomb("urvacsora2")
+              + Diasor_Hirdetesek.mobil_diakeszites_gomb("hirdetesek")
+              + "</table>";
+        $("#kivetites_osszeallitasa").html(t);
+    },
+};
+
+const REJTETT_GOMB = 1;
+
+Menu.menuvalaszto_gombok_megjelenitese();
+Fajl.fajllista_betoltese();
+Fajl.ikonallapotok_frissitese();
+Stilus.eloredefinialt_stilus_valasztasa();
+Stilus.pelda_megjelenitese();
+Stilus.betutipus.bevitel_megjelenitese();
+Stilus.betumeret.bevitel_megjelenitese();
+Stilus.betuvastagsag.bevitel_megjelenitese();
+Stilus.betuarnyekolas.bevitel_megjelenitese();
+Stilus.betukorvonal_valasztasa();
+Stilus.betu_kis_nagy_valasztasa();
+Stilus.szovegigazitas_valasztasa();
+Stilus.keparany_valasztasa();
+Stilus.margo_valasztasa();
+Hatter.betuszin_valasztasa();
+Hatter.hatterszin_valasztasa();
+Hatter.hatterkep_valasztasa();
+Elemek.kivetites_osszeallitasa();
+Menu.menu_kivalasztasa("stilus");
+</script>
+
+</body>
+</html>

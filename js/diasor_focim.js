@@ -75,4 +75,14 @@ var Diasor_Focim =
               + "</tr>\n";
         return(t);
     },
+    
+    mobil_diakeszites_gomb : function(gomb_id)
+    {
+        var t = "<tr>\n"
+              + " <td><input id='cimoldal_szoveg' type='text' value='ISTENTISZTELET'><br>\n"
+              + "     <input id='" + this.datum_bevitel + "' onchange=\"STILUS.stilus_valasztasa_naptar_szerint(this.value);\" type='date'></td>\n"
+              + " <td><button onclick=\"diasor_bovitese(Diasor_Focim.uj_diasor('" + gomb_id + "'));\">&rarr;</button></td>\n"
+              + "</tr>\n";
+        return(t);
+    },
 };

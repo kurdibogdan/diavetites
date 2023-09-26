@@ -122,17 +122,32 @@ var DIA_MERET = new function()
     this.diameretek_beallitasa(200);
 };
 
+const BETUSZINEK =
+{
+    "fekete" : "#000000",
+    "feher"  : "#ffffff",
+};
+
+const HATTERSZINEK =
+{
+    "lila"  : "#640064",    // "#a754ac"}, // [167,  84, 172];
+    "feher" : "#ffffff",    // [255, 255, 255];
+    "zold"  : "#004511",    // [  0,  69,  17];    // "#3b8d4f"}, // [ 59, 141,  79];
+    "piros" : "#940200",    // [148,   2,   0];    // "#db0a05"}, // [219,  10,   5];
+    "fekete" : "#000000",   // [  0,   0,   0];
+};
+
 var STILUS = new function()
 {
     this.betuszin;
     this.hatterszin;
     this.beepitett_stilusok =
     {
-        "lila"   : {"betuszin": "#ffffff", "hatterszin": "#640064"}, // [100,   0, 100];    // "#a754ac"}, // [167,  84, 172];
-        "feher"  : {"betuszin": "#000000", "hatterszin": "#ffffff"}, // [255, 255, 255];
-        "zold"   : {"betuszin": "#ffffff", "hatterszin": "#004511"}, // [  0,  69,  17];    // "#3b8d4f"}, // [ 59, 141,  79];
-        "piros"  : {"betuszin": "#ffffff", "hatterszin": "#940200"}, // [148,   2,   0];    // "#db0a05"}, // [219,  10,   5];
-        "fekete" : {"betuszin": "#ffffff", "hatterszin": "#000000"}, // [  0,   0,   0];
+        "lila"   : {"betuszin": BETUSZINEK.feher,  "hatterszin": HATTERSZINEK.lila},
+        "feher"  : {"betuszin": BETUSZINEK.fekete, "hatterszin": HATTERSZINEK.feher},
+        "zold"   : {"betuszin": BETUSZINEK.feher,  "hatterszin": HATTERSZINEK.zold},
+        "piros"  : {"betuszin": BETUSZINEK.feher,  "hatterszin": HATTERSZINEK.piros},
+        "fekete" : {"betuszin": BETUSZINEK.feher,  "hatterszin": HATTERSZINEK.fekete},
     };
     this.kivalasztott_stilus = "zold";
     this.naptar =

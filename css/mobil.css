@@ -1,0 +1,119 @@
+html
+{
+    text-align: center;
+    overflow-y: scroll;
+}
+
+h2, h3
+{
+    font-family: Garamond;
+    font-weight: normal;
+    margin: 5px;
+}
+
+#keret
+{
+    display: inline-block;
+    text-align: initial;
+    width: 360px;
+    min-height: 480px;
+    border: 1px solid black;
+    background-color: #eee;
+}
+
+#fejlec
+{
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid grey;
+    background-color: #ccc;
+}
+
+button, input, select, .gomb
+{
+    display: inline-block;
+    min-width: 60px;
+    min-height: 34px;
+    border-radius: 0px;
+    margin: 0px;
+    padding: 5px 8px;
+    line-height: 30px;
+    font-family: Garamond;
+    font-size: 20px;
+    color: black;
+    background-color: #ccc;
+}
+
+select
+{
+    max-width: 100%;
+    background-color: #ccc;
+}
+
+button.kivalasztott
+{
+    background-color:orange;
+}
+
+.menu
+{
+    display: none;
+    padding: 5px;
+}
+
+#fajlnev
+{
+    width: calc(100% - 30px);
+    margin: 10px 5px;
+}
+
+.stilusvalaszto
+{
+    text-align: center;
+    margin: 15px;
+}
+.stilusvalaszto table
+{
+    display: inline-block;
+}
+#stilus_pelda_keret
+{
+    text-align: center;
+}
+#stilus_pelda
+{
+    display: inline-block;
+    background-color: white;
+    text-align: center;
+    padding-top: 16px;
+    margin: 10px;
+    width: 256px;
+    height: 112px;
+    border: 1px solid black;
+    font-family: Arial Black;
+    font-size: 12px;
+}
+.margo_valasztasa
+{
+    width: 20px;
+    min-width: 20px;
+    margin: 5px;
+}
+.keparany_valasztasa
+{
+    max-height: 100px;
+}
+.kivalasztott_keparany
+{
+    background-color: orange;
+}
+
+#kivetites_osszeallitas_elonezet
+{
+    height: 50px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.gomb_inaktiv{opacity: 0.5;}
+.gorgethetetlen{position: sticky; top: 0px; background-color: #eee;}

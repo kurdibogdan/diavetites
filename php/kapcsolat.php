@@ -5,6 +5,7 @@
     {
         $kapcsolat = new PDO("sqlite:phpLiteAdmin/adatbazis_v4wb87b.db");
         $kapcsolat->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $kapcsolat->sqliteCreateFunction('kereses', 'kereses', 2);
     }
     catch(PDOException $e)
     {

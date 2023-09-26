@@ -41,4 +41,13 @@ var Diasor_Kezdokep =
               + "</tr>\n";
         return(t);
     },
+    
+     mobil_diakeszites_gomb: function(gomb_id)
+     {
+        var t = "<tr>\n"
+              + " <td>Kezdőkép (Julcsi rajza)</td>\n"
+              + " <td><button onclick=\"diasor_bovitese(Diasor_Kezdokep.uj_diasor('" + gomb_id + "'));\">&rarr;</button></td>\n"
+              + "</tr>\n";
+        return(t);
+     },
 };

@@ -52,4 +52,20 @@
             array_push($a, $r);
         return($a);
     }
+    
+    function ekezettelen($szo)
+	{
+		$ekezettelenito = array( 'ö' => 'o',  'Ö' => 'O',  'ó' => 'o',  'Ó' => 'O',  'ő' => 'o',  'Ő' => 'O',
+								 'ú' => 'u',  'Ú' => 'U',  'ű' => 'u',  'Ű' => 'U',  'ü' => 'u',  'Ü' => 'U',
+								 'á' => 'a',  'Á' => 'A',  'é' => 'e',  'É' => 'E',  'í' => 'i',  'Í' => 'I',
+								 'Ä' => 'A',  'ä' => 'a',  'ß' => 'ss', ' ' => '_',  ',' => '');
+		$szo =  mb_strtolower($szo, 'UTF-8');
+        $szo = strtolower(strtr($szo, $ekezettelenito));
+		return $szo;
+	}
+    
+    function kereses($miben, $mit)
+    {
+        return(strpos(ekezettelen($miben), ekezettelen($mit)) !== false);
+    }
 ?>

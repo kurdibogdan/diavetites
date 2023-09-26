@@ -78,4 +78,25 @@ var Diasor_Urvacsora =
               ;
         return(t);
     },
+    
+    mobil_diakeszites_gomb : function(gomb_id)
+    {
+        var t = " <tr id='dia_keszitese_sor_"+gomb_id+"'>\n"
+              + "  <th width='230'>úrvacsorai liturgia</th>\n"
+              + "  <th><button id='diasor_bovitese_" + gomb_id + "' "
+              + "              onclick=\"Diasor_Urvacsora.uj_diasor('" + gomb_id + "', diasor_bovitese);\""
+              + "              disabled='disabled'>&rarr;</button></th>\n"
+              + " </tr>\n"
+          //  + " <tr>\n"
+          //  + Diasor_Urvacsora_Bunvallas.diakeszites_gomb("urvacsora_bunvallas", REJTETT_GOMB)
+          //  + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_1", "csak_elso_versszak", "ének 1 versszakkal", REJTETT_GOMB)
+          //  + Diasor_Urvacsora_Halaadas.diakeszites_gomb("urvacsora_halaadas", REJTETT_GOMB)
+          //  // + Mi Atyánk szöveg
+          //  + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_2", "utolso_versszakig", "közbülső ének (utolsó előtti versszakig)", REJTETT_GOMB)
+          //  + Diasor_Urvacsora_Befejezes.diakeszites_gomb("urvacsora_befejezes", REJTETT_GOMB)
+          //  + Diasor_Dalszoveg.diakeszites_gomb("urvacsora_enek_3", "csak_utolso_versszak", "befejező ének (utolsó versszak)", REJTETT_GOMB)
+          //  // + úrvacsorai közösség szöveg
+              ;
+        return(t);
+    },
 }
