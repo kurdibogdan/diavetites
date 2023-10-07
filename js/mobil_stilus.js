@@ -21,16 +21,64 @@ var Stilus =
         var that = this;
         dalszoveg_betoltese(PELDA_DAL_ID, function(data)
         {
+            const MERETARANY = 1/3;
             var dalszoveg = Diasor_Dalszoveg.szoveg_elofeldolgozasa(data.szoveg);
             var dia = dalszoveg[0];
+            var szoveg = "";
+            
+            switch(that.betu_kis_nagy.kivalasztva)
+            {
+                case "kisbetus":
+                    szoveg = dia.join("<br>").toLowerCase();
+                    break;
+                case "nagybetus":
+                    szoveg = dia.join("<br>").toUpperCase();
+                    break;
+                case "sor_elso_nagybetu":
+                    var uj_dia = [];
+                    for(var sor of dia)
+                    {
+                        uj_dia.push(sor.charAt(0).toUpperCase() 
+                                      + sor.substring(1));
+                    }
+                    szoveg = uj_dia.join("<br>");
+                    break;
+                case "mondat_elso_nagybetu":
+                    szoveg = dia.join("<br>");
+                    szoveg[0] = szoveg[0].toUpperCase();
+                    break;
+                default:
+                    break;
+            }
+            
+            const igazitas_kodolasa =
+            {
+                "vizszintes":
+                {
+                    "balra": "left",
+                    "kozepre": "center",
+                    "jobbra": "right"
+                },
+                "fuggoleges":
+                {
+                    "fent": "top",
+                    "kozepre": "middle",
+                    "lent": "bottom"
+                }
+            };
+            
             $("#stilus_pelda")
                 .css("font-family", that.betutipus.kivalasztva)
-                .css("font-size",   that.betumeret.kivalasztva / 3)
+                .css("font-size",   that.betumeret.kivalasztva * MERETARANY)
                 .css("font-weight", that.betuvastagsag.kivalasztva)
-                .css("text-shadow", that.betuarnyekolas.kivalasztva.tavolsag + "px "
-                                  + that.betuarnyekolas.kivalasztva.tavolsag + "px "
+                .css("text-shadow", (that.betuarnyekolas.kivalasztva.tavolsag * MERETARANY) + "px "
+                                  + (that.betuarnyekolas.kivalasztva.tavolsag * MERETARANY) + "px "
                                   + that.betuarnyekolas.kivalasztva.szin)
-                .html(dia.join("<br>"));
+                .css("-webkit-text-stroke", (that.betukorvonal.kivalasztva.meret * MERETARANY) + "px "
+                                          + that.betukorvonal.kivalasztva.szin)
+                .css("text-align", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes])
+/* ! */         .css("vertical-align", igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges])
+                .html(szoveg);
         });
     },
     
@@ -190,80 +238,150 @@ var Stilus =
         }
     },
     
-    betukorvonal_valasztasa: function()
+    betukorvonal: 
     {
-        var t = "<table>"
-              + " <tr>"
-              + "  <td>"
-              + "   <select id='betukorvonal' autocomplete='off'>"
-              + "    <option value='0'>nincs</option>"
-              + "    <option value='1'>1px körvonal</option>"
-              + "    <option value='2'>2px körvonal</option>"
-              + "   </select>"
-              + "  </td>"
-              + "  <td>"
-              + "   <input id='betukorvonal_szine' type='color'>"
-              + "  </td>"
-              + " </tr>"
-              + "</table>";
-        $("#betukorvonal_valasztasa").html(t);
+        kivalasztva:
+        {
+            meret: 0,
+            szin: "#000000"
+        },
+        bevitel_megjelenitese: function()
+        {
+            const korvonalak =
+            {
+                0: "nincs",
+                1: "1px körvonal",
+                2: "2px körvonal"
+            };
+            
+            var t = "<table>"
+                  + " <tr>"
+                  + "  <td>"
+                  + "   <select id='betukorvonal' "
+                  + "           onchange='Stilus.betukorvonal.meret_valtoztatasa(this.value);' "
+                  + "           autocomplete='off'>";
+            
+            for(var kulcs of Object.keys(korvonalak))
+            {
+                t += "<option value='" + kulcs + "' "
+                   + (this.kivalasztva.tavolsag == kulcs ? " selected='selected' " : "")
+                   + ">" + korvonalak[kulcs] + "</option>";
+            }
+            
+            t += "   </select>"
+               + "  </td>"
+               + "  <td>"
+               + "   <input id='betukorvonal_szine' "
+               + "          type='color' "
+               + "          value='" + this.kivalasztva.szin + "' "
+               + "          onchange='Stilus.betukorvonal.szin_valtoztatasa(this.value);'"
+               + "   >"
+               + "  </td>"
+               + " </tr>"
+               + "</table>";
+            $("#betukorvonal_valasztasa").html(t);
+        },
+        
+        meret_valtoztatasa: function(uj_meret)
+        {
+            this.kivalasztva.meret = uj_meret;
+            Stilus.pelda_megjelenitese();
+        },
+        
+        szin_valtoztatasa: function(uj_szin)
+        {
+            this.kivalasztva.szin = uj_szin;
+            Stilus.pelda_megjelenitese();
+        }
     },
     
-    betu_kis_nagy_valasztasa: function()
+    betu_kis_nagy:
     {
-        var t = "<select id='betu_kis_nagy'>"
-              + " <option value='kisbetus'>kisbetűs</option>"
-              + " <option value='nagybetus'>NAGYBETŰS</option>"
-              + " <option value='sor_elso_nagybetu'>Sorok első | Betűje nagy.</option>"
-              + " <option value='vers_elso_nagybetu'>Versszakok első | betűje nagy.</option>"
-              + "</select>";
-        $("#betu_kis_nagy_valasztasa").html(t);
+        kivalasztva: "sor_elso_nagybetu",
+        bevitel_megjelenitese: function()
+        {
+            const opciok =
+            {
+                "kisbetus": "kisbetűs",
+                "nagybetus": "NAGYBETŰS",
+                "sor_elso_nagybetu": "Sorok első | Betűje nagy.",
+                "mondat_elso_nagybetu": "Mondatok első | betűje nagy."                
+            };
+            
+            var t = "<select id='betu_kis_nagy' onclick='Stilus.betu_kis_nagy.valtoztatas(this.value);'>";
+            for(var kulcs of Object.keys(opciok))
+            {
+                t += "<option value='" + kulcs + "' "
+                   + (this.kivalasztva == kulcs ? "selected='selected'" : "")
+                   + ">" + opciok[kulcs] + "</option>";
+            }
+            t += "</select>";
+            $("#betu_kis_nagy_valasztasa").html(t);
+        },
+        valtoztatas: function(uj_ertek)
+        {
+            this.kivalasztva = uj_ertek;
+            Stilus.pelda_megjelenitese();
+        }
     },
     
-    szovegigazitas_valasztasa: function()
+    szovegigazitas:
     {
-        var t = "<h3>Vízszintesen:</h3>"
-              + "<div>"
-              + " <table>"
-              + "  <tr>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/vizszintes_igazitas_balra.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/vizszintes_igazitas_kozepre.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/vizszintes_igazitas_jobbra.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "  </tr>"
-              + " </table>"
-              + " <h3>Függőlegesen:</h3>"
-              + " <table>"
-              + "  <tr>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/fuggoleges_igazitas_fent.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/fuggoleges_igazitas_kozepre.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "   <td>"
-              + "    <div class='vezerlo_gomb'>"
-              + "     <img src='kepek/fuggoleges_igazitas_lent.png'>"
-              + "    </div>"
-              + "   </td>"
-              + "  </tr>"
-              + " </table>";
-        $("#szovegigazitas_valasztasa").html(t);
+        kivalasztva:
+        {
+            "vizszintes": "kozepre",
+            "fuggoleges": "kozepre"
+        },
+        bevitel_megjelenitese: function()
+        {
+            const ertekek =
+            {
+                "vizszintes":
+                {
+                    "cim": "Vízszintesen",
+                    "igazitas": ["balra", "kozepre", "jobbra"],
+                },
+                "fuggoleges":
+                {
+                    "cim": "Függőlegesen",
+                    "igazitas": ["lent", "kozepre", "fent"],
+                }
+            };
+            
+            var t = "";
+            for(var irany of Object.keys(ertekek))
+            {
+                t += "<h3>" + ertekek[irany].cim + ":</h3>"
+                   + "<div>"
+                   + " <table>"
+                   + "  <tr>";
+                
+                for(var igazitas of ertekek[irany].igazitas)
+                {
+                    t += "<td>"
+                       + " <div class='vezerlo_gomb " 
+                       + (this.kivalasztva[irany] == igazitas ? " vezerlo_gomb_kivalasztva " : "") + "'"
+                       + " onclick=\"Stilus.szovegigazitas.valtoztatas('" + irany + "', '" + igazitas + "');\""
+                       + ">"
+                       + "  <img src='kepek/" + irany + "_igazitas_" + igazitas + ".png'>"
+                       + " </div>"
+                       + "</td>";                    
+                }
+                
+                t += "  </tr>"
+                   + " </table>"
+                   + "</div>";
+            }
+            
+            $("#szovegigazitas_valasztasa").html(t);
+        },
+        
+        valtoztatas: function(irany, igazitas)
+        {
+            this.kivalasztva[irany] = igazitas;
+            this.bevitel_megjelenitese();
+            Stilus.pelda_megjelenitese();
+        }
     },
     
     margo_valasztasa: function()
