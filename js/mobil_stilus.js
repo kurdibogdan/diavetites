@@ -55,15 +55,15 @@ var Stilus =
             {
                 "vizszintes":
                 {
-                    "balra": "left",
-                    "kozepre": "center",
-                    "jobbra": "right"
+                    "balra"   : {"left": "0%", "align": "left"},
+                    "kozepre" : {"left": "50%", "align": "center"},
+                    "jobbra"  : {"left": "100%", "align": "right"}
                 },
                 "fuggoleges":
                 {
-                    "fent": "top",
-                    "kozepre": "middle",
-                    "lent": "bottom"
+                    "fent"    : {"top": "0%", "valign": "top"},
+                    "kozepre" : {"top": "50%", "valign": "center"},
+                    "lent"    : {"top": "100%", "valign": "bottom"}
                 }
             };
             
@@ -76,9 +76,17 @@ var Stilus =
                                   + that.betuarnyekolas.kivalasztva.szin)
                 .css("-webkit-text-stroke", (that.betukorvonal.kivalasztva.meret * MERETARANY) + "px "
                                           + that.betukorvonal.kivalasztva.szin)
-                .css("text-align", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes])
-/* ! */         .css("vertical-align", igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges])
+                .css("text-align", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes].align)
+                .css("top", igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
+                .css("-ms-transform", "translate(-50%, -"
+                                      + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
+                .css("-transform", "translate(-50%, -"
+                      + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
+                .css("left", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes].left)
                 .html(szoveg);
+            $("#stilus_pelda_belsobb_keret")
+                .css("width", (256 - that.margo.kivalasztva.x * 10 * 2) + "px")
+                .css("height", (177 - that.margo.kivalasztva.y * 10 * 2) + "px");
         });
     },
     
@@ -384,19 +392,34 @@ var Stilus =
         }
     },
     
-    margo_valasztasa: function()
+    margo:
     {
-        var t = "<table>"
-              + " <tr>"
-              + "  <td>jobbra-balra:</td>"
-              + "  <td><input id='margo_vizszintes' type='text' value='1' class='margo_valasztasa'>cm</td>"
-              + " </tr>"
-              + " <tr>"
-              + "  <td>fent-lent:</td>"
-              + "  <td><input id='margo_fuggoleges' type='text' value='1' class='margo_valasztasa'>cm</td>"
-              + " </tr>"
-              + "</table>";
-        $("#margo_valasztasa").html(t);
+        kivalasztva: {x: 1, y: 1},  // cm
+        bevitel_megjelenitese: function()
+        {
+            var t = "<table>"
+                  + " <tr>"
+                  + "  <td>jobbra-balra:</td>"
+                  + "  <td>"
+                  + "   <input id='margo_vizszintes' type='text' value='1' class='margo_valasztasa' "
+                  + "          onchange=\"Stilus.margo.valtoztatas('x', this.value);\""
+                  + "      >cm</td>"
+                  + " </tr>"
+                  + " <tr>"
+                  + "  <td>fent-lent:</td>"
+                  + "  <td>"
+                  + "   <input id='margo_fuggoleges' type='text' value='1' class='margo_valasztasa'"
+                  + "          onchange=\"Stilus.margo.valtoztatas('y', this.value);\""
+                  + "   >cm</td>"
+                  + " </tr>"
+                  + "</table>";
+            $("#margo_valasztasa").html(t);
+        },
+        valtoztatas: function(pozicio, ertek)
+        {
+            this.kivalasztva[pozicio] = ertek;
+            Stilus.pelda_megjelenitese();
+        },
     },
     
     kivalasztott_keparany: "szelesvaszon",

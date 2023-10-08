@@ -80,18 +80,45 @@ button.kivalasztott
 {
     text-align: center;
 }
-#stilus_pelda
+#stilus_pelda_belso_keret
 {
     display: inline-block;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     box-sizing: border-box;
     background-color: white;
     text-align: center;
-    padding-top: 16px;
     margin: 10px;
     width: 256px;
-    height: 112px;
+    height: 177px;  /* 13:9 */
     border: 1px solid black;
     font-family: Arial Black;
     font-size: 12px;
+}
+#stilus_pelda_belsobb_keret
+{
+    display: inline-block;
+    border: 1px solid red;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#stilus_pelda
+{
+    display: inline-block;
+    border: 1px solid blue;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 .margo_valasztasa
 {
@@ -116,4 +143,4 @@ button.kivalasztott
 }
 
 .gomb_inaktiv{opacity: 0.5;}
-.gorgethetetlen{position: sticky; top: 0px; background-color: #eee;}
+.gorgethetetlen{position: sticky; z-index: 1; top: 0px; background-color: #eee;}
