@@ -21,7 +21,16 @@ var Stilus =
         var that = this;
         dalszoveg_betoltese(PELDA_DAL_ID, function(data)
         {
-            const MERETARANY = 1/3;
+            // eredeti képarány: 25,4 cm x 19,05 cm (4:3)
+            // megjelenítés: 256 x 177 (13:9)
+            const PAPIR_SZELESSEG = 25.4; // cm
+            const PAPIR_MAGASSAG = 19.05; // cm
+            const KISKEP_SZELESSEG = 256;
+            const KISKEP_MAGASSAG = KISKEP_SZELESSEG / DIA_MERET.beepitett_keparanyok[Stilus.keparany.kivalasztva].ertek;
+            const PIXEL_PER_CM = KISKEP_SZELESSEG / PAPIR_SZELESSEG;    // ~ 10 px / cm
+            const PIXEL_PER_PT = 493/1380; // ~0.36 px/pt (~ 2.8 pt/px)
+            
+            // Szöveg megalkotása a beállítások alapján:
             var dalszoveg = Diasor_Dalszoveg.szoveg_elofeldolgozasa(data.szoveg);
             var dia = dalszoveg[0];
             var szoveg = "";
@@ -51,6 +60,7 @@ var Stilus =
                     break;
             }
             
+            // Többi stílus alkalmazása CSS-ként:
             const igazitas_kodolasa =
             {
                 "vizszintes":
@@ -67,26 +77,31 @@ var Stilus =
                 }
             };
             
-            $("#stilus_pelda")
-                .css("font-family", that.betutipus.kivalasztva)
-                .css("font-size",   that.betumeret.kivalasztva * MERETARANY)
-                .css("font-weight", that.betuvastagsag.kivalasztva)
-                .css("text-shadow", (that.betuarnyekolas.kivalasztva.tavolsag * MERETARANY) + "px "
-                                  + (that.betuarnyekolas.kivalasztva.tavolsag * MERETARANY) + "px "
-                                  + that.betuarnyekolas.kivalasztva.szin)
-                .css("-webkit-text-stroke", (that.betukorvonal.kivalasztva.meret * MERETARANY) + "px "
-                                          + that.betukorvonal.kivalasztva.szin)
-                .css("text-align", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes].align)
-                .css("top", igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
-                .css("-ms-transform", "translate(-50%, -"
-                                      + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
-                .css("-transform", "translate(-50%, -"
-                      + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top)
-                .css("left", igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes].left)
-                .html(szoveg);
-            $("#stilus_pelda_belsobb_keret")
-                .css("width", (256 - that.margo.kivalasztva.x * 10 * 2) + "px")
-                .css("height", (177 - that.margo.kivalasztva.y * 10 * 2) + "px");
+            $("#stilus_pelda").css(
+            {
+                "font-family" : that.betutipus.kivalasztva,
+                "font-size"   : that.betumeret.kivalasztva * PIXEL_PER_PT,
+                "font-weight" : that.betuvastagsag.kivalasztva,
+                "text-shadow" : (that.betuarnyekolas.kivalasztva.tavolsag * PIXEL_PER_CM) + "px "
+                              + (that.betuarnyekolas.kivalasztva.tavolsag * PIXEL_PER_CM) + "px "
+                              + that.betuarnyekolas.kivalasztva.szin,
+                "-webkit-text-stroke": (that.betukorvonal.kivalasztva.meret * PIXEL_PER_CM) + "px "
+                                        + that.betukorvonal.kivalasztva.szin,
+                "text-align"    : igazitas_kodolasa.vizszintes[that.szovegigazitas.kivalasztva.vizszintes].align,
+                "top"           : igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top,
+                "-ms-transform" : "translate(-50%, -"
+                                + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top,
+                "-transform"    : "translate(-50%, -"
+                                + igazitas_kodolasa.fuggoleges[that.szovegigazitas.kivalasztva.fuggoleges].top
+            }).html(szoveg);
+            
+            $("#stilus_pelda_belsobb_keret").css(
+            {
+                "width"  : (KISKEP_SZELESSEG - that.margo.kivalasztva.x * PIXEL_PER_CM * 2) + "px",
+                "height" : (KISKEP_MAGASSAG - that.margo.kivalasztva.y * PIXEL_PER_CM * 2) + "px",
+            });
+            
+            $("#stilus_pelda_belso_keret").css("height", KISKEP_MAGASSAG);
         });
     },
     
@@ -422,20 +437,28 @@ var Stilus =
         },
     },
     
-    kivalasztott_keparany: "szelesvaszon",
-    keparany_valasztasa: function(uj_keparany)
+    keparany:
     {
-        this.kivalasztott_keparany = (uj_keparany ? uj_keparany : this.kivalasztott_keparany);
-        var t = "";
-        for(var keparany of Object.keys(DIA_MERET.beepitett_keparanyok))
+        kivalasztva: "szelesvaszon", // "normalvaszon"
+        bevitel_megjelenitese: function()
         {
-            t += "<img onclick=\"Stilus.keparany_valasztasa('" + keparany + "')\" "
-               + "     src='kepek/" + DIA_MERET.beepitett_keparanyok[keparany].kep + "' "
-               + "     class='gomb keparany_valasztasa " 
-               + (keparany == this.kivalasztott_keparany 
-               ? " kivalasztott_keparany " 
-               : "") + "'>";
+            var t = "";
+            for(var keparany of Object.keys(DIA_MERET.beepitett_keparanyok))
+            {
+                t += "<img onclick=\"Stilus.keparany.valtoztatas('" + keparany + "')\" "
+                   + "     src='kepek/" + DIA_MERET.beepitett_keparanyok[keparany].kep + "' "
+                   + "     class='gomb keparany_valasztasa "
+                   + (keparany == this.kivalasztva
+                   ? " kivalasztott_keparany "
+                   : "") + "'>";
+            }
+            $("#keparany_valasztasa").html(t);
+        },
+        valtoztatas: function(uj_keparany)
+        {
+            this.kivalasztva = uj_keparany;
+            this.bevitel_megjelenitese();
+            Stilus.pelda_megjelenitese();
         }
-        $("#keparany_valasztasa").html(t);
     },
 };
