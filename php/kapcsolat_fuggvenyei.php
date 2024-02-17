@@ -48,7 +48,7 @@
         global $kapcsolat;
         $a = array();
         $q = $kapcsolat->query($qs);
-        while($r = $q->fetchArray(SQLITE3_ASSOC))
+        while($r = $q->fetch(PDO::FETCH_ASSOC))
             array_push($a, $r);
         return($a);
     }
