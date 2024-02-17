@@ -223,6 +223,10 @@ var HATTER = new function()
                   + "  </td>";
             for(var i = 0; i < kepek.length; i++)
             {
+                if (i % 5 == 4)
+                {
+                    t += "</tr><tr>";
+                }
                 var kep = kepek[i];
                 t += "<td id='kiskep_keret_" + kep + "' class='kiskep_keret " + (kep == HATTER.kivalasztott_hatterkep ? "vezerlo_gomb_kivalasztva" : "") + "'>"
                    + " <div class='vezerlo_gomb_hatterrel'>"
@@ -235,6 +239,13 @@ var HATTER = new function()
                    + " </div>"
                    + "</td>";
             }
+            
+            if (i % 5 == 4)
+            {
+                t += "</tr><tr>";
+            }
+            
+            // t += "  <td colspan='" + (5 - i % 5) + "'>"
             t += "  <td>"
                + "   <label for='hatter_feltoltese'>"
                + "    <div class='vezerlo_gomb'>"
