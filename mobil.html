@@ -115,6 +115,8 @@
   <div id="betumeret_valasztasa" class="stilusvalaszto"></div>
   <h2>Betűvastagság:</h2>
   <div id="betuvastagsag_valasztasa" class="stilusvalaszto"></div>
+  <h2>Betűszín</h2>
+  <div id="betuszin_valasztasa" class="stilusvalaszto"></div>
   <h2>Betűkárnyékolás:</h2>
   <div id="betuarnyekolas_valasztasa" class="stilusvalaszto"></div>
   <h2>Betűkörvonal:</h2>
@@ -135,6 +137,31 @@
  <!-- Diasor elemei -->
  <div id="menu_elemek" class="menu">
   <h2>Diavetítés összeállítása:</h2>
+  <table rules="all">
+   <tr>
+    <th width="50%">Elem</th>
+    <th width="1">&rarr;</th>
+    <th width="50%">Diasor</th>
+   <tr>
+    <td><button>Kép<br>Kezdőkép</button></td>
+    <td><button>&rarr;</button></td>
+    <td rowspan="5" valign="top" style="background-color: #ccc;">Diasor...</td>
+   </tr>
+   <tr>
+    <td><button>Cím<br>Istentisztelet<br>2023.10.22.</button></td>
+    <td><button>&rarr;</button></td>
+   </tr>
+   <tr>
+     <td><button>Dalszöveg<br>Ó, hála az Úrnak</button></td>
+    <td><button>&rarr;</button></td>
+   </tr>
+     <td><button>Úrvacsora</button></td>
+    <td><button>&rarr;</button></td>
+   </tr>
+     <td><button>Hirdetések</button></td>
+    <td><button>&rarr;</button></td>
+   </tr>
+  </table>
   <div id="kivetites_osszeallitasa"></div>
   <div id="kivetites_osszeallitas_elonezet"></div>
  </div>
@@ -212,6 +239,7 @@ Stilus.pelda_megjelenitese();
 Stilus.betutipus.bevitel_megjelenitese();
 Stilus.betumeret.bevitel_megjelenitese();
 Stilus.betuvastagsag.bevitel_megjelenitese();
+Stilus.betuszin.bevitel_megjelenitese();
 Stilus.betuarnyekolas.bevitel_megjelenitese();
 Stilus.betukorvonal.bevitel_megjelenitese();
 Stilus.betu_kis_nagy.bevitel_megjelenitese();
@@ -222,10 +250,12 @@ Hatter.betuszin_valasztasa();
 Hatter.hatterszin_valasztasa();
 Hatter.hatterkep_valasztasa();
 Elemek.kivetites_osszeallitasa();
-Menu.menu_kivalasztasa("stilus");
+// Menu.menu_kivalasztasa("stilus");
+Menu.menu_kivalasztasa("elemek");
 
 // font-variant: small-caps;  --  ez is egy hasznos beállítás!!
-// Stílus mentése másként
+// Stílus mentése másként.
+// Stílus helyett "Sablon".
 // Háttér: Betű színe, körvonal színe, árnyékolás színe
 // Háttérhez is legyen előkép.
 // Háttérkép: legyen mappákba rendezhető

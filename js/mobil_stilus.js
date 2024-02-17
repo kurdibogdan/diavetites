@@ -82,6 +82,7 @@ var Stilus =
                 "font-family" : that.betutipus.kivalasztva,
                 "font-size"   : that.betumeret.kivalasztva * PIXEL_PER_PT,
                 "font-weight" : that.betuvastagsag.kivalasztva,
+                "color"       : that.betuszin.kivalasztva,
                 "text-shadow" : (that.betuarnyekolas.kivalasztva.tavolsag * PIXEL_PER_CM) + "px "
                               + (that.betuarnyekolas.kivalasztva.tavolsag * PIXEL_PER_CM) + "px "
                               + that.betuarnyekolas.kivalasztva.szin,
@@ -200,6 +201,22 @@ var Stilus =
         valtoztatas: function(uj_betuvastagsag)
         {
             this.kivalasztva = uj_betuvastagsag;
+            Stilus.pelda_megjelenitese();
+        }
+    },
+    
+    betuszin:
+    {
+        kivalasztva: "#000000",
+        bevitel_megjelenitese: function()
+        {
+            var t = "<input type='color' onchange=\"Stilus.betuszin.valtoztatas(this.value);\">";
+            $("#betuszin_valasztasa").html(t);
+        },
+        valtoztatas: function(uj_szin)
+        {
+            console.log(uj_szin);
+            this.kivalasztva = uj_szin;
             Stilus.pelda_megjelenitese();
         }
     },
