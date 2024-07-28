@@ -119,7 +119,10 @@ var DIA_MERET = new function()
         $("#dia_keparanyvalasztas").html(t);
     };
     
-    this.diameretek_beallitasa(200);
+    $(document).ready(function()
+    {
+        DIA_MERET.diameretek_beallitasa(200);
+    });
 };
 
 const BETUSZINEK =
@@ -179,6 +182,7 @@ var STILUS = new function()
     
     this.beepitett_stilus_valasztasa = function(beepitett_stilus)
     {
+        HATTER.hatter_kivalasztasa('semmi');
         this.kivalasztott_stilus = beepitett_stilus;
         this.betuszin = this.beepitett_stilusok[beepitett_stilus].betuszin;
         this.hatterszin = this.beepitett_stilusok[beepitett_stilus].hatterszin;
@@ -192,38 +196,74 @@ var STILUS = new function()
         for(var i in Object.keys(this.beepitett_stilusok))
         {
             var kulcs = Object.keys(this.beepitett_stilusok)[i];
-            t += "<td class='" + (kulcs == this.kivalasztott_stilus ? "vezerlo_gomb_kivalasztva" : "") + "'>"
+            t += "<td class='" 
+               + (kulcs == this.kivalasztott_stilus ? "vezerlo_gomb_kivalasztva" : "")
+               + "'>"
                + " <div class='vezerlo_gomb' "
                + "      onclick=\"STILUS.beepitett_stilus_valasztasa('" + kulcs + "');\""
                + "      style='background-color:" + this.beepitett_stilusok[kulcs].hatterszin + ";'>"
                + " </div>"
                + "</td>";
         }
+        t += "  <td class='kiskep_keret "
+           +    (this.kivalasztott_stilus == "kép" ? "vezerlo_gomb_kivalasztva" : "")
+           + "   '>"
+           + "   <div id='hatterkep_valasztasa' class='vezerlo_gomb' onclick=\"STILUS.hatterkep_kivalasztasa();\">"
+           + "    <div class='kiskep'>"
+           + "     Kép"
+           + "    </div>"
+           + "   </div>"
+           + "  </td>"
         t += " </tr>"
            + "</table>";
         
         $("#dia_stilusvalasztas").html(t);
     };
     
-    this.beepitett_stilus_valasztasa("zold");
+    this.hatterkep_kivalasztasa = function()
+    {
+        HATTER.meglevo_hatterkepek_megjelenitese();
+        this.kivalasztott_stilus = "kép";
+        this.gombok_megjelenitese();
+    };
+    
+    $(document).ready(function()
+    {
+        STILUS.beepitett_stilus_valasztasa("zold");        
+    });
 };
 
 var HATTER = new function()
 {
-    this.kivalasztott_hatterkep = "semmi";
+    this.kivalasztott_hatterkep = "semmi";    
     this.meglevo_hatterkepek_megjelenitese = function(callback)
     {
+        $("#dia_hattervalasztas").show();
         $.post("php/meglevo_hatterkepek.php", function(data)
         {
             const kepek = jQuery.parseJSON(data);
             var t = "<table class='diakeszites_tabla'>"
                   + " <tr>"
+                  + "  <td>"
+                  + "   <label for='hatter_feltoltese'>"
+                  + "    <div class='vezerlo_gomb'>"
+                  + "     <img src='kepek/hatter_feltoltese.png'>"
+                  + "    </div>"
+                  + "   </label>"
+                  + "   <input id='hatter_feltoltese' "
+                  + "          type='file' "
+                  + "          accept='image/png, image/jpeg' "
+               // + "          multiple "
+                  + "          style='display:none;' "
+                  + "          onchange='HATTER.uj_hatter_feltoltese(event);'>"
+                  + "  </td>"
                   + "  <td id='kiskep_keret_semmi' class='kiskep_keret " + (HATTER.kivalasztott_hatterkep == "semmi" ? "vezerlo_gomb_kivalasztva" : "") + "'>"
                   + "   <div class='vezerlo_gomb' onclick=\"HATTER.hatter_kivalasztasa('semmi');\"></div>"
                   + "  </td>";
+            
             for(var i = 0; i < kepek.length; i++)
             {
-                if (i % 5 == 4)
+                if ((i + 1) % 5 == 4)
                 {
                     t += "</tr><tr>";
                 }
@@ -240,26 +280,12 @@ var HATTER = new function()
                    + "</td>";
             }
             
-            if (i % 5 == 4)
+            if ((i + 1) % 5 == 4)
             {
                 t += "</tr><tr>";
             }
             
-            // t += "  <td colspan='" + (5 - i % 5) + "'>"
-            t += "  <td>"
-               + "   <label for='hatter_feltoltese'>"
-               + "    <div class='vezerlo_gomb'>"
-               + "     <img src='kepek/hatter_feltoltese.png'>"
-               + "    </div>"
-               + "   </label>"
-               + "   <input id='hatter_feltoltese' "
-               + "          type='file' "
-               + "          accept='image/png, image/jpeg' "
-            // + "          multiple "
-               + "          style='display:none;' "
-               + "          onchange='HATTER.uj_hatter_feltoltese(event);'>"
-               + "  </td>"
-               + " </tr>"
+            t += " </tr>"
                + "</table>";
            
             $("#dia_hattervalasztas").html(t);
@@ -270,7 +296,7 @@ var HATTER = new function()
     this.hatter_kivalasztasa = function(kep)
     {
         this.kivalasztott_hatterkep = kep;
-        $(".kiskep_keret.vezerlo_gomb_kivalasztva").removeClass("vezerlo_gomb_kivalasztva");
+        $("#dia_hattervalasztas").hide();
         $(document.getElementById("kiskep_keret_" + kep)).addClass("vezerlo_gomb_kivalasztva");
         diasor_megjelenitese();
     };
@@ -312,29 +338,6 @@ var HATTER = new function()
             },
         });
     };
-    
-    this.gombok_megjelenitese = function()
-    {
-        var t = "<table class='diakeszites_tabla'>"
-              + " <tr>";
-        // for(var i in Object.keys(this.beepitett_stilusok))
-        // {
-        //     var kulcs = Object.keys(this.beepitett_stilusok)[i];
-        //     t += "<td class='" + (kulcs == this.kivalasztott_stilus ? "vezerlo_gomb_kivalasztva" : "") + "'>"
-        //        + " <div class='vezerlo_gomb' "
-        //        + "      onclick=\"STILUS.beepitett_stilus_valasztasa('" + kulcs + "');\""
-        //        + "      style='background-color:" + this.beepitett_stilusok[kulcs].hatterszin + ";'>"
-        //        + " </div>"
-        //        + "</td>";
-        // }
-        t += " </tr>"
-           + "</table>";
-        
-        // $("#dia_hattervalasztas").html(t);
-    };
-    
-    this.gombok_megjelenitese();
-    this.meglevo_hatterkepek_megjelenitese();
 };
 
 var DIA_VEZERLES = new function()

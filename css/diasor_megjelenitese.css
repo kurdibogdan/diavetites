@@ -62,3 +62,16 @@
 {
     border : 1px solid grey;
 }
+#dia_hattervalasztas
+{
+    display: none;
+    position: fixed;
+    top: calc(50vh - 200px);
+    left: calc(50vw - 200px);
+    width: 400px;
+    height: 400px;
+    border: 1px solid black;
+    overflow-y: scroll;
+    background-color: white;
+    z-index: 1;
+}
