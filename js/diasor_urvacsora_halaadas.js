@@ -13,8 +13,8 @@ var Diasor_Urvacsora_Halaadas =
                         "tipus"      : "szovegdoboz",
                         "poz_x"      : 4,           // % (~ 1 cm)
                         "poz_y"      : 13,          // % (~ 1 cm)
-                        "szelesseg"  : 96,          // % (100% - 1 cm)
-                        "magassag"   : 87,          // % (100% - 1 cm)
+                        "szelesseg"  : 92,          // % (100% - 2 cm)
+                        "magassag"   : 74,          // % (100% - 2 cm)
                         "igazitas_x" : "balra",
                         "igazitas_y" : "fent",
                         "szovegek"   :
@@ -59,8 +59,8 @@ var Diasor_Urvacsora_Halaadas =
                         "tipus"      : "szovegdoboz",
                         "poz_x"      : 4,           // % (~ 1 cm)
                         "poz_y"      : 13,          // % (~ 1 cm)
-                        "szelesseg"  : 96,          // % (100% - 1 cm)
-                        "magassag"   : 87,          // % (100% - 1 cm)
+                        "szelesseg"  : 92,          // % (100% - 2 cm)
+                        "magassag"   : 74,          // % (100% - 2 cm)
                         "igazitas_x" : "balra",
                         "igazitas_y" : "fent",
                         "szovegek"   :
@@ -101,8 +101,8 @@ var Diasor_Urvacsora_Halaadas =
                         "tipus"      : "szovegdoboz",
                         "poz_x"      : 4,           // % (~ 1 cm)
                         "poz_y"      : 13,          // % (~ 1 cm)
-                        "szelesseg"  : 96,          // % (100% - 1 cm)
-                        "magassag"   : 87,          // % (100% - 1 cm)
+                        "szelesseg"  : 92,          // % (100% - 2 cm)
+                        "magassag"   : 74,          // % (100% - 2 cm)
                         "igazitas_x" : "balra",
                         "igazitas_y" : "fent",
                         "szovegek"   :
