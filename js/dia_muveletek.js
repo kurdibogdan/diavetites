@@ -1,12 +1,3 @@
-$(document).mouseup(function(e)
-{
-	// var container = $(".dia, .vezerlo_gomb");
-	// if (!container.is(e.target) && container.has(e.target).length === 0)
-	// {
-	//     kijelolesek_megszuntetese();
-	// }
-});
-
 function osszes_dia_kijelolesenek_beallitasa(kijelolve)
 {
     for (var i=0, n=diasor.length; i<n; i++)

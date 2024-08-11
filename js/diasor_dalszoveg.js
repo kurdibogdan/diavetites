@@ -10,6 +10,66 @@
 // - gomb.css
 // - checkbox.css
 
+const Diasor_Dalszoveg2 = {
+    dalszovegbol_diasor: function(dal_id){
+        const that = this;
+        dalszoveg_betoltese(dal_id, function(dalszoveg){
+            const diak = that.dalszoveg_felbontasa_diakra(dalszoveg);
+            const feldolgozott_diak = [];
+            console.log("Diák száma: " + diak.length);
+            for (let dia of diak) {
+                let dia = that.diatulajdonsagok_feldolgozasa(dia);
+                feldolgozott_diak.push(dia);
+            }
+            return(feldolgozott_diak);
+        });
+    },
+    
+    dalszoveg_felbontasa_diakra: function(dalszoveg){
+        return(szoveg.replace(/(\r|\n|\r\n)/g, /\n/).split("\n\n"));
+    },
+    
+    diatulajdonsagok_feldolgozasa: function(nyers_szoveg) {
+        // TODO
+        let szovegdoboz = {
+         // poz_x: 0,
+         // poz_y: 0,
+         // szelesseg: 92,
+         // magassag: 74,
+            betumeret: 25,
+            betutipus: "Arial Black",
+            igazitas: {
+                x: "kozepre",   // jobbra, kozepre
+                y: "kozepre",   // fent, kozepre, lent
+            },
+            felkover,
+            korvonal,
+            arnyek,
+            nyelv,
+        };
+    },
+    
+    szoveg_elofeldolgozasa : function(szoveg)
+    {
+        // A szöveg felbontása a diák (üres sorok) mentén:
+        var dalszoveg = [];
+        
+        for(var i=0, n=diak.length; i<n; i++)
+        {
+            // Szöveg felosztása sorokra, közben a jelölések (#) feldolgozása:
+            var dia = diak[i]
+                      .replace(/^#\s*$/gm,   "")      // "#" jelölésből dián belüli üres sor lesz
+                      .replace(/^#.*?$\n/gm, "")      // jelölések törlése
+                      .split("\n");
+            dalszoveg.push(dia);
+        }
+        // dalszoveg = [  1. versszak            ,  2. versszak    , ... ]
+        // dalszoveg = [ [1. sor, 2. sor, 3. sor], [4. sor, 5. sor], ... ]
+        
+        return(dalszoveg);
+    },
+};
+
 var Diasor_Dalszoveg =
 {
     uj_diasor : function(gomb_id, callback)
@@ -41,10 +101,10 @@ var Diasor_Dalszoveg =
                 var szovegdoboz =
                 {
                     "tipus"      : "szovegdoboz",
-                    "poz_x"      : 0,           // 4% (~ 1 cm)
-                    "poz_y"      : 0,           // 8% (~ 1 cm)
-                    "szelesseg"  : 100,         // 92% (100% - 1 cm)
-                    "magassag"   : 100,         // 84% (100% - 1 cm)
+                    "poz_x"      : 0,
+                    "poz_y"      : 0,
+                    "szelesseg"  : 100,
+                    "magassag"   : 100,
                     "igazitas_x" : BETUBEALLITASOK.igazitasok.kivalasztva.x,
                     "igazitas_y" : BETUBEALLITASOK.igazitasok.kivalasztva.y,
                     "szovegek"   :

@@ -1,4 +1,12 @@
 var diasor = [];
+$(document).mouseup(function(e)
+{
+	var container = $("#dia_hattervalasztas");
+	if (!container.is(e.target) && container.has(e.target).length === 0)
+	{
+	    HATTER.hattervalaszto_bezarasa();
+	}
+});
 
 var REJTETT_GOMBOK = new function()
 {
@@ -296,9 +304,14 @@ var HATTER = new function()
     this.hatter_kivalasztasa = function(kep)
     {
         this.kivalasztott_hatterkep = kep;
-        $("#dia_hattervalasztas").hide();
+        this.hattervalaszto_bezarasa();
         $(document.getElementById("kiskep_keret_" + kep)).addClass("vezerlo_gomb_kivalasztva");
         diasor_megjelenitese();
+    };
+    
+    this.hattervalaszto_bezarasa = function()
+    {
+        $("#dia_hattervalasztas").hide();
     };
     
     this.hatterkep_torlese = function(e, kep)

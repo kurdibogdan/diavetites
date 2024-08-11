@@ -20,6 +20,7 @@ function ppt_keszitese()
         var dia = pptx.addSlide();
         dia.color = STILUS.betuszin;
         
+        // Dia hátteének beállítása
         if (HATTER.kivalasztott_hatterkep != "semmi")
         {
             dia.background =
@@ -35,8 +36,7 @@ function ppt_keszitese()
             dia.background = {color: STILUS.hatterszin};
         }
         
-        
-        
+        // Dia objektumok elhelyezése:
         var objektumok = diasor[i].objektumok;
         for(var j = 0, o = objektumok.length; j < o; j++)
         {
