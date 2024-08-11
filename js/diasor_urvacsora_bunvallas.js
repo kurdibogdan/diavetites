@@ -66,7 +66,8 @@ var Diasor_Urvacsora_Bunvallas =
                                             + "szóval és cselekedettel. Megvalljuk, hogy sokszor nem figyeltünk szeretetedre, "
                                             + "és parancsolataidra, és teret engedtünk a szeretetlenségnek.",
                                 "betumeret" : 32,      // pt
-                                "betutipus" : "Calibri Light",
+                                "betutipus" : "Calibri",
+                                "felkover"  : true,
                                 "dolt"      : true
                             }
                         ]
@@ -95,6 +96,7 @@ var Diasor_Urvacsora_Bunvallas =
                                             + "elfeledkeztünk rólad és felebarátainkról.",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri",
+                                "felkover"  : true,
                                 "dolt"      : true
                             }
                         ]
@@ -124,6 +126,7 @@ var Diasor_Urvacsora_Bunvallas =
                                             + "felebarátainknak, és dicsőségedre élhessünk! Ámen.",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri",
+                                "felkover"  : true,
                                 "dolt"      : true
                             }
                         ]
@@ -149,6 +152,7 @@ var Diasor_Urvacsora_Bunvallas =
                                 "szoveg"    : "Lelkész:",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri Light",
+                                "felkover"  : true
                             },
                             {
                                 "szoveg"    : "Bűnvallásunkat és kéréseinket vigyük csendes imádságban Isten elé!",
@@ -156,7 +160,7 @@ var Diasor_Urvacsora_Bunvallas =
                                 "betutipus" : "Calibri Light",
                             },
                             {
-                                "szoveg"    : "&nbsp;", // üres sor
+                                "szoveg"    : "",   // üres sor
                                 "betumeret" : 32,
                                 "betutipus" : "Calibri Light",
                             },
@@ -189,6 +193,7 @@ var Diasor_Urvacsora_Bunvallas =
                                 "szoveg"    : "Lelkész:",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri Light",
+                                "felkover"  : true
                             },
                             {
                                 "szoveg"    : "Halljátok Isten ígéretét: Ha megvalljuk bűneinket, hű és igaz Ő: "
@@ -218,7 +223,7 @@ var Diasor_Urvacsora_Bunvallas =
                         "szovegek"   :
                         [
                             {
-                                "szoveg"    : "Ha pedig vélkezik valaki, van pártfogónk az Atyánál: "
+                                "szoveg"    : "Ha pedig vétkezik valaki, van pártfogónk az Atyánál: "
                                             + "az igaz Jézus Krisztus, mert ő engesztelő áldozat a mi bűneinkért; "
                                             + "de nem csak a mienkért, hanem az egész világ bűnéért is. ",
                                 "betumeret" : 32,      // pt

@@ -27,14 +27,14 @@ var Diasor_Urvacsora_Halaadas =
                             },
                             {
                                 "szoveg"    : "Gy: Áldjad, lelkem, az Urat, és el ne feledd , mennyi jót tett veled!",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true,
                             },
                             {
                                 "szoveg"    : "L: Ő megbocsátja minden bűnödet, meggyógyítja minden betegségedet.",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri Light",
                             },
                         ]
@@ -58,19 +58,19 @@ var Diasor_Urvacsora_Halaadas =
                         [
                             {
                                 "szoveg"    : "Gy: Megváltja életedet a sírtól, szeretettel és irgalommal koronáz meg.",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true,
                             },
                             {
                                 "szoveg"    : "L: Irgalmas és kegyelmes az Úr, türelme hosszú, szeretete nagy.",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri Light",
                             },
                             {
                                 "szoveg"    : "Gy: Nem vétkeink szerint bánik velünk, nem bűneink szerint fizet nekünk.",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true,
@@ -102,19 +102,24 @@ var Diasor_Urvacsora_Halaadas =
                             },
                             {
                                 "szoveg"    : "Gy: Áldjad, lelkem, az Urat!",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true,
                             },
                             {
                                 "szoveg"    : "L: Urunk! Hallgass meg bennünket, amikor együtt imádkozunk!",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
+                                "betutipus" : "Calibri Light",
+                            },
+                            {
+                                "szoveg"    : "",   // üres sor
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri Light",
                             },
                             {
                                 "szoveg"    : "Mi Atyánk...",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true,
