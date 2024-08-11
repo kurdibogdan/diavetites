@@ -48,30 +48,6 @@ var Diasor_Urvacsora_Titok =
                     }
                 ]
             },
-            {
-                kijelolve  : false,
-                csoport    : "",
-                objektumok :
-                [
-                    {
-                        "tipus"      : "szovegdoboz",
-                        "poz_x"      : 4,           // % (~ 1 cm)
-                        "poz_y"      : 13,          // % (~ 1 cm)
-                        "szelesseg"  : 92,          // % (100% - 2 cm)
-                        "magassag"   : 74,          // % (100% - 2 cm)
-                        "igazitas_x" : "balra",
-                        "igazitas_y" : "fent",
-                        "szovegek"   :
-                        [
-                            {
-                                "szoveg"    : "",
-                                "betumeret" : 28,      // pt
-                                "betutipus" : "Arial Black",
-                            },
-                        ]
-                    }
-                ]
-            },
         ];
         
         if ($("#dia_keszitese_" + gomb_id).prop("checked") == false)

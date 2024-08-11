@@ -56,7 +56,7 @@ var Diasor_Urvacsora_Bunvallas =
                             {
                                 "szoveg"    : "Gyülekezet:",
                                 "betumeret" : 32,        // pt
-                                "betutipus" : "Calibri Light",
+                                "betutipus" : "Calibri",
                                 "felkover"  : true,
                                 "dolt"      : true
                             },
@@ -94,7 +94,7 @@ var Diasor_Urvacsora_Bunvallas =
                                             + "nem volt elég időnk. Sokszor azt tettük, ami tetszésünkre volt, és közben "
                                             + "elfeledkeztünk rólad és felebarátainkról.",
                                 "betumeret" : 32,      // pt
-                                "betutipus" : "Calibri Light",
+                                "betutipus" : "Calibri",
                                 "dolt"      : true
                             }
                         ]
@@ -123,7 +123,7 @@ var Diasor_Urvacsora_Bunvallas =
                                             + "Szentlelked által! Segíts, hogy Jézus Krisztus követeiként szolgáljunk "
                                             + "felebarátainknak, és dicsőségedre élhessünk! Ámen.",
                                 "betumeret" : 32,      // pt
-                                "betutipus" : "Calibri Light",
+                                "betutipus" : "Calibri",
                                 "dolt"      : true
                             }
                         ]
@@ -146,13 +146,23 @@ var Diasor_Urvacsora_Bunvallas =
                         "szovegek"   :
                         [
                             {
-                                "szoveg"    : "Bűnvallásunkat és kéréseinket vigyük csendes imádságban Isten elé!",
+                                "szoveg"    : "Lelkész:",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri Light",
                             },
                             {
+                                "szoveg"    : "Bűnvallásunkat és kéréseinket vigyük csendes imádságban Isten elé!",
+                                "betumeret" : 32,
+                                "betutipus" : "Calibri Light",
+                            },
+                            {
+                                "szoveg"    : "&nbsp;", // üres sor
+                                "betumeret" : 32,
+                                "betutipus" : "Calibri Light",
+                            },
+                            {
                                 "szoveg"    : "Csendes imádság",
-                                "betumeret" : 32,      // pt
+                                "betumeret" : 32,
                                 "betutipus" : "Calibri Light",
                                 "dolt"      : true
                             },
@@ -176,12 +186,41 @@ var Diasor_Urvacsora_Bunvallas =
                         "szovegek"   :
                         [
                             {
-                                "szoveg"    : "L: Halljátok Isten ígéretét: Ha megvalljuk bűneinket, hű és igaz Ő: "
+                                "szoveg"    : "Lelkész:",
+                                "betumeret" : 32,      // pt
+                                "betutipus" : "Calibri Light",
+                            },
+                            {
+                                "szoveg"    : "Halljátok Isten ígéretét: Ha megvalljuk bűneinket, hű és igaz Ő: "
                                             + "megbocsátja bűneinket, és megtisztít minket minden gonoszságtól. (1Jn 1,9) "
                                             + "Igaz az a beszéd, és teljes elfogadásra méltó, hogy Krisztus Jézus azért "
-                                            + "jött el a világba, hogy a bűnösöket üdvözítse! (1Tim 1.15) Ha pedig vélkezik "
-                                            + "valaki, van pártfogónk az Atyánál: az igaz Jézus Krisztus, mert ő engesztelő "
-                                            + "áldozat a mi bűneinkért; de nem csak a mienkért, hanem az egész világ bűnéért is. ",
+                                            + "jött el a világba, hogy a bűnösöket üdvözítse! (1Tim 1.15)",
+                                "betumeret" : 32,      // pt
+                                "betutipus" : "Calibri Light",
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                kijelolve  : false,
+                csoport    : "",
+                objektumok :
+                [
+                    {
+                        "tipus"      : "szovegdoboz",
+                        "poz_x"      : 4,           // % (~ 1 cm)
+                        "poz_y"      : 13,          // % (~ 1 cm)
+                        "szelesseg"  : 92,          // % (100% - 2 cm)
+                        "magassag"   : 74,          // % (100% - 2 cm)
+                        "igazitas_x" : "balra",
+                        "igazitas_y" : "fent",
+                        "szovegek"   :
+                        [
+                            {
+                                "szoveg"    : "Ha pedig vélkezik valaki, van pártfogónk az Atyánál: "
+                                            + "az igaz Jézus Krisztus, mert ő engesztelő áldozat a mi bűneinkért; "
+                                            + "de nem csak a mienkért, hanem az egész világ bűnéért is. ",
                                 "betumeret" : 32,      // pt
                                 "betutipus" : "Calibri Light",
                             },
