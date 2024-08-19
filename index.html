@@ -35,6 +35,8 @@
   <script type="text/javascript" src="js/diasor_urvacsora_bunvallas2.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_parbeszed.js"></script>
   <script type="text/javascript" src="js/diasor_urvacsora_titok.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora3.js"></script>
+  <script type="text/javascript" src="js/diasor_urvacsora_bunvallas3.js"></script>
   <style></style>
  </head>
  <body>
@@ -121,6 +123,7 @@ var t = "<table class='diakeszites_tabla'>\n"
       + Diasor_Dalszoveg.diakeszites_gomb("ifienek", "teljes", "dalszöveg")
       + Diasor_Urvacsora.diakeszites_gomb("urvacsora")
       + Diasor_Urvacsora2.diakeszites_gomb("urvacsora2")
+      + Diasor_Urvacsora3.diakeszites_gomb("urvacsora3")
       + Diasor_Hirdetesek.diakeszites_gomb("hirdetesek")
       + "</table>";
 $("#kivetites_osszeallitasa").html(t);
@@ -136,6 +139,10 @@ dallista_betoltese(function()
     dal_kivalasztasa_cim_szerint("urvacsora2_enek_1", "Örvendj, világ, az Úr lejött");
     dal_kivalasztasa_cim_szerint("urvacsora2_enek_2", "Szent, szent, szent a Seregek Ura Istene");
     dal_kivalasztasa_cim_szerint("urvacsora2_enek_3", "Az Úr szent Bárányára");
+    
+    dal_kivalasztasa_cim_szerint("urvacsora3_enek_1", "Ó, hála az Úrnak");
+    dal_kivalasztasa_cim_szerint("urvacsora3_enek_2", "Szent, szent, szent a Seregek Ura Istene");
+    dal_kivalasztasa_cim_szerint("urvacsora3_enek_3", "Az Úr szent Bárányára");
 });
 
 </script>

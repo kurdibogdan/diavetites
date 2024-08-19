@@ -1,3 +1,4 @@
+const ALAP_BETUMERET = 28;
 var diasor = [];
 $(document).mouseup(function(e)
 {
@@ -675,13 +676,15 @@ function diasor_megjelenitese()
                     for(var k=0, p=obj.szovegek.length; k<p; k++)
                     {
                         var sz = obj.szovegek[k];
-                        t += "<div style='font-size      : " + sz.betumeret/DIA_MERET.skalazas + "pt;"
+                        t += "<div style='font-size      : " + (sz.betumeret ? sz.betumeret : ALAP_BETUMERET) / DIA_MERET.skalazas + "pt;"
                            + "            font-weight    : " + (sz.felkover  == true ? "bold"       : "normal")  + ";"
                            + "            font-style     : " + (sz.dolt      == true ? "italic"     : "normal")  + ";"
                            + "            font-family    : " + (sz.betutipus != null ? sz.betutipus : "Sylfaen") + ";"
                            + "            text-transform : " + (sz.nagybetus == true ? "uppercase"  : "none")    + ";"
                            + "           '>"
-                           + sz.szoveg
+                           + (sz.szoveg.length == 0
+                              ? "<br>"
+                              : sz.szoveg.replace(/  /g, "&nbsp; "))
                            + "</div>";
                     }
                     t += "  </td>"
