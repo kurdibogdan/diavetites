@@ -14,7 +14,7 @@
   }
   h2, input, button
   {
-      font-size: 32px;
+      font-size: 26px;
       margin: 0px;
       padding: 5px 10px;
   }
@@ -110,14 +110,13 @@
    <!-- Bevitel -->
    <table>
     <tr>
-     <td><h2>Keresés egy dalszövegre:</h2></td>
+     <td><h2>Dalok keresése:</h2></td>
      <td><input id="dal_keresese" type="text" onkeyup="Dal_Keresese.kereses_inditasa();"></td>
      <td><button onclick="osszes_dal_betoltese();">Összes dal betöltése</button></td>
     </tr>
    </table>
 
    <!-- Eredmény -->
-   
    <pre id="keresett_dalok"></pre>
 
   </td>
@@ -154,7 +153,7 @@ const Dal_Keresese =
     KERESES_KESLELTETESE: 1000,  // ms
     kereses_inditasa: function()
     {
-        console.log("Keresés indítása");
+        // console.log("Keresés indítása");
         const aktualis_ido = new Date();
         const keres = $("#dal_keresese").val();
         
@@ -166,7 +165,7 @@ const Dal_Keresese =
             this.kereses_folyamatban = false;
             $.get("php/dallista_betoltese.php", {keres: keres}, function(dallista)
             {
-                dallista_megjelenitese(JSON.parse(dallista), "#keresett_dalok");
+                dallista_megjelenitese(JSON.parse(dallista));
             });
         }
         else // Keresés késleltetése, ha 1 másodpercen belül már volt keresés (szerver tehermentesítése):
@@ -194,12 +193,12 @@ function dalszoveg_betoltese(kivalasztott_dal_id)
         $("#dalszoveg").html(
             dalszoveg
             .replace(/^#[^\r\n]*(\n|\r\n)?/gm, "")  // megjegyzések eltüntetése (versszak, refrén, stb.)
-            .replace(/(\n|\r\n)/g, "<br>")          // sortörések átváltása html formátumra
+            .replace(/(\n|\r\n)/gm, "<br>")         // sortörések átváltása html formátumra
         );
     });
 }
 
-function dallista_megjelenitese(dallista, doboz)
+function dallista_megjelenitese(dallista)
 {
     var t = "<div class='tabla_kerete'>"
           + "<table class='tabla' cellspacing='0' cellpadding='0'>"
@@ -229,7 +228,7 @@ function dallista_megjelenitese(dallista, doboz)
     }
     t += " </table>"
        + "</div>";
-    $(doboz).html(t);
+    $("#keresett_dalok").html(t);
 }
 
 osszes_dal_betoltese();
