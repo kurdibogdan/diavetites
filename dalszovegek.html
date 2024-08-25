@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Dalszövegek keresésére példák</title>
+  <style type="text/css">
+  :root
+  {
+      --keret: 1px solid black;
+  }
+  body
+  {
+      background-color: #ccc;
+  }
+  h2, input, button
+  {
+      font-size: 32px;
+      margin: 0px;
+      padding: 5px 10px;
+  }
+  .tabla_kerete
+  {
+      width: 1080px;      
+      max-height: calc(100vh - 110px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 0px;
+  }
+  .tabla
+  {
+      width: 1050px;
+      table-layout: fixed;
+  }
+  .tabla td, .tabla th
+  {
+      padding: 5px;
+      border-left: var(--keret);
+      border-top: var(--keret);
+  }
+  .tabla th:last-of-type, .tabla td:last-of-type
+  {
+      border-right: var(--keret);
+  }
+  .tabla tr:last-of-type td
+  {
+      border-bottom: var(--keret);
+  }
+  .tabla tr:first-of-type
+  {
+      background-color: #eee;
+      position: sticky;
+      top: 0px;
+  }
+  .tabla th:nth-of-type(1){width: 50px;}
+  .tabla th:nth-of-type(2){}
+  .tabla th:nth-of-type(3){width: 90px;}
+  .tabla th:nth-of-type(4){width: 80px;}
+  .tabla th:nth-of-type(5){width: 140px;}
+  .tabla th:nth-of-type(6){width: 150px;}
+  #nagykeret
+  {
+      background-color: white;
+  }
+  #dalszoveg_kerete
+  {
+      width: 400px;
+      background-color: white;
+  }
+  #dalszoveg_kerete table
+  {
+      width: 100%;
+      border: var(--keret);
+  }
+  #dalszoveg_bezaras_gomb
+  {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      padding: 5px 10px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #ccc;
+      color: white;
+  }
+  #dalszoveg
+  {
+      overflow-y: auto;
+      height: calc(100vh - 100px);
+  }
+  .link
+  {
+      text-decoration: underline;
+      color: blue;
+  }
+  .link:hover
+  {
+      cursor: pointer;
+  }
+  </style>
+  <script type="text/javascript" src="js/jquery.1.12.4.min.js"></script>
+ </head>
+ <body>
+
+<center>
+<table id="nagykeret">
+ <tr valign="top">
+  <!-- Bal menü -->
+  <td width="1100" align="left">
+   
+   <!-- Bevitel -->
+   <table>
+    <tr>
+     <td><h2>Keresés egy dalszövegre:</h2></td>
+     <td><input id="dal_keresese" type="text" onkeyup="Dal_Keresese.kereses_inditasa();"></td>
+     <td><button onclick="osszes_dal_betoltese();">Összes dal betöltése</button></td>
+    </tr>
+   </table>
+
+   <!-- Eredmény -->
+   
+   <pre id="keresett_dalok"></pre>
+
+  </td>
+  
+  <!-- Jobb menü -->
+  <td align="right">
+   <div id="dalszoveg_kerete">
+    <table>
+     <tr height="1">
+      <th><h2>Dalszöveg:</h2></th>
+     </tr>
+     <tr valign="top">
+      <td><div id="dalszoveg"></div></td>
+     </tr>
+    </table>
+   </div>
+  </td>
+ 
+ </tr>
+</table>
+</center>
+
+<script type="text/javascript">
+function osszes_dal_betoltese()
+{
+    $("#dal_keresese").val("");
+    Dal_Keresese.kereses_inditasa();
+}
+
+const Dal_Keresese =
+{
+    legutobbi_kereses_ideje: 0,
+    kereses_folyamatban: false,
+    KERESES_KESLELTETESE: 1000,  // ms
+    kereses_inditasa: function()
+    {
+        console.log("Keresés indítása");
+        const aktualis_ido = new Date();
+        const keres = $("#dal_keresese").val();
+        
+        if ((this.legutobbi_kereses_ideje == 0) ||
+            (aktualis_ido - this.legutobbi_kereses_ideje > this.KERESES_KESLELTETESE))
+        {
+            // console.log("Eltelt idő: " + aktualis_ido - this.legutobbi_kereses_ideje);
+            this.legutobbi_kereses_ideje = aktualis_ido;
+            this.kereses_folyamatban = false;
+            $.get("php/dallista_betoltese.php", {keres: keres}, function(dallista)
+            {
+                dallista_megjelenitese(JSON.parse(dallista), "#keresett_dalok");
+            });
+        }
+        else // Keresés késleltetése, ha 1 másodpercen belül már volt keresés (szerver tehermentesítése):
+        {
+            if (this.legutobbi_kereses_ideje == 0)
+            {
+                this.legutobbi_kereses_ideje = aktualis_ido;
+            }
+            if (this.kereses_folyamatban == false)
+            {
+                // console.log("Késleltetés");
+                this.kereses_folyamatban = true;
+                let that = this;
+                setTimeout(function(){that.kereses_inditasa();}, this.KERESES_KESLELTETESE);
+            }
+        }
+    }
+};
+
+function dalszoveg_betoltese(kivalasztott_dal_id)
+{
+    $.post("php/dalszoveg_betoltese.php", {dalszoveg_id: kivalasztott_dal_id}, function(dalszoveg)
+    {
+        dalszoveg = JSON.parse(dalszoveg).szoveg;
+        $("#dalszoveg").html(
+            dalszoveg
+            .replace(/^#[^\r\n]*(\n|\r\n)?/gm, "")  // megjegyzések eltüntetése (versszak, refrén, stb.)
+            .replace(/(\n|\r\n)/g, "<br>")          // sortörések átváltása html formátumra
+        );
+    });
+}
+
+function dallista_megjelenitese(dallista, doboz)
+{
+    var t = "<div class='tabla_kerete'>"
+          + "<table class='tabla' cellspacing='0' cellpadding='0'>"
+          + "  <tr>"
+          + "   <th>ID</th>"
+          + "   <th>Cím</th>"
+          + "   <th>Típus</th>"
+          + "   <th>Sorszám</th>"
+          + "   <th>Címben talált?</th>"
+          + "   <th>Szövegben talált?</th>"
+          + "  </tr>";
+    for (dal of dallista)
+    {
+        t += "<tr>"
+           + "<td>" + dal.id + "</td>"
+           + "<td>"
+           + " <span class='link' "
+           + "       onclick=\"dalszoveg_betoltese('" + dal.id + "');\">"
+           +   dal.cim
+           + " </span>"
+           + "</td>"
+           + "<td>" + dal.tipus + "</td>"
+           + "<td>" + dal.sorszam + "</td>"
+           + "<td>" + dal.cimben_talalt + "</td>"
+           + "<td>" + dal.szovegben_talalt + "</td>"
+           + "</tr>";
+    }
+    t += " </table>"
+       + "</div>";
+    $(doboz).html(t);
+}
+
+osszes_dal_betoltese();
+</script>
+
+ </body>
+</html>
